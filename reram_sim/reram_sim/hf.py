@@ -3,7 +3,7 @@
 Reads outputs/<model>/{svd_model.pt, tier_map.json, importance.pt} written by
 ../svd_tiering and replaces every factorised encoder layer with a ReRAMLinear.
 The SLC/MLC split is recomputed from the saved importance so that other
-policies (all-SLC, all-MLC, magnitude, random) use the same factorised weights.
+policies (all-SLC, all-MLC, rank, random) use the same factorised weights.
 """
 import json
 import sys
@@ -19,7 +19,7 @@ from svd_tiering.data import evaluate, sst2_loader  # noqa: E402
 
 from .layer import ReRAMLinear, replace_modules  # noqa: E402
 
-POLICIES = ("all_slc", "all_mlc", "gradient", "magnitude", "random")
+POLICIES = ("all_slc", "all_mlc", "gradient", "rank", "random")
 DEFAULT_OUTPUTS = SVD_ROOT / "outputs"
 
 
@@ -45,8 +45,9 @@ def tier_masks(layers: dict[str, SVDLinear], importance: dict, policy: str,
         return {n: torch.ones(l.rank, dtype=torch.bool) for n, l in layers.items()}
     if policy == "all_mlc":
         return {n: torch.zeros(l.rank, dtype=torch.bool) for n, l in layers.items()}
-    if policy in ("gradient", "magnitude"):
-        scores = importance[policy]
+    if policy in ("gradient", "rank"):
+        # "rank" = top singular values (HyFlexPIM's rank-based baseline), stored as "magnitude"
+        scores = importance["gradient" if policy == "gradient" else "magnitude"]
     elif policy == "random":
         g = torch.Generator().manual_seed(seed)
         scores = {n: torch.rand(l.rank, generator=g) for n, l in layers.items()}

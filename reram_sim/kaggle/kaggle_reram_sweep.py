@@ -11,13 +11,15 @@
 #   3. Paste this whole file into ONE notebook cell and run it.
 # Results: /kaggle/working/reram_results/<model>/ and /kaggle/working/reram_results.zip
 #
-# Per model: load the SVD factors, then run each experiment in CONFIG["experiments"]
-# (A: HyFlexPIM noise vs SLC rate, B: cell noise vs SLC rate, C: cell-noise sweep,
-# D: stuck-at fault sweep). Every point = one tiering policy x SLC rate x sigma x
-# fault rate x chip seed: program all crossbars, evaluate SST-2 validation accuracy.
+# Per model: load the SVD factors, compute the HyFlexPIM gradient score, then run each
+# experiment in CONFIG["experiments"] (A: HyFlexPIM noise vs SLC rate, B: cell noise vs
+# SLC rate, C: cell-noise sweep, D: stuck-at fault sweep, E: SA1 vs SA0 share). Every
+# point = one tiering policy x SLC rate x sigma x fault rate x chip seed: program all
+# crossbars, evaluate SST-2 validation accuracy.
 # Outputs per experiment: <name>.csv (every chip), <name>_summary.csv, <name>.png.
-# Runtime: 505 evaluations per model (~25 min DistilBERT, ~50 min BERT on a T4, estimated);
-# drop experiments or lower "seeds" to shorten.
+# Runtime: 695 evaluations per model. The first run (505 evaluations) took 20 min for
+# DistilBERT and 39 min for BERT on a T4, so expect ~80 min total; drop experiments or
+# lower "seeds" to shorten.
 #
 # Cell model (same as reram_sim/reram_sim/crossbar.py, which has the local tests):
 #   8-bit signed weights per row, differential pair (G+, G-), bit-sliced into
@@ -58,34 +60,52 @@ from transformers import AutoModelForSequenceClassification, AutoTokenizer, Data
 #   * RRAM on/off 150, 64-row arrays, 1-bit DAC, 6-b (SLC) / 7-b (MLC) ADC
 # In our per-cell conductance model, sigma/G_max = 0.095 gives the same 4.04% MLC
 # bit error rate (SLC: ~1e-7), so the cell-noise sweep is centred on 0.095.
-# HyFlexPIM has no stuck-at faults; the fault sweep uses the project plan's 0.1-20 %.
+# HyFlexPIM has no stuck-at faults; the fault sweep uses the project plan's range. The
+# first run showed every policy at chance above 2 % faults, so the grid is dense below that.
+#
+# Tiering policies (all use the same fine-tuned SVD factors; only the SLC/MLC split changes):
+#   gradient      HyFlexPIM Alg. 1 step 4: top-k% singular values by absolute gradient,
+#                 |dL_b/dσ_r| averaged over calibration batches (computed here, fp32)
+#   gradient_net  |sum_b dL_b/dσ_r| from importance.pt (the first run's score). Near the
+#                 fine-tuned minimum the signed per-batch gradients cancel, so this is mostly
+#                 noise; kept to show the difference.
+#   rank          top-k% singular values (HyFlexPIM Fig. 13 "rank-based")
+#   random        random k%;  all_slc / all_mlc: 100 % / 0 % SLC
 SIGMA_CAL = 0.095
+POLICIES = ["all_slc", "all_mlc", "gradient", "gradient_net", "rank", "random"]
 CONFIG = {
     "models": ["distilbert-sst2", "bert-base-sst2"],
     "experiments": [
         # A. HyFlexPIM reproduction: accuracy vs SLC rate under their own noise model.
         {"name": "A_hyflexpim_slc_rate", "x": "slc_frac", "noise_model": "multiplicative",
          "noisy_tiers": ["MLC"], "sigmas": [0.025],
-         "policies": ["all_slc", "all_mlc", "gradient", "magnitude", "random"],
+         "policies": ["all_slc", "all_mlc", "gradient", "rank", "random"],
          "slc_fracs": [0.05, 0.1, 0.2, 0.3, 0.5], "fault_rates": [0.0]},
         # B. Same, with per-cell conductance noise at the BER-matched sigma (both tiers noisy).
         {"name": "B_cell_slc_rate", "x": "slc_frac", "noise_model": "cell",
-         "noisy_tiers": ["SLC", "MLC"], "sigmas": [SIGMA_CAL],
-         "policies": ["all_slc", "all_mlc", "gradient", "magnitude", "random"],
+         "noisy_tiers": ["SLC", "MLC"], "sigmas": [SIGMA_CAL], "policies": POLICIES,
          "slc_fracs": [0.05, 0.1, 0.2, 0.3, 0.5], "fault_rates": [0.0]},
         # C. Noise sweep around the calibrated point at a 20 % SLC rate.
         {"name": "C_cell_noise_sweep", "x": "sigma", "noise_model": "cell",
          "noisy_tiers": ["SLC", "MLC"], "sigmas": [0.0, 0.02, 0.04, 0.06, 0.08, SIGMA_CAL, 0.12],
-         "policies": ["all_slc", "all_mlc", "gradient", "magnitude", "random"],
-         "slc_fracs": [0.2], "fault_rates": [0.0]},
-        # D. Stuck-at fault sweep (no programming noise), project plan Table 2 range.
+         "policies": POLICIES, "slc_fracs": [0.2], "fault_rates": [0.0]},
+        # D. Stuck-at fault sweep (no programming noise), half SA1 / half SA0.
         {"name": "D_fault_sweep", "x": "fault_rate", "noise_model": "cell",
          "noisy_tiers": ["SLC", "MLC"], "sigmas": [0.0],
-         "policies": ["all_slc", "all_mlc", "gradient", "random"],
-         "slc_fracs": [0.2], "fault_rates": [0.0, 0.001, 0.005, 0.01, 0.02, 0.05, 0.1, 0.2]},
+         "policies": ["all_slc", "all_mlc", "gradient", "rank", "random"],
+         "slc_fracs": [0.2], "fault_rates": [0.0, 0.0005, 0.001, 0.002, 0.005, 0.01, 0.02, 0.05]},
+        # E. Which stuck-at type does the damage: share of stuck cells at G_max (SA1).
+        #    A stuck-at-G_max MLC cell reads as digit 3; in the top slice (only digits 0-1 used)
+        #    that is +192 on a 127 full scale, so SA1 should dominate.
+        {"name": "E_sa1_share", "x": "sa1_frac", "noise_model": "cell",
+         "noisy_tiers": ["SLC", "MLC"], "sigmas": [0.0],
+         "policies": ["all_slc", "all_mlc", "gradient"], "slc_fracs": [0.2],
+         "fault_rates": [0.002, 0.01], "sa1_fracs": [0.0, 0.5, 1.0]},
     ],
-    "sa1_frac": 0.5,           # share of stuck cells stuck at G_max
+    "sa1_frac": 0.5,           # default share of stuck cells stuck at G_max (rest at G_min)
     "seeds": 5,                # simulated chips per point
+    "calib_n": 512,            # SST-2 train sentences for the gradient score
+    "calib_batch": 32,         # HyFlexPIM Table 1 fine-tune batch size for BERT-Base
     "slc_bits": 1,
     "mlc_bits": 2,
     "w_bits": 8,
@@ -346,6 +366,47 @@ def tier_masks(layers, importance, policy, frac):
     return select_slc({n: s.cpu() for n, s in importance[policy].items()}, frac)
 
 
+def gradient_importance(model, layers, tok):
+    """HyFlexPIM score: mean over calibration batches of |dL_b/dσ_r| (fp32, eval mode)."""
+    ds = load_dataset("nyu-mll/glue", "sst2", split="train").shuffle(seed=1).select(range(CONFIG["calib_n"]))
+    ds = ds.map(lambda b: tok(b["sentence"], truncation=True, max_length=128),
+                batched=True, remove_columns=["sentence", "idx"]).rename_column("label", "labels")
+    loader = DataLoader(ds, batch_size=CONFIG["calib_batch"], collate_fn=DataCollatorWithPadding(tok))
+    model.to(DEVICE).eval()
+    for name, p in model.named_parameters():
+        p.requires_grad_(name.endswith(".S"))
+    scores = {n: torch.zeros(l.rank, device=DEVICE) for n, l in layers.items()}
+    for i, b in enumerate(loader, 1):
+        model.zero_grad(set_to_none=True)
+        model(**{k: v.to(DEVICE) for k, v in b.items()}).loss.backward()
+        for n, l in layers.items():
+            scores[n] += l.S.grad.detach().abs()
+        if i % 4 == 0 or i == len(loader):
+            log(f"    calibration batch {i}/{len(loader)}")
+    model.zero_grad(set_to_none=True)
+    for p in model.parameters():
+        p.requires_grad_(False)
+    model.cpu()
+    return {n: (s / len(loader)).cpu() for n, s in scores.items()}
+
+
+def spearman(a, b):
+    ra, rb = a.argsort().argsort().float(), b.argsort().argsort().float()
+    ra, rb = ra - ra.mean(), rb - rb.mean()
+    return float((ra * rb).sum() / (ra.norm() * rb.norm()).clamp(min=1e-12))
+
+
+def log_score_agreement(importance, frac=0.2):
+    """How alike the scores are: mean Spearman correlation and top-20% overlap per layer."""
+    names = ["gradient", "gradient_net", "rank"]
+    for i, a in enumerate(names):
+        for b in names[i + 1:]:
+            rho = mean(spearman(importance[a][n], importance[b][n]) for n in importance[a])
+            ma, mb = select_slc(importance[a], frac), select_slc(importance[b], frac)
+            overlap = sum(int((ma[n] & mb[n]).sum()) for n in ma) / sum(int(ma[n].sum()) for n in ma)
+            log(f"    {a:12s} vs {b:12s}: Spearman {rho:+.3f}, top-{frac:.0%} overlap {overlap:.1%}")
+
+
 def to_reram(model, layers, masks):
     built = {}
     for name, svd in layers.items():
@@ -382,7 +443,7 @@ def plot(summary, digital, exp, path, key):
     fig, ax = plt.subplots(figsize=(6, 4))
     by_policy = defaultdict(list)
     for r in summary:
-        by_policy[r["policy"]].append(r)
+        by_policy[series(r, exp)].append(r)
     for i, (policy, rows) in enumerate(by_policy.items()):
         rows.sort(key=lambda r: r[x])
         if len({r[x] for r in rows}) == 1:          # all_slc / all_mlc in an SLC-rate sweep
@@ -392,7 +453,8 @@ def plot(summary, digital, exp, path, key):
                     yerr=[r["acc_std"] for r in rows], marker="o", capsize=3, color=f"C{i}", label=policy)
     ax.axhline(digital, color="gray", ls="--", lw=1, label="digital SVD model")
     ax.set_xlabel({"sigma": "noise sigma (%)", "slc_frac": "SLC rate (%)",
-                   "fault_rate": "stuck-at fault rate (%)"}[x])
+                   "fault_rate": "stuck-at fault rate (%)",
+                   "sa1_frac": "stuck cells at G_max (%)"}[x])
     ax.set_ylabel("SST-2 accuracy")
     ax.set_title(f"{key}: {exp['name']}")
     ax.legend(fontsize=8)
@@ -401,6 +463,13 @@ def plot(summary, digital, exp, path, key):
     fig.savefig(path, dpi=150)
     plt.show()
     log(f"    plot -> {path}")
+
+
+def series(r, exp):
+    """One plot line / table row: the policy, plus the fault rate when that is not the x axis."""
+    if len(exp["fault_rates"]) > 1 and exp["x"] != "fault_rate":
+        return f"{r['policy']} @ {r['fault_rate']:.1%}"
+    return r["policy"]
 
 
 def grid(exp):
@@ -419,13 +488,14 @@ def run_experiment(exp, key, digital_model, layers, importance, batches, digital
     tier_base = {"SLC": CrossbarConfig(bits_per_cell=CONFIG["slc_bits"], **base),
                  "MLC": CrossbarConfig(bits_per_cell=CONFIG["mlc_bits"], **base)}
     pairs = list(grid(exp))
-    n_points = len(pairs) * len(exp["sigmas"]) * len(exp["fault_rates"]) * CONFIG["seeds"]
+    sa1_fracs = exp.get("sa1_fracs", [CONFIG["sa1_frac"]])
+    n_points = len(pairs) * len(exp["sigmas"]) * len(exp["fault_rates"]) * len(sa1_fracs) * CONFIG["seeds"]
     log(f"    {len(pairs)} policy/SLC-rate pairs x {len(exp['sigmas'])} sigmas x {len(exp['fault_rates'])} "
-        f"fault rates x {CONFIG['seeds']} chips = {n_points} evaluations")
+        f"fault rates x {len(sa1_fracs)} SA1 shares x {CONFIG['seeds']} chips = {n_points} evaluations")
     rows, done, t_exp = [], 0, time.time()
     with open(out / f"{exp['name']}.csv", "w", newline="") as f:
         w = csv.writer(f)
-        w.writerow(["policy", "slc_frac", "sigma", "fault_rate", "seed", "acc"])
+        w.writerow(["policy", "slc_frac", "sigma", "fault_rate", "sa1_frac", "seed", "acc"])
         for i_pair, (policy, frac) in enumerate(pairs, 1):
             t_build = time.time()
             model = copy.deepcopy(digital_model)
@@ -436,35 +506,38 @@ def run_experiment(exp, key, digital_model, layers, importance, batches, digital
             mem = f", GPU mem {torch.cuda.memory_allocated() / 2**30:.2f} GB" if DEVICE.type == "cuda" else ""
             log(f"    pair {i_pair}/{len(pairs)}: {policy}, {real_frac:.1%} of components in SLC "
                 f"(built in {fmt_time(time.time() - t_build)}{mem})")
-            for fault in exp["fault_rates"]:
-                for sigma in exp["sigmas"]:
-                    cfgs = {t: replace(c, sigma=sigma if t in exp["noisy_tiers"] else 0.0, fault_rate=fault)
-                            for t, c in tier_base.items()}
-                    accs = []
-                    for seed in range(CONFIG["seeds"]):
-                        program_model(model, cfgs, seed)
-                        acc = evaluate(model, batches)
-                        accs.append(acc)
-                        rows.append({"policy": policy, "slc_frac": real_frac, "sigma": sigma,
-                                     "fault_rate": fault, "seed": seed, "acc": acc})
-                        w.writerow([policy, f"{real_frac:.4f}", sigma, fault, seed, f"{acc:.6f}"])
-                        done += 1
-                    f.flush()
-                    elapsed = time.time() - t_exp
-                    eta = elapsed / done * (n_points - done)
-                    log(f"    [{done:4d}/{n_points}] {policy:9s} slc {real_frac:5.1%} sigma {sigma:.3f} "
-                        f"fault {fault:.3f}  acc {mean(accs):.4f} +- {pstdev(accs):.4f} "
-                        f"(min {min(accs):.4f}; chips {' '.join(f'{a:.3f}' for a in accs)})  ETA {fmt_time(eta)}")
+            for sa1 in sa1_fracs:
+                for fault in exp["fault_rates"]:
+                    for sigma in exp["sigmas"]:
+                        cfgs = {t: replace(c, sigma=sigma if t in exp["noisy_tiers"] else 0.0,
+                                           fault_rate=fault, sa1_frac=sa1)
+                                for t, c in tier_base.items()}
+                        accs = []
+                        for seed in range(CONFIG["seeds"]):
+                            program_model(model, cfgs, seed)
+                            acc = evaluate(model, batches)
+                            accs.append(acc)
+                            rows.append({"policy": policy, "slc_frac": real_frac, "sigma": sigma,
+                                         "fault_rate": fault, "sa1_frac": sa1, "seed": seed, "acc": acc})
+                            w.writerow([policy, f"{real_frac:.4f}", sigma, fault, sa1, seed, f"{acc:.6f}"])
+                            done += 1
+                        f.flush()
+                        elapsed = time.time() - t_exp
+                        eta = elapsed / done * (n_points - done)
+                        log(f"    [{done:4d}/{n_points}] {policy:12s} slc {real_frac:5.1%} sigma {sigma:.3f} "
+                            f"fault {fault:.4f} sa1 {sa1:.1f}  acc {mean(accs):.4f} +- {pstdev(accs):.4f} "
+                            f"(min {min(accs):.4f}; chips {' '.join(f'{a:.3f}' for a in accs)})  "
+                            f"ETA {fmt_time(eta)}")
             del model
             if DEVICE.type == "cuda":
                 torch.cuda.empty_cache()
 
     groups = defaultdict(list)
     for r in rows:
-        groups[(r["policy"], r["slc_frac"], r["sigma"], r["fault_rate"])].append(r["acc"])
-    summary = [{"policy": p, "slc_frac": sf, "sigma": s, "fault_rate": fr, "acc_mean": mean(a),
-                "acc_std": pstdev(a), "acc_min": min(a), "n": len(a)}
-               for (p, sf, s, fr), a in groups.items()]
+        groups[(r["policy"], r["slc_frac"], r["sigma"], r["fault_rate"], r["sa1_frac"])].append(r["acc"])
+    summary = [{"policy": p, "slc_frac": sf, "sigma": s, "fault_rate": fr, "sa1_frac": sa1,
+                "acc_mean": mean(a), "acc_std": pstdev(a), "acc_min": min(a), "n": len(a)}
+               for (p, sf, s, fr, sa1), a in groups.items()]
     with open(out / f"{exp['name']}_summary.csv", "w", newline="") as f:
         dw = csv.DictWriter(f, fieldnames=list(summary[0]))
         dw.writeheader()
@@ -479,14 +552,14 @@ def log_table(summary, exp, digital):
     x = exp["x"]
     xs = sorted({r[x] for r in summary if r["policy"] not in ("all_slc", "all_mlc")} or {r[x] for r in summary})
     log(f"    summary ({x}; mean acc over {CONFIG['seeds']} chips; digital {digital:.4f}):")
-    log("      " + f"{'policy':10s}" + "".join(f"{v:>9.3f}" for v in xs))
-    for policy in exp["policies"]:
-        rows = {round(r[x], 4): r["acc_mean"] for r in summary if r["policy"] == policy}
-        if policy in ("all_slc", "all_mlc") and x == "slc_frac":
-            log("      " + f"{policy:10s}" + f"{next(iter(rows.values())):>9.4f}  (all x)")
+    log("      " + f"{'policy':20s}" + "".join(f"{v:>9.4f}" for v in xs))
+    for name in dict.fromkeys(series(r, exp) for r in summary):
+        rows = {round(r[x], 4): r["acc_mean"] for r in summary if series(r, exp) == name}
+        if name in ("all_slc", "all_mlc") and x == "slc_frac":
+            log("      " + f"{name:20s}" + f"{next(iter(rows.values())):>9.4f}  (all x)")
             continue
-        log("      " + f"{policy:10s}" + "".join(f"{rows[round(v, 4)]:>9.4f}" if round(v, 4) in rows
-                                                  else f"{'-':>9s}" for v in xs))
+        log("      " + f"{name:20s}" + "".join(f"{rows[round(v, 4)]:>9.4f}" if round(v, 4) in rows
+                                                else f"{'-':>9s}" for v in xs))
 
 
 def run_model(key):
@@ -494,17 +567,26 @@ def run_model(key):
     out.mkdir(parents=True, exist_ok=True)
     log(f"========== {key} ==========")
 
-    log("[1/4] locating SVD-tiering outputs")
+    log("[1/5] locating SVD-tiering outputs")
     src = find_svd_outputs(key)
     log(f"  {src}")
 
-    log("[2/4] loading SVD model and SST-2 validation")
+    log("[2/5] loading SVD model and SST-2 validation")
     digital_model, tok, layers = load_svd_model(key, src)
-    importance = torch.load(src / "importance.pt", map_location="cpu")
+    saved = torch.load(src / "importance.pt", map_location="cpu")
     batches = sst2_batches(tok)
     log(f"  {len(layers)} factorised layers, {sum(len(b['labels']) for b in batches)} sentences")
 
-    log("[3/4] digital reference")
+    log(f"[3/5] gradient importance (mean per-batch |dL/dsigma|, {CONFIG['calib_n']} SST-2 train sentences, "
+        f"batch {CONFIG['calib_batch']})")
+    t_imp = time.time()
+    importance = {"gradient": gradient_importance(digital_model, layers, tok),
+                  "gradient_net": saved["gradient"], "rank": saved["magnitude"]}
+    torch.save(importance, out / "importance_scores.pt")
+    log(f"  done in {fmt_time(time.time() - t_imp)}; saved importance_scores.pt")
+    log_score_agreement(importance)
+
+    log("[4/5] digital reference")
     digital = evaluate(digital_model.to(DEVICE), batches)
     digital_model.cpu()
     log(f"  digital SVD model acc {digital:.4f}")
@@ -512,7 +594,7 @@ def run_model(key):
         json.dump({"config": {k: str(v) for k, v in CONFIG.items()}, "source": str(src),
                    "digital_acc": digital}, f, indent=2)
 
-    log(f"[4/4] {len(CONFIG['experiments'])} experiments")
+    log(f"[5/5] {len(CONFIG['experiments'])} experiments")
     for exp in CONFIG["experiments"]:
         try:
             run_experiment(exp, key, digital_model, layers, importance, batches, digital, out)

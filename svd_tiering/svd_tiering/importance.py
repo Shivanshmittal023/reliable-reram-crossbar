@@ -25,19 +25,25 @@ def finetune(model, loader, steps: int, lr: float) -> list[float]:
 
 
 def gradient_importance(model, layers: dict[str, SVDLinear], loader) -> dict[str, torch.Tensor]:
-    """I_r = |dL/dσ_r|, with L the loss summed over the calibration set.
+    """I_r = mean over calibration batches of |dL_b/dσ_r|.
 
-    Gradients are accumulated over all calibration batches before taking the
-    absolute value, so I_r is the magnitude of the full-dataset gradient.
+    HyFlexPIM (Alg. 1, Fig. 11) ranks singular values by absolute gradient
+    stored during fine-tuning. The absolute value is taken per batch: after
+    fine-tuning the model sits near a minimum, so the signed gradient summed
+    over the whole set cancels to noise and no longer reflects sensitivity.
     Dropout is off (eval mode) so the score is deterministic.
     """
     model.eval()
-    model.zero_grad(set_to_none=True)
+    scores = {name: torch.zeros_like(layer.S) for name, layer in layers.items()}
+    n = 0
     for batch in loader:
+        model.zero_grad(set_to_none=True)
         model(**batch).loss.backward()
-    scores = {name: layer.S.grad.detach().abs().clone() for name, layer in layers.items()}
+        for name, layer in layers.items():
+            scores[name] += layer.S.grad.detach().abs()
+        n += 1
     model.zero_grad(set_to_none=True)
-    return scores
+    return {name: s / max(n, 1) for name, s in scores.items()}
 
 
 def magnitude_importance(layers: dict[str, SVDLinear]) -> dict[str, torch.Tensor]:

@@ -179,16 +179,21 @@ def finetune(model, loader, epochs, lr):
 
 
 def gradient_importance(model, layers, loader):
-    """I_r = |dL/dσ_r|, gradient of loss summed over calibration set (fp32, eval mode, no dropout)."""
+    """I_r = mean over calibration batches of |dL_b/dσ_r| (fp32, eval mode, no dropout).
+
+    Absolute value per batch, as in HyFlexPIM Fig. 11: the signed gradient summed over
+    the whole set cancels near the fine-tuned minimum and no longer ranks sensitivity."""
     model.eval()
-    model.zero_grad(set_to_none=True)
+    scores = {n: torch.zeros_like(l.S, dtype=torch.float32) for n, l in layers.items()}
     for i, batch in enumerate(loader):
+        model.zero_grad(set_to_none=True)
         model(**to_dev(batch)).loss.backward()
+        for n, l in layers.items():
+            scores[n] += l.S.grad.detach().abs().float()
         if (i + 1) % 20 == 0 or i + 1 == len(loader):
             log(f"  calibration batch {i + 1}/{len(loader)}")
-    scores = {n: l.S.grad.detach().abs().float().cpu().clone() for n, l in layers.items()}
     model.zero_grad(set_to_none=True)
-    return scores
+    return {n: (s / max(len(loader), 1)).cpu() for n, s in scores.items()}
 
 
 def magnitude_importance(layers):

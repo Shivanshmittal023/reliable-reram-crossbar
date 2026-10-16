@@ -31,8 +31,9 @@ All policies use the same factorised weights. Only the SLC/MLC split changes:
 
 - `all_slc`: every component in SLC.
 - `all_mlc`: every component in MLC.
-- `gradient`: top 20% by `|∂L/∂σ|` in SLC. This is identical to `svd_tiering/outputs/<model>/SLC`.
-- `magnitude`: top 20% by σ in SLC.
+- `gradient`: top 20% by absolute gradient `|∂L/∂σ|` in SLC (HyFlexPIM Alg. 1 step 4). The Kaggle sweep computes it as the mean over calibration batches of the per-batch absolute gradient.
+- `gradient_net` (Kaggle sweep only): `|Σ_b ∂L_b/∂σ|`, the score the first run used. It is still the `gradient` entry in `importance.pt` from the existing SVD run, so the local package uses it until `svd_tiering` is rerun. Near the fine-tuned minimum the signed per-batch gradients cancel, so this score is mostly noise.
+- `rank`: top 20% by σ in SLC (HyFlexPIM Fig. 13 "rank-based").
 - `random`: a random 20% in SLC.
 
 ## Local (CPU): smoke only
@@ -58,7 +59,10 @@ Sweep values follow HyFlexPIM (Song et al., ISCA 2025):
 | A_hyflexpim_slc_rate | SLC rate 5–50% | multiplicative σ=0.025, MLC only | reproduction of HyFlexPIM Fig. 12/13 |
 | B_cell_slc_rate | SLC rate 5–50% | cell σ=0.095, both tiers | same question under per-cell noise |
 | C_cell_noise_sweep | σ 0–0.12 | cell, 20% SLC | accuracy vs noise around the calibrated point |
-| D_fault_sweep | fault rate 0.1–20% | none, 20% SLC | stuck-at fault tolerance |
+| D_fault_sweep | fault rate 0.05–5% | none, 20% SLC | stuck-at fault tolerance |
+| E_sa1_share | share of stuck cells at G_max | none, 20% SLC, 0.2% and 1% faults | whether stuck-at-G_max or stuck-at-G_min does the damage |
+
+A stuck-at-G_max MLC cell reads as digit 3. In the top slice, only digits 0–1 are used, so this fault adds 192 to a weight with a full scale of 127.
 
 1. Accelerator GPU, Internet on.
 2. Add the SVD-tiering notebook's output as an input. Alternatively, upload `svd_tiering/outputs.zip` as a dataset.
