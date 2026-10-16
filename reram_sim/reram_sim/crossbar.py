@@ -8,7 +8,9 @@ Mapping of a weight to cells (programmed once, then used for inference):
   4. Digit d is programmed as conductance g = g_min + d * delta, with
      delta = (g_max - g_min) / (L - 1) and g_max = 1 (all conductances are
      normalised to G_max).
-  5. Programming noise: g += sigma * G_max * N(0, 1), clamped at 0.
+  5. Programming noise, noise_model="cell": g += sigma * G_max * N(0, 1), clamped at 0.
+     noise_model="multiplicative" instead reproduces HyFlexPIM eq. (5): each weight
+     becomes w * (1 + sigma * N(0, 1)), the same for all of its cells.
      Stuck-at faults: a cell is stuck at G_max (SA1) or G_min (SA0) with
      probability fault_rate, whatever it was meant to hold.
 
@@ -20,7 +22,7 @@ The same sigma hurts MLC more than SLC: MLC levels are closer together
 (smaller delta), so the same absolute conductance error is a larger digit error.
 """
 import math
-from dataclasses import dataclass
+from dataclasses import dataclass, replace
 
 import torch
 import torch.nn as nn
@@ -30,10 +32,11 @@ import torch.nn.functional as F
 @dataclass(frozen=True)
 class CrossbarConfig:
     bits_per_cell: int = 1           # 1 = SLC, 2/3 = MLC
-    sigma: float = 0.0               # programming noise std, as a fraction of G_max
+    sigma: float = 0.0               # programming noise std (fraction of G_max, or of w if multiplicative)
+    noise_model: str = "cell"        # "cell" (per-cell conductance noise) | "multiplicative" (HyFlexPIM)
     fault_rate: float = 0.0          # probability that a cell is stuck
     sa1_frac: float = 0.5            # share of stuck cells stuck at G_max (rest at G_min)
-    on_off: float = 100.0            # G_max / G_min
+    on_off: float = 150.0            # G_max / G_min (HyFlexPIM: R_ON 6 kOhm, on/off 150)
     w_bits: int = 8                  # signed weight precision (sign + w_bits-1 magnitude bits)
     in_bits: int | None = 8          # DAC precision (signed, per-tensor scale); None = ideal input
     adc_bits: int | None = None      # ADC precision per slice and tile; None = ideal readout
@@ -80,11 +83,18 @@ class Crossbar(nn.Module):
         L = cfg.levels
         g_min = 1.0 / cfg.on_off
         delta = (1.0 - g_min) / (L - 1)
+        multiplicative = cfg.noise_model == "multiplicative"
+        if cfg.noise_model not in ("cell", "multiplicative"):
+            raise ValueError(f"unknown noise_model {cfg.noise_model!r}")
+        cell_cfg = replace(cfg, sigma=0.0) if multiplicative else cfg
         digits = []
         for s in range(cfg.n_slices):
-            g = {k: self._cells(torch.div(m, L ** s, rounding_mode="floor") % L, cfg, g_min, delta, gen)
+            g = {k: self._cells(torch.div(m, L ** s, rounding_mode="floor") % L, cell_cfg, g_min, delta, gen)
                  for k, m in mag.items()}
             digits.append((g["pos"] - g["neg"]) / delta)
+        if multiplicative and cfg.sigma > 0:
+            eta = 1 + cfg.sigma * torch.randn(q.shape, generator=gen, device=q.device)
+            digits = [d * eta for d in digits]
 
         if cfg.adc_bits is None:
             # Ideal readout is linear, so the slices can be merged once here.

@@ -11,16 +11,20 @@
 #   3. Paste this whole file into ONE notebook cell and run it.
 # Results: /kaggle/working/reram_results/<model>/ and /kaggle/working/reram_results.zip
 #
-# Per model: load the SVD factors, then for each tiering policy (all-SLC, all-MLC,
-# gradient top-20%, magnitude top-20%, random 20%), each sigma (programming noise as a
-# fraction of G_max), each fault rate and each chip seed: program every crossbar with
-# simulated ReRAM cells and evaluate SST-2 validation accuracy.
+# Per model: load the SVD factors, then run each experiment in CONFIG["experiments"]
+# (A: HyFlexPIM noise vs SLC rate, B: cell noise vs SLC rate, C: cell-noise sweep,
+# D: stuck-at fault sweep). Every point = one tiering policy x SLC rate x sigma x
+# fault rate x chip seed: program all crossbars, evaluate SST-2 validation accuracy.
+# Outputs per experiment: <name>.csv (every chip), <name>_summary.csv, <name>.png.
+# Runtime: 505 evaluations per model (~25 min DistilBERT, ~50 min BERT on a T4, estimated);
+# drop experiments or lower "seeds" to shorten.
 #
 # Cell model (same as reram_sim/reram_sim/crossbar.py, which has the local tests):
 #   8-bit signed weights per row, differential pair (G+, G-), bit-sliced into
 #   base-2^b digits (SLC b=1, MLC b=2). Digit d -> g = g_min + d*delta, g_max = 1.
-#   Noise g += sigma*N(0,1); stuck-at faults set g to G_max or G_min.
-#   Ideal readout merges the slices; with adc_bits each slice and 128-row tile is
+#   Noise g += sigma*N(0,1) ("cell"), or w*(1+sigma*N(0,1)) per weight ("multiplicative",
+#   HyFlexPIM eq. 5); stuck-at faults set g to G_max or G_min.
+#   Ideal readout merges the slices; with adc_bits each slice and tile_rows tile is
 #   quantised by an ideally calibrated ADC before shift-and-add.
 #   Runs in fp32 on purpose: fp16 overflows the integer-domain partial sums.
 import copy
@@ -43,20 +47,48 @@ from torch.utils.data import DataLoader
 from transformers import AutoModelForSequenceClassification, AutoTokenizer, DataCollatorWithPadding
 
 # ---------------------------------------------------------------- config
+# Values follow HyFlexPIM (Song et al., ISCA 2025):
+#   * noise: W~ = W (1 + eta), eta ~ N(0, 0.025^2), MLC weights only (SLC noise-free),
+#     calibrated to a measured 2-bit MLC bit error rate of 4.04% (Fan et al.)
+#   * SLC (protection) rates in Fig. 12: 0, 5, 10, 30, 40, 50, 100 %
+#   * RRAM on/off 150, 64-row arrays, 1-bit DAC, 6-b (SLC) / 7-b (MLC) ADC
+# In our per-cell conductance model, sigma/G_max = 0.095 gives the same 4.04% MLC
+# bit error rate (SLC: ~1e-7), so the cell-noise sweep is centred on 0.095.
+# HyFlexPIM has no stuck-at faults; the fault sweep uses the project plan's 0.1-20 %.
+SIGMA_CAL = 0.095
 CONFIG = {
     "models": ["distilbert-sst2", "bert-base-sst2"],
-    "policies": ["all_slc", "all_mlc", "gradient", "magnitude", "random"],
-    "slc_frac": 0.2,
-    "sigmas": [0.0, 0.01, 0.02, 0.03, 0.05, 0.075, 0.1],   # sigma / G_max
-    "fault_rates": [0.0],      # e.g. [0.0, 0.001, 0.01, 0.05, 0.1] for a stuck-at sweep
+    "experiments": [
+        # A. HyFlexPIM reproduction: accuracy vs SLC rate under their own noise model.
+        {"name": "A_hyflexpim_slc_rate", "x": "slc_frac", "noise_model": "multiplicative",
+         "noisy_tiers": ["MLC"], "sigmas": [0.025],
+         "policies": ["all_slc", "all_mlc", "gradient", "magnitude", "random"],
+         "slc_fracs": [0.05, 0.1, 0.2, 0.3, 0.5], "fault_rates": [0.0]},
+        # B. Same, with per-cell conductance noise at the BER-matched sigma (both tiers noisy).
+        {"name": "B_cell_slc_rate", "x": "slc_frac", "noise_model": "cell",
+         "noisy_tiers": ["SLC", "MLC"], "sigmas": [SIGMA_CAL],
+         "policies": ["all_slc", "all_mlc", "gradient", "magnitude", "random"],
+         "slc_fracs": [0.05, 0.1, 0.2, 0.3, 0.5], "fault_rates": [0.0]},
+        # C. Noise sweep around the calibrated point at a 20 % SLC rate.
+        {"name": "C_cell_noise_sweep", "x": "sigma", "noise_model": "cell",
+         "noisy_tiers": ["SLC", "MLC"], "sigmas": [0.0, 0.02, 0.04, 0.06, 0.08, SIGMA_CAL, 0.12],
+         "policies": ["all_slc", "all_mlc", "gradient", "magnitude", "random"],
+         "slc_fracs": [0.2], "fault_rates": [0.0]},
+        # D. Stuck-at fault sweep (no programming noise), project plan Table 2 range.
+        {"name": "D_fault_sweep", "x": "fault_rate", "noise_model": "cell",
+         "noisy_tiers": ["SLC", "MLC"], "sigmas": [0.0],
+         "policies": ["all_slc", "all_mlc", "gradient", "random"],
+         "slc_fracs": [0.2], "fault_rates": [0.0, 0.001, 0.005, 0.01, 0.02, 0.05, 0.1, 0.2]},
+    ],
     "sa1_frac": 0.5,           # share of stuck cells stuck at G_max
     "seeds": 5,                # simulated chips per point
     "slc_bits": 1,
     "mlc_bits": 2,
     "w_bits": 8,
     "in_bits": 8,              # DAC precision; None = ideal inputs
-    "adc_bits": None,          # e.g. 8; None = ideal readout (much faster)
-    "tile_rows": 128,
+    "adc_bits": None,          # e.g. 7; None = ideal readout (much faster)
+    "tile_rows": 64,           # HyFlexPIM arrays are 64 rows x 128 columns
+    "on_off": 150.0,
     "eval_n": None,            # None = all 872 validation sentences
     "batch_size": 128,
     "out": Path("/kaggle/working/reram_results") if Path("/kaggle/working").exists() else Path("reram_results"),
@@ -79,9 +111,10 @@ def log(msg):
 class CrossbarConfig:
     bits_per_cell: int = 1
     sigma: float = 0.0
+    noise_model: str = "cell"      # "cell" | "multiplicative" (HyFlexPIM eq. 5)
     fault_rate: float = 0.0
     sa1_frac: float = 0.5
-    on_off: float = 100.0
+    on_off: float = 150.0
     w_bits: int = 8
     in_bits: int | None = 8
     adc_bits: int | None = None
@@ -120,11 +153,16 @@ class Crossbar(nn.Module):
         L = cfg.levels
         g_min = 1.0 / cfg.on_off
         delta = (1.0 - g_min) / (L - 1)
+        multiplicative = cfg.noise_model == "multiplicative"
+        cell_cfg = replace(cfg, sigma=0.0) if multiplicative else cfg
         digits = []
         for s in range(cfg.n_slices):
-            g = {k: self._cells(torch.div(m, L ** s, rounding_mode="floor") % L, cfg, g_min, delta, gen)
+            g = {k: self._cells(torch.div(m, L ** s, rounding_mode="floor") % L, cell_cfg, g_min, delta, gen)
                  for k, m in mag.items()}
             digits.append((g["pos"] - g["neg"]) / delta)
+        if multiplicative and cfg.sigma > 0:
+            eta = 1 + cfg.sigma * torch.randn(q.shape, generator=gen, device=q.device)
+            digits = [d * eta for d in digits]
         if cfg.adc_bits is None:
             self.w_hat, self.digits = sum(L ** s * d for s, d in enumerate(digits)) * self.scale, None
         else:
@@ -292,111 +330,125 @@ def evaluate(model, batches):
     return correct / total
 
 
-def plot(summary, digital, path, key):
+def plot(summary, digital, exp, path, key):
     import matplotlib
     matplotlib.use("Agg")
     import matplotlib.pyplot as plt
-    sweep_sigma = len(CONFIG["sigmas"]) > 1
-    x_key = "sigma" if sweep_sigma else "fault_rate"
+    x = exp["x"]
     fig, ax = plt.subplots(figsize=(6, 4))
     by_policy = defaultdict(list)
     for r in summary:
-        if sweep_sigma and r["fault_rate"] != CONFIG["fault_rates"][0]:
-            continue
         by_policy[r["policy"]].append(r)
-    for policy, rows in by_policy.items():
-        rows.sort(key=lambda r: r[x_key])
-        ax.errorbar([100 * r[x_key] for r in rows], [r["acc_mean"] for r in rows],
-                    yerr=[r["acc_std"] for r in rows], marker="o", capsize=3, label=policy)
+    for i, (policy, rows) in enumerate(by_policy.items()):
+        rows.sort(key=lambda r: r[x])
+        if len({r[x] for r in rows}) == 1:          # all_slc / all_mlc in an SLC-rate sweep
+            ax.axhline(rows[0]["acc_mean"], ls=":", lw=1.2, color=f"C{i}", label=policy)
+            continue
+        ax.errorbar([100 * r[x] for r in rows], [r["acc_mean"] for r in rows],
+                    yerr=[r["acc_std"] for r in rows], marker="o", capsize=3, color=f"C{i}", label=policy)
     ax.axhline(digital, color="gray", ls="--", lw=1, label="digital SVD model")
-    ax.set_xlabel("sigma / G_max (%)" if sweep_sigma else "stuck-at fault rate (%)")
+    ax.set_xlabel({"sigma": "noise sigma (%)", "slc_frac": "SLC rate (%)",
+                   "fault_rate": "stuck-at fault rate (%)"}[x])
     ax.set_ylabel("SST-2 accuracy")
-    ax.set_title(key)
-    ax.legend()
+    ax.set_title(f"{key}: {exp['name']}")
+    ax.legend(fontsize=8)
     ax.grid(alpha=0.3)
     fig.tight_layout()
     fig.savefig(path, dpi=150)
     plt.show()
-    log(f"  plot -> {path}")
+    log(f"    plot -> {path}")
 
 
-# ---------------------------------------------------------------- sweep
+def grid(exp):
+    """(policy, slc_frac) pairs; all_slc / all_mlc ignore slc_frac, so they run once."""
+    for policy in exp["policies"]:
+        for frac in ([None] if policy in ("all_slc", "all_mlc") else exp["slc_fracs"]):
+            yield policy, frac
+
+
+def run_experiment(exp, key, digital_model, layers, importance, batches, digital, out):
+    log(f"  ---- experiment {exp['name']} (x = {exp['x']}, noise_model = {exp['noise_model']}, "
+        f"noisy tiers = {exp['noisy_tiers']})")
+    base = dict(w_bits=CONFIG["w_bits"], in_bits=CONFIG["in_bits"], adc_bits=CONFIG["adc_bits"],
+                tile_rows=CONFIG["tile_rows"], on_off=CONFIG["on_off"], sa1_frac=CONFIG["sa1_frac"],
+                noise_model=exp["noise_model"])
+    tier_base = {"SLC": CrossbarConfig(bits_per_cell=CONFIG["slc_bits"], **base),
+                 "MLC": CrossbarConfig(bits_per_cell=CONFIG["mlc_bits"], **base)}
+    pairs = list(grid(exp))
+    n_points = len(pairs) * len(exp["sigmas"]) * len(exp["fault_rates"]) * CONFIG["seeds"]
+    log(f"    {n_points} evaluations")
+    rows, done = [], 0
+    with open(out / f"{exp['name']}.csv", "w", newline="") as f:
+        w = csv.writer(f)
+        w.writerow(["policy", "slc_frac", "sigma", "fault_rate", "seed", "acc"])
+        for policy, frac in pairs:
+            model = copy.deepcopy(digital_model)
+            masks = tier_masks(layers, importance, policy, frac)
+            to_reram(model, layers, masks)
+            model.to(DEVICE)
+            real_frac = sum(int(m.sum()) for m in masks.values()) / sum(m.numel() for m in masks.values())
+            for fault in exp["fault_rates"]:
+                for sigma in exp["sigmas"]:
+                    cfgs = {t: replace(c, sigma=sigma if t in exp["noisy_tiers"] else 0.0, fault_rate=fault)
+                            for t, c in tier_base.items()}
+                    accs = []
+                    for seed in range(CONFIG["seeds"]):
+                        program_model(model, cfgs, seed)
+                        acc = evaluate(model, batches)
+                        accs.append(acc)
+                        rows.append({"policy": policy, "slc_frac": real_frac, "sigma": sigma,
+                                     "fault_rate": fault, "seed": seed, "acc": acc})
+                        w.writerow([policy, f"{real_frac:.4f}", sigma, fault, seed, f"{acc:.6f}"])
+                        done += 1
+                    f.flush()
+                    log(f"    [{done:4d}/{n_points}] {policy:9s} slc {real_frac:5.1%} sigma {sigma:.3f} "
+                        f"fault {fault:.3f}  acc {mean(accs):.4f} +- {pstdev(accs):.4f}")
+            del model
+            if DEVICE.type == "cuda":
+                torch.cuda.empty_cache()
+
+    groups = defaultdict(list)
+    for r in rows:
+        groups[(r["policy"], r["slc_frac"], r["sigma"], r["fault_rate"])].append(r["acc"])
+    summary = [{"policy": p, "slc_frac": sf, "sigma": s, "fault_rate": fr, "acc_mean": mean(a),
+                "acc_std": pstdev(a), "acc_min": min(a), "n": len(a)}
+               for (p, sf, s, fr), a in groups.items()]
+    with open(out / f"{exp['name']}_summary.csv", "w", newline="") as f:
+        dw = csv.DictWriter(f, fieldnames=list(summary[0]))
+        dw.writeheader()
+        dw.writerows(summary)
+    for r in summary:
+        log(f"    {r['policy']:9s} slc {r['slc_frac']:5.1%} sigma {r['sigma']:.3f} fault {r['fault_rate']:.3f}  "
+            f"{r['acc_mean']:.4f} +- {r['acc_std']:.4f} (min {r['acc_min']:.4f})")
+    plot(summary, digital, exp, out / f"{exp['name']}.png", key)
+
+
 def run_model(key):
     out = CONFIG["out"] / key
     out.mkdir(parents=True, exist_ok=True)
     log(f"========== {key} ==========")
 
-    log("[1/5] locating SVD-tiering outputs")
+    log("[1/4] locating SVD-tiering outputs")
     src = find_svd_outputs(key)
     log(f"  {src}")
 
-    log("[2/5] loading SVD model and SST-2 validation")
+    log("[2/4] loading SVD model and SST-2 validation")
     digital_model, tok, layers = load_svd_model(key, src)
     importance = torch.load(src / "importance.pt", map_location="cpu")
     batches = sst2_batches(tok)
     log(f"  {len(layers)} factorised layers, {sum(len(b['labels']) for b in batches)} sentences")
 
-    log("[3/5] digital reference")
+    log("[3/4] digital reference")
     digital = evaluate(digital_model.to(DEVICE), batches)
     digital_model.cpu()
     log(f"  digital SVD model acc {digital:.4f}")
-
-    base = dict(w_bits=CONFIG["w_bits"], in_bits=CONFIG["in_bits"], adc_bits=CONFIG["adc_bits"],
-                tile_rows=CONFIG["tile_rows"], sa1_frac=CONFIG["sa1_frac"])
-    tier_base = {"SLC": CrossbarConfig(bits_per_cell=CONFIG["slc_bits"], **base),
-                 "MLC": CrossbarConfig(bits_per_cell=CONFIG["mlc_bits"], **base)}
     with open(out / "config.json", "w") as f:
         json.dump({"config": {k: str(v) for k, v in CONFIG.items()}, "source": str(src),
-                   "crossbar": {t: asdict(c) for t, c in tier_base.items()}, "digital_acc": digital}, f, indent=2)
+                   "digital_acc": digital}, f, indent=2)
 
-    n_points = len(CONFIG["policies"]) * len(CONFIG["sigmas"]) * len(CONFIG["fault_rates"]) * CONFIG["seeds"]
-    log(f"[4/5] sweep: {n_points} evaluations")
-    rows, done = [], 0
-    with open(out / "noise_sweep.csv", "w", newline="") as f:
-        w = csv.writer(f)
-        w.writerow(["policy", "sigma", "fault_rate", "seed", "acc"])
-        for policy in CONFIG["policies"]:
-            model = copy.deepcopy(digital_model)
-            masks = tier_masks(layers, importance, policy, CONFIG["slc_frac"])
-            to_reram(model, layers, masks)
-            model.to(DEVICE)
-            n_slc = sum(int(m.sum()) for m in masks.values())
-            log(f"  policy {policy}: {n_slc}/{sum(m.numel() for m in masks.values())} components in SLC")
-            for fault in CONFIG["fault_rates"]:
-                for sigma in CONFIG["sigmas"]:
-                    accs = []
-                    for seed in range(CONFIG["seeds"]):
-                        program_model(model, {t: replace(c, sigma=sigma, fault_rate=fault)
-                                              for t, c in tier_base.items()}, seed)
-                        acc = evaluate(model, batches)
-                        accs.append(acc)
-                        rows.append({"policy": policy, "sigma": sigma, "fault_rate": fault, "seed": seed, "acc": acc})
-                        w.writerow([policy, sigma, fault, seed, f"{acc:.6f}"])
-                        done += 1
-                    f.flush()
-                    log(f"    [{done:4d}/{n_points}] {policy:9s} sigma {sigma:.3f} fault {fault:.3f}  "
-                        f"acc {mean(accs):.4f} +- {pstdev(accs):.4f}")
-            del model
-            if DEVICE.type == "cuda":
-                torch.cuda.empty_cache()
-
-    log("[5/5] summary")
-    groups = defaultdict(list)
-    for r in rows:
-        groups[(r["policy"], r["sigma"], r["fault_rate"])].append(r["acc"])
-    summary = [{"policy": p, "sigma": s, "fault_rate": fr, "acc_mean": mean(a), "acc_std": pstdev(a), "n": len(a)}
-               for (p, s, fr), a in groups.items()]
-    with open(out / "noise_sweep_summary.csv", "w", newline="") as f:
-        dw = csv.DictWriter(f, fieldnames=list(summary[0]))
-        dw.writeheader()
-        dw.writerows(summary)
-    # accuracy table: rows = policy, columns = sigma (first fault rate)
-    sig = CONFIG["sigmas"]
-    log("  policy     " + " ".join(f"{s:>7.3f}" for s in sig))
-    for p in CONFIG["policies"]:
-        accs = {r["sigma"]: r["acc_mean"] for r in summary if r["policy"] == p and r["fault_rate"] == CONFIG["fault_rates"][0]}
-        log(f"  {p:10s} " + " ".join(f"{accs[s]:7.4f}" for s in sig))
-    plot(summary, digital, out / "noise_sweep.png", key)
+    log(f"[4/4] {len(CONFIG['experiments'])} experiments")
+    for exp in CONFIG["experiments"]:
+        run_experiment(exp, key, digital_model, layers, importance, batches, digital, out)
 
 
 log(f"device: {DEVICE} {torch.cuda.get_device_name(0) if DEVICE.type == 'cuda' else ''}")

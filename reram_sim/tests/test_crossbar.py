@@ -159,3 +159,17 @@ def test_slc_and_mlc_agree_without_noise():
     # A split changes the per-row U scales and the DAC range of h, so only
     # 8-bit quantisation differences remain.
     assert rel_err(outs[1], outs[0]) < 0.02
+
+
+def test_multiplicative_noise_matches_hyflexpim_eq5():
+    """noise_model='multiplicative': w_hat = w_q * (1 + sigma * N(0,1)), relative std = sigma."""
+    W = torch.randn(256, 256)
+    clean, noisy = Crossbar(W), Crossbar(W)
+    clean.program(CrossbarConfig(in_bits=None))
+    noisy.program(CrossbarConfig(sigma=0.025, noise_model="multiplicative", in_bits=None),
+                  torch.Generator().manual_seed(0))
+    w = clean.effective_weight()
+    nz = w != 0
+    rel = noisy.effective_weight()[nz] / w[nz] - 1
+    assert rel.std().item() == pytest.approx(0.025, rel=0.03)
+    assert torch.equal(noisy.effective_weight()[~nz], w[~nz])

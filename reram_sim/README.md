@@ -17,8 +17,8 @@ kaggle/kaggle_reram_sweep.py   self-contained single-cell GPU version for the fu
 
 - **Quantisation.** Weights are quantised per row to signed `w_bits` (8) integers. Each integer is split into a differential pair `q = q⁺ − q⁻`.
 - **Bit-slicing.** Each magnitude is split into base-`L` digits, where `L = 2^bits_per_cell`. SLC uses 1 bit per cell, so 7 slices. MLC uses 2 bits per cell, so 4 slices.
-- **Conductance.** Each digit `d` is programmed as conductance `g = g_min + d·Δ`, where `Δ = (G_max − g_min)/(L−1)`. Conductances are normalised so that `G_max = 1`, and `on_off = 100`.
-- **Programming noise.** Noise is added as `g += σ·G_max·N(0,1)`, then clamped at ≥ 0. The same σ costs MLC more than SLC, because MLC levels are spaced closer together.
+- **Conductance.** Each digit `d` is programmed as conductance `g = g_min + d·Δ`, where `Δ = (G_max − g_min)/(L−1)`. Conductances are normalised so that `G_max = 1`, and `on_off = 150` (HyFlexPIM).
+- **Programming noise.** `noise_model="cell"` (default) adds `g += σ·G_max·N(0,1)` to every cell, then clamps at ≥ 0. The same σ costs MLC more than SLC, because MLC levels are spaced closer together. `noise_model="multiplicative"` instead reproduces HyFlexPIM eq. (5): each weight becomes `w·(1 + σ·N(0,1))`.
 - **Stuck-at faults.** A cell is stuck with probability `fault_rate`. A stuck cell is set to `G_max` (fraction `sa1_frac` of stuck cells) or to `G_min` (the rest).
 - **Readout.** The read-out digit is `(g⁺ − g⁻)/Δ`. Slices are combined by shift-and-add.
 - **DAC.** Inputs use an `in_bits` (8) DAC with a per-tensor scale.
@@ -38,7 +38,7 @@ All policies use the same factorised weights. Only the SLC/MLC split changes:
 ## Local (CPU): smoke only
 
 ```
-python -m pytest tests -q                    # 23 tests, ~1 min
+python -m pytest tests -q                    # 24 tests, ~1 min
 python scripts/noise_sweep.py --model distilbert-sst2 --eval-n 128 --sigmas 0,0.05,0.1 --seeds 1
 ```
 
@@ -46,9 +46,21 @@ On CPU, each sweep point takes about 20 s (8.5 s of that is programming the chip
 
 ## Kaggle (GPU): full sweep
 
+Sweep values follow HyFlexPIM (Song et al., ISCA 2025):
+
+- **HyFlexPIM noise.** `W(1+η)` with η ~ N(0, 0.025²), on MLC weights only. It is calibrated to a measured 2-bit MLC bit error rate of 4.04%.
+- **Matching σ for our cell model.** σ/G_max = 0.095 gives the same 4.04% MLC bit error rate. At that σ the SLC bit error rate is about 1e-7.
+- **Hardware.** SLC rates 5–50%, on/off 150, 64-row arrays.
+- **Faults.** HyFlexPIM has none, so the fault sweep uses the project plan's 0.1–20%.
+
+| experiment | x-axis | noise | what it shows |
+|---|---|---|---|
+| A_hyflexpim_slc_rate | SLC rate 5–50% | multiplicative σ=0.025, MLC only | reproduction of HyFlexPIM Fig. 12/13 |
+| B_cell_slc_rate | SLC rate 5–50% | cell σ=0.095, both tiers | same question under per-cell noise |
+| C_cell_noise_sweep | σ 0–0.12 | cell, 20% SLC | accuracy vs noise around the calibrated point |
+| D_fault_sweep | fault rate 0.1–20% | none, 20% SLC | stuck-at fault tolerance |
+
 1. Accelerator GPU, Internet on.
 2. Add the SVD-tiering notebook's output as an input. Alternatively, upload `svd_tiering/outputs.zip` as a dataset.
-3. Paste `kaggle/kaggle_reram_sweep.py` into one cell and run it. Edit `CONFIG` at the top if needed. The defaults cover both models, 5 policies, 7 σ values, and 5 chips.
-4. Download `reram_results.zip`. It holds, per model: `noise_sweep.csv`, `noise_sweep_summary.csv`, `config.json` and `noise_sweep.png`.
-
-For a fault sweep, set `"sigmas": [0.0]` and `"fault_rates": [0, 0.001, 0.01, 0.05, 0.1]`.
+3. Paste `kaggle/kaggle_reram_sweep.py` into one cell and run it. The defaults are 505 evaluations per model (5 chips each). Edit `CONFIG["experiments"]` or `"seeds"` to shorten.
+4. Download `reram_results.zip`. Per model and per experiment it holds `<name>.csv` (every chip), `<name>_summary.csv` (mean, std, min) and `<name>.png`.
