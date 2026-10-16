@@ -1,0 +1,13 @@
+__pycache__/
+*.pyc
+.pytest_cache/
+.DS_Store
+.venv/
+venv/
+data/
+
+# Only the INT8 golden exports are versioned (D14); everything else lives on Drive.
+checkpoints/*
+!checkpoints/README.md
+!checkpoints/*_int8_seed*.pt
+!checkpoints/*_int8_seed*.npz
