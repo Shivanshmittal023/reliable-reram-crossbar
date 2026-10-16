@@ -1,0 +1,9 @@
+# large Kaggle download; contents are already unpacked in svd_tiering/outputs/
+svd_tiering/outputs.zip
+
+__pycache__/
+*.pyc
+.pytest_cache/
+
+# model weights and tier tensors (regenerate with the Kaggle scripts)
+*.pt

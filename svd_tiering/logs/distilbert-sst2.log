@@ -1,0 +1,39 @@
+WARNING: All log messages before absl::InitializeLog() is called are written to STDERR
+I0000 00:00:1792092844.978651    7504 port.cc:153] oneDNN custom operations are on. You may see slightly different numerical results due to floating-point round-off errors from different computation orders. To turn them off, set the environment variable `TF_ENABLE_ONEDNN_OPTS=0`.
+WARNING: All log messages before absl::InitializeLog() is called are written to STDERR
+I0000 00:00:1792092846.434925    7504 port.cc:153] oneDNN custom operations are on. You may see slightly different numerical results due to floating-point round-off errors from different computation orders. To turn them off, set the environment variable `TF_ENABLE_ONEDNN_OPTS=0`.
+Map:   0%|          | 0/872 [00:00<?, ? examples/s]Map: 100%|##########| 872/872 [00:00<00:00, 37896.93 examples/s]
+Map:   0%|          | 0/8000 [00:00<?, ? examples/s]Map:  62%|######2   | 5000/8000 [00:00<00:00, 40559.24 examples/s]Map: 100%|##########| 8000/8000 [00:00<00:00, 33399.72 examples/s]
+Map:   0%|          | 0/512 [00:00<?, ? examples/s]Map: 100%|##########| 512/512 [00:00<00:00, 23637.16 examples/s]
+[distilbert-sst2] baseline acc 0.9106
+[distilbert-sst2] factorised 36 layers (param); acc 0.8968
+  finetune step 1/200  loss 0.1043
+  finetune step 21/200  loss 0.0055
+  finetune step 41/200  loss 0.1343
+  finetune step 61/200  loss 0.0470
+  finetune step 81/200  loss 0.0367
+  finetune step 101/200  loss 0.0746
+  finetune step 121/200  loss 0.0140
+  finetune step 141/200  loss 0.2471
+  finetune step 161/200  loss 0.0509
+  finetune step 181/200  loss 0.1112
+  finetune step 200/200  loss 0.0915
+[distilbert-sst2] after fine-tune acc 0.8933
+[distilbert-sst2] SLC+MLC reconstruction max abs error 3.815e-06
+{
+  "accuracy": {
+    "baseline": 0.9105504587155964,
+    "svd_truncated": 0.8967889908256881,
+    "svd_finetuned": 0.893348623853211
+  },
+  "components": {
+    "SLC": 3324,
+    "MLC": 13260,
+    "slc_fraction": 0.20043415340086831
+  },
+  "weights": {
+    "SLC": 8506368,
+    "MLC": 33942528,
+    "slc_fraction": 0.20039079461571863
+  }
+}
