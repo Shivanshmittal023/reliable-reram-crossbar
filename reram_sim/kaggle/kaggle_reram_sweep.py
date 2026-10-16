@@ -37,7 +37,7 @@ import traceback
 import warnings
 import zipfile
 from collections import defaultdict
-from dataclasses import asdict, dataclass, replace
+from dataclasses import dataclass, replace
 from pathlib import Path
 from statistics import mean, pstdev
 
@@ -93,6 +93,8 @@ CONFIG = {
     "adc_bits": None,          # e.g. 7; None = ideal readout (much faster)
     "tile_rows": 64,           # HyFlexPIM arrays are 64 rows x 128 columns
     "on_off": 150.0,
+    # Kaggle input holding outputs.zip (or extracted outputs/<model>/) from the SVD-tiering run
+    "svd_input": Path("/kaggle/input/notebooks/sarveshjoshi29/svd-wts"),
     "eval_n": None,            # None = all 872 validation sentences
     "batch_size": 128,
     "out": Path("/kaggle/working/reram_results") if Path("/kaggle/working").exists() else Path("reram_results"),
@@ -271,22 +273,44 @@ def program_model(model, cfgs, seed):
 
 
 # ---------------------------------------------------------------- data / model loading
+NEEDED = ("tier_map.json", "importance.pt", "svd_model.pt")   # SLC/ and MLC/ files are not needed
+
+
 def find_svd_outputs(key):
-    for p in Path("/kaggle/input").rglob("tier_map.json") if Path("/kaggle/input").exists() else []:
-        if p.parent.name == key:
-            return p.parent
-    for z in Path("/kaggle/input").rglob("outputs.zip") if Path("/kaggle/input").exists() else []:
-        dest = Path("/kaggle/working/svd_outputs")
-        if not (dest / key / "tier_map.json").exists():
-            log(f"  unzipping {z} -> {dest}")
-            zipfile.ZipFile(z).extractall(dest)
-        if (dest / key / "tier_map.json").exists():
+    """Look in CONFIG["svd_input"] first, then anywhere under /kaggle/input.
+
+    Uses an extracted <key>/ folder if one exists; otherwise pulls just the three
+    needed files for <key> out of outputs.zip into /kaggle/working/svd_outputs.
+    """
+    roots = [r for r in (CONFIG["svd_input"], Path("/kaggle/input")) if r.exists()]
+    for root in roots:
+        log(f"  searching {root}")
+        for p in root.rglob("tier_map.json"):
+            if p.parent.name == key and all((p.parent / n).exists() for n in NEEDED):
+                return p.parent
+        for z in root.rglob("outputs.zip"):
+            dest = Path("/kaggle/working/svd_outputs")
+            if all((dest / key / n).exists() for n in NEEDED):
+                return dest / key
+            with zipfile.ZipFile(z) as zf:
+                members = [m for m in zf.namelist() if m.rstrip("/").split("/")[-2:-1] == [key]
+                           and m.split("/")[-1] in NEEDED]
+                if len(members) != len(NEEDED):
+                    log(f"  {z} has no complete {key}/ entry, skipping")
+                    continue
+                log(f"  extracting {len(members)} files for {key} from {z} -> {dest}")
+                for m in members:
+                    target = dest / key / Path(m).name
+                    target.parent.mkdir(parents=True, exist_ok=True)
+                    with zf.open(m) as fin, open(target, "wb") as fout:
+                        shutil.copyfileobj(fin, fout)
+                    log(f"    {target.name}  ({target.stat().st_size / 2**20:.1f} MB)")
             return dest / key
     local = Path("../svd_tiering/outputs") / key            # when run outside Kaggle
     if (local / "tier_map.json").exists():
         return local
-    raise FileNotFoundError(f"no {key}/tier_map.json under /kaggle/input; attach the SVD-tiering "
-                            "notebook output or upload svd_tiering/outputs.zip as a dataset")
+    raise FileNotFoundError(f"no {key}/tier_map.json or outputs.zip under {CONFIG['svd_input']} or "
+                            "/kaggle/input; attach the SVD-tiering notebook output as an input")
 
 
 def load_svd_model(key, src):
