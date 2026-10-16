@@ -33,6 +33,8 @@ import json
 import math
 import shutil
 import time
+import traceback
+import warnings
 import zipfile
 from collections import defaultdict
 from dataclasses import asdict, dataclass, replace
@@ -42,6 +44,8 @@ from statistics import mean, pstdev
 import torch
 import torch.nn as nn
 import torch.nn.functional as F
+import datasets
+import transformers
 from datasets import load_dataset
 from torch.utils.data import DataLoader
 from transformers import AutoModelForSequenceClassification, AutoTokenizer, DataCollatorWithPadding
@@ -102,8 +106,24 @@ DEVICE = torch.device("cuda" if torch.cuda.is_available() else "cpu")
 T_START = time.time()
 
 
+# Keep the cell output readable: only our own log lines, no HF progress bars or warnings.
+transformers.logging.set_verbosity_error()
+datasets.disable_progress_bars()
+warnings.filterwarnings("ignore")
+CONFIG["out"].mkdir(parents=True, exist_ok=True)
+LOG_FILE = open(CONFIG["out"] / "run.log", "a", encoding="utf-8")
+
+
 def log(msg):
-    print(f"[{time.time() - T_START:7.1f}s] {msg}", flush=True)
+    """Print with elapsed time and append to <out>/run.log (survives a truncated notebook view)."""
+    line = f"[{time.time() - T_START:7.1f}s] {msg}"
+    print(line, flush=True)
+    LOG_FILE.write(line + "\n")
+    LOG_FILE.flush()
+
+
+def fmt_time(sec):
+    return f"{sec / 60:.1f} min" if sec >= 60 else f"{sec:.0f} s"
 
 
 # ---------------------------------------------------------------- crossbar
@@ -376,17 +396,22 @@ def run_experiment(exp, key, digital_model, layers, importance, batches, digital
                  "MLC": CrossbarConfig(bits_per_cell=CONFIG["mlc_bits"], **base)}
     pairs = list(grid(exp))
     n_points = len(pairs) * len(exp["sigmas"]) * len(exp["fault_rates"]) * CONFIG["seeds"]
-    log(f"    {n_points} evaluations")
-    rows, done = [], 0
+    log(f"    {len(pairs)} policy/SLC-rate pairs x {len(exp['sigmas'])} sigmas x {len(exp['fault_rates'])} "
+        f"fault rates x {CONFIG['seeds']} chips = {n_points} evaluations")
+    rows, done, t_exp = [], 0, time.time()
     with open(out / f"{exp['name']}.csv", "w", newline="") as f:
         w = csv.writer(f)
         w.writerow(["policy", "slc_frac", "sigma", "fault_rate", "seed", "acc"])
-        for policy, frac in pairs:
+        for i_pair, (policy, frac) in enumerate(pairs, 1):
+            t_build = time.time()
             model = copy.deepcopy(digital_model)
             masks = tier_masks(layers, importance, policy, frac)
             to_reram(model, layers, masks)
             model.to(DEVICE)
             real_frac = sum(int(m.sum()) for m in masks.values()) / sum(m.numel() for m in masks.values())
+            mem = f", GPU mem {torch.cuda.memory_allocated() / 2**30:.2f} GB" if DEVICE.type == "cuda" else ""
+            log(f"    pair {i_pair}/{len(pairs)}: {policy}, {real_frac:.1%} of components in SLC "
+                f"(built in {fmt_time(time.time() - t_build)}{mem})")
             for fault in exp["fault_rates"]:
                 for sigma in exp["sigmas"]:
                     cfgs = {t: replace(c, sigma=sigma if t in exp["noisy_tiers"] else 0.0, fault_rate=fault)
@@ -401,8 +426,11 @@ def run_experiment(exp, key, digital_model, layers, importance, batches, digital
                         w.writerow([policy, f"{real_frac:.4f}", sigma, fault, seed, f"{acc:.6f}"])
                         done += 1
                     f.flush()
+                    elapsed = time.time() - t_exp
+                    eta = elapsed / done * (n_points - done)
                     log(f"    [{done:4d}/{n_points}] {policy:9s} slc {real_frac:5.1%} sigma {sigma:.3f} "
-                        f"fault {fault:.3f}  acc {mean(accs):.4f} +- {pstdev(accs):.4f}")
+                        f"fault {fault:.3f}  acc {mean(accs):.4f} +- {pstdev(accs):.4f} "
+                        f"(min {min(accs):.4f}; chips {' '.join(f'{a:.3f}' for a in accs)})  ETA {fmt_time(eta)}")
             del model
             if DEVICE.type == "cuda":
                 torch.cuda.empty_cache()
@@ -417,10 +445,24 @@ def run_experiment(exp, key, digital_model, layers, importance, batches, digital
         dw = csv.DictWriter(f, fieldnames=list(summary[0]))
         dw.writeheader()
         dw.writerows(summary)
-    for r in summary:
-        log(f"    {r['policy']:9s} slc {r['slc_frac']:5.1%} sigma {r['sigma']:.3f} fault {r['fault_rate']:.3f}  "
-            f"{r['acc_mean']:.4f} +- {r['acc_std']:.4f} (min {r['acc_min']:.4f})")
+    log_table(summary, exp, digital)
+    log(f"    experiment {exp['name']} done in {fmt_time(time.time() - t_exp)}")
     plot(summary, digital, exp, out / f"{exp['name']}.png", key)
+
+
+def log_table(summary, exp, digital):
+    """Mean accuracy table: one row per policy, one column per x value."""
+    x = exp["x"]
+    xs = sorted({r[x] for r in summary if r["policy"] not in ("all_slc", "all_mlc")} or {r[x] for r in summary})
+    log(f"    summary ({x}; mean acc over {CONFIG['seeds']} chips; digital {digital:.4f}):")
+    log("      " + f"{'policy':10s}" + "".join(f"{v:>9.3f}" for v in xs))
+    for policy in exp["policies"]:
+        rows = {round(r[x], 4): r["acc_mean"] for r in summary if r["policy"] == policy}
+        if policy in ("all_slc", "all_mlc") and x == "slc_frac":
+            log("      " + f"{policy:10s}" + f"{next(iter(rows.values())):>9.4f}  (all x)")
+            continue
+        log("      " + f"{policy:10s}" + "".join(f"{rows[round(v, 4)]:>9.4f}" if round(v, 4) in rows
+                                                  else f"{'-':>9s}" for v in xs))
 
 
 def run_model(key):
@@ -448,15 +490,29 @@ def run_model(key):
 
     log(f"[4/4] {len(CONFIG['experiments'])} experiments")
     for exp in CONFIG["experiments"]:
-        run_experiment(exp, key, digital_model, layers, importance, batches, digital, out)
+        try:
+            run_experiment(exp, key, digital_model, layers, importance, batches, digital, out)
+        except Exception:
+            # Log and move on, so one failure does not lose the other experiments.
+            log(f"  !! experiment {exp['name']} failed:\n{traceback.format_exc()}")
+            if DEVICE.type == "cuda":
+                torch.cuda.empty_cache()
 
 
 log(f"device: {DEVICE} {torch.cuda.get_device_name(0) if DEVICE.type == 'cuda' else ''}")
 log(f"torch {torch.__version__}")
-log(f"config: {CONFIG}")
+log("config:\n" + json.dumps(CONFIG, indent=1, default=str))
 for key in CONFIG["models"]:
-    run_model(key)
+    try:
+        run_model(key)
+    except Exception:
+        log(f"!! model {key} failed:\n{traceback.format_exc()}")
 
+log("output files:")
+for f in sorted(CONFIG["out"].rglob("*")):
+    if f.is_file():
+        log(f"  {f.relative_to(CONFIG['out'])}  ({f.stat().st_size / 1024:.1f} KB)")
 log("zipping results")
+LOG_FILE.flush()
 shutil.make_archive(str(CONFIG["out"]), "zip", CONFIG["out"])
-log(f"done. download {CONFIG['out']}.zip from the Output panel")
+log(f"done in {fmt_time(time.time() - T_START)}. download {CONFIG['out']}.zip from the Output panel")
