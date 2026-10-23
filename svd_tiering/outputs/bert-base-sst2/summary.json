@@ -1,0 +1,39 @@
+{
+  "model": "bert-base-sst2",
+  "hf_id": "textattack/bert-base-uncased-SST-2",
+  "device": "cuda",
+  "config": {
+    "models": "['distilbert-sst2', 'bert-base-sst2']",
+    "rank_mode": "param",
+    "slc_frac": "0.2",
+    "scope": "layer",
+    "metric": "gradient",
+    "finetune_epochs": "8",
+    "lr": "2e-05",
+    "train_n": "None",
+    "calib_n": "2048",
+    "batch_size": "32",
+    "amp": "True",
+    "log_every": "200",
+    "seed": "0",
+    "out": "/kaggle/working/outputs"
+  },
+  "accuracy": {
+    "baseline": 0.9243119266055045,
+    "svd_truncated": 0.893348623853211,
+    "svd_finetuned": 0.9013761467889908
+  },
+  "num_layers": 72,
+  "components": {
+    "SLC": 6648,
+    "MLC": 26520,
+    "slc_fraction": 0.20043415340086831
+  },
+  "weights": {
+    "SLC": 17012736,
+    "MLC": 67885056,
+    "slc_fraction": 0.20039079461571863
+  },
+  "reconstruction_max_abs_error": 2.6226043701171875e-06,
+  "runtime_s": 2026.6
+}

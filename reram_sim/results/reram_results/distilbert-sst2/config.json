@@ -1,0 +1,48 @@
+{
+  "config": {
+    "models": "['distilbert-sst2', 'bert-base-sst2']",
+    "policies": "['all_slc', 'all_mlc', 'gradient', 'magnitude', 'random']",
+    "slc_frac": "0.2",
+    "sigmas": "[0.0, 0.01, 0.02, 0.03, 0.05, 0.075, 0.1]",
+    "fault_rates": "[0.0]",
+    "sa1_frac": "0.5",
+    "seeds": "5",
+    "slc_bits": "1",
+    "mlc_bits": "2",
+    "w_bits": "8",
+    "in_bits": "8",
+    "adc_bits": "None",
+    "tile_rows": "128",
+    "eval_n": "None",
+    "batch_size": "128",
+    "out": "/kaggle/working/reram_results"
+  },
+  "source": "/kaggle/input/notebooks/shivansh023/svd-tiering/outputs/distilbert-sst2",
+  "crossbar": {
+    "SLC": {
+      "bits_per_cell": 1,
+      "sigma": 0.0,
+      "fault_rate": 0.0,
+      "sa1_frac": 0.5,
+      "on_off": 100.0,
+      "w_bits": 8,
+      "in_bits": 8,
+      "adc_bits": null,
+      "tile_rows": 128
+    },
+    "MLC": {
+      "bits_per_cell": 2,
+      "sigma": 0.0,
+      "fault_rate": 0.0,
+      "sa1_frac": 0.5,
+      "on_off": 100.0,
+      "w_bits": 8,
+      "in_bits": 8,
+      "adc_bits": null,
+      "tile_rows": 128
+    }
+  },
+  "digital_acc": 0.8910550458715596,
+  "fp32_acc": 0.9105504587155964,
+  "int8_acc": 0.9036697247706422
+}

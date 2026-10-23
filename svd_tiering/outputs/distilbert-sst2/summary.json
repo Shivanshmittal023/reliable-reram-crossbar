@@ -1,0 +1,39 @@
+{
+  "model": "distilbert-sst2",
+  "hf_id": "distilbert-base-uncased-finetuned-sst-2-english",
+  "device": "cuda",
+  "config": {
+    "models": "['distilbert-sst2', 'bert-base-sst2']",
+    "rank_mode": "param",
+    "slc_frac": "0.2",
+    "scope": "layer",
+    "metric": "gradient",
+    "finetune_epochs": "8",
+    "lr": "2e-05",
+    "train_n": "None",
+    "calib_n": "2048",
+    "batch_size": "32",
+    "amp": "True",
+    "log_every": "200",
+    "seed": "0",
+    "out": "/kaggle/working/outputs"
+  },
+  "accuracy": {
+    "baseline": 0.9105504587155964,
+    "svd_truncated": 0.8967889908256881,
+    "svd_finetuned": 0.8910550458715596
+  },
+  "num_layers": 36,
+  "components": {
+    "SLC": 3324,
+    "MLC": 13260,
+    "slc_fraction": 0.20043415340086831
+  },
+  "weights": {
+    "SLC": 8506368,
+    "MLC": 33942528,
+    "slc_fraction": 0.20039079461571863
+  },
+  "reconstruction_max_abs_error": 3.814697265625e-06,
+  "runtime_s": 1119.1
+}

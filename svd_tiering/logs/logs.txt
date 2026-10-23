@@ -1,0 +1,388 @@
+11.1s 1 0.00s - Debugger warning: It seems that frozen modules are being used, which may
+11.1s 2 0.00s - make the debugger miss breakpoints. Please pass -Xfrozen_modules=off
+11.1s 3 0.00s - to python to disable frozen modules.
+11.1s 4 0.00s - Note: Debugging will proceed. Set PYDEVD_DISABLE_FILE_VALIDATION=1 to disable this validation.
+11.9s 5 0.00s - Debugger warning: It seems that frozen modules are being used, which may
+11.9s 6 0.00s - make the debugger miss breakpoints. Please pass -Xfrozen_modules=off
+11.9s 7 0.00s - to python to disable frozen modules.
+11.9s 8 0.00s - Note: Debugging will proceed. Set PYDEVD_DISABLE_FILE_VALIDATION=1 to disable this validation.
+67.3s 9 [    0.1s] device: cuda Tesla T4
+67.3s 10 [    0.1s] torch 2.11.0+cu128
+67.3s 11 [    0.1s] ========== distilbert-sst2 (distilbert-base-uncased-finetuned-sst-2-english) ==========
+67.3s 12 [    0.1s] [1/6] loading model, tokenizer, SST-2
+67.6s 13 Warning: You are sending unauthenticated requests to the HF Hub. Please set a HF_TOKEN to enable higher rate limits and faster downloads.
+67.6s 14 
+67.6s 15 Warning: You are sending unauthenticated requests to the HF Hub. Please set a HF_TOKEN to enable higher rate limits and faster downloads.
+72.8s 16 [    5.6s]   params: 67.0M
+76.6s 17 [    9.4s]   SST-2 validation: 872 sentences, 7 batches of 128
+78.9s 18 [   11.7s]   SST-2 train: 67349 sentences, 2105 batches of 32
+79.4s 19 [   12.2s]   SST-2 train: 2048 sentences, 64 batches of 32
+81.4s 20 [   14.2s]   baseline acc 0.9106
+81.4s 21 [   14.2s] [2/6] SVD factorisation (rank_mode=param)
+84.6s 22 [   17.4s]   W 768x768 -> U 768x384 + ΣVᵀ 384x768  (rank 384 of 768)
+84.6s 23 [   17.4s]   W 768x3072 -> U 768x614 + ΣVᵀ 614x3072  (rank 614 of 768)
+84.6s 24 [   17.4s]   W 3072x768 -> U 3072x614 + ΣVᵀ 614x768  (rank 614 of 768)
+85.2s 25 [   18.0s]   factorised 36 layers; acc 0.8968
+85.2s 26 [   18.0s] [3/6] recovery fine-tune (8 epoch, lr 2e-05, amp=True)
+85.8s 27 /tmp/ipykernel_23/418873759.py:171: UserWarning: Detected call of `lr_scheduler.step()` before `optimizer.step()`. In PyTorch 1.1.0 and later, you should call them in the opposite order: `optimizer.step()` before `lr_scheduler.step()`.  Failure to do this will result in PyTorch skipping the first value of the learning rate schedule. See more details at https://pytorch.org/docs/stable/optim.html#how-to-adjust-learning-rate
+85.8s 28 sched.step()
+85.8s 29 
+85.8s 30 /tmp/ipykernel_23/418873759.py:171: UserWarning: Detected call of `lr_scheduler.step()` before `optimizer.step()`. In PyTorch 1.1.0 and later, you should call them in the opposite order: `optimizer.step()` before `lr_scheduler.step()`.  Failure to do this will result in PyTorch skipping the first value of the learning rate schedule. See more details at https://pytorch.org/docs/stable/optim.html#how-to-adjust-learning-rate
+85.8s 31 sched.step()
+98.5s 32 [   31.3s]   epoch 1/8 step 200/16840  avg loss 0.0955  lr 1.98e-05
+111.1s 33 [   43.9s]   epoch 1/8 step 400/16840  avg loss 0.0823  lr 1.95e-05
+123.6s 34 [   56.4s]   epoch 1/8 step 600/16840  avg loss 0.1009  lr 1.93e-05
+136.3s 35 [   69.1s]   epoch 1/8 step 800/16840  avg loss 0.1039  lr 1.90e-05
+148.9s 36 [   81.7s]   epoch 1/8 step 1000/16840  avg loss 0.0979  lr 1.88e-05
+161.8s 37 [   94.6s]   epoch 1/8 step 1200/16840  avg loss 0.0971  lr 1.86e-05
+174.6s 38 [  107.4s]   epoch 1/8 step 1400/16840  avg loss 0.1123  lr 1.83e-05
+187.4s 39 [  120.2s]   epoch 1/8 step 1600/16840  avg loss 0.1026  lr 1.81e-05
+200.4s 40 [  133.2s]   epoch 1/8 step 1800/16840  avg loss 0.1082  lr 1.79e-05
+213.6s 41 [  146.4s]   epoch 1/8 step 2000/16840  avg loss 0.1129  lr 1.76e-05
+226.8s 42 [  159.6s]   epoch 2/8 step 2200/16840  avg loss 0.0831  lr 1.74e-05
+239.7s 43 [  172.5s]   epoch 2/8 step 2400/16840  avg loss 0.0688  lr 1.71e-05
+252.7s 44 [  185.5s]   epoch 2/8 step 2600/16840  avg loss 0.0692  lr 1.69e-05
+265.5s 45 [  198.3s]   epoch 2/8 step 2800/16840  avg loss 0.0712  lr 1.67e-05
+278.4s 46 [  211.2s]   epoch 2/8 step 3000/16840  avg loss 0.0673  lr 1.64e-05
+291.6s 47 [  224.4s]   epoch 2/8 step 3200/16840  avg loss 0.0699  lr 1.62e-05
+304.6s 48 [  237.4s]   epoch 2/8 step 3400/16840  avg loss 0.0709  lr 1.60e-05
+317.6s 49 [  250.4s]   epoch 2/8 step 3600/16840  avg loss 0.0813  lr 1.57e-05
+330.4s 50 [  263.2s]   epoch 2/8 step 3800/16840  avg loss 0.0753  lr 1.55e-05
+343.2s 51 [  276.0s]   epoch 2/8 step 4000/16840  avg loss 0.0790  lr 1.52e-05
+356.3s 52 [  289.1s]   epoch 2/8 step 4200/16840  avg loss 0.0788  lr 1.50e-05
+369.6s 53 [  302.4s]   epoch 3/8 step 4400/16840  avg loss 0.0398  lr 1.48e-05
+382.6s 54 [  315.4s]   epoch 3/8 step 4600/16840  avg loss 0.0555  lr 1.45e-05
+395.6s 55 [  328.4s]   epoch 3/8 step 4800/16840  avg loss 0.0450  lr 1.43e-05
+408.5s 56 [  341.3s]   epoch 3/8 step 5000/16840  avg loss 0.0423  lr 1.41e-05
+421.4s 57 [  354.2s]   epoch 3/8 step 5200/16840  avg loss 0.0489  lr 1.38e-05
+434.3s 58 [  367.1s]   epoch 3/8 step 5400/16840  avg loss 0.0523  lr 1.36e-05
+447.3s 59 [  380.1s]   epoch 3/8 step 5600/16840  avg loss 0.0562  lr 1.33e-05
+460.2s 60 [  393.0s]   epoch 3/8 step 5800/16840  avg loss 0.0562  lr 1.31e-05
+473.2s 61 [  406.0s]   epoch 3/8 step 6000/16840  avg loss 0.0518  lr 1.29e-05
+486.2s 62 [  419.0s]   epoch 3/8 step 6200/16840  avg loss 0.0559  lr 1.26e-05
+499.2s 63 [  432.0s]   epoch 4/8 step 6400/16840  avg loss 0.0506  lr 1.24e-05
+512.3s 64 [  445.1s]   epoch 4/8 step 6600/16840  avg loss 0.0330  lr 1.22e-05
+525.2s 65 [  458.0s]   epoch 4/8 step 6800/16840  avg loss 0.0356  lr 1.19e-05
+538.2s 66 [  471.0s]   epoch 4/8 step 7000/16840  avg loss 0.0346  lr 1.17e-05
+551.2s 67 [  484.0s]   epoch 4/8 step 7200/16840  avg loss 0.0316  lr 1.14e-05
+564.1s 68 [  496.9s]   epoch 4/8 step 7400/16840  avg loss 0.0327  lr 1.12e-05
+577.1s 69 [  509.9s]   epoch 4/8 step 7600/16840  avg loss 0.0427  lr 1.10e-05
+590.1s 70 [  522.9s]   epoch 4/8 step 7800/16840  avg loss 0.0395  lr 1.07e-05
+603.2s 71 [  536.0s]   epoch 4/8 step 8000/16840  avg loss 0.0369  lr 1.05e-05
+616.3s 72 [  549.1s]   epoch 4/8 step 8200/16840  avg loss 0.0421  lr 1.03e-05
+629.3s 73 [  562.1s]   epoch 4/8 step 8400/16840  avg loss 0.0380  lr 1.00e-05
+642.6s 74 [  575.4s]   epoch 5/8 step 8600/16840  avg loss 0.0252  lr 9.79e-06
+655.5s 75 [  588.3s]   epoch 5/8 step 8800/16840  avg loss 0.0226  lr 9.55e-06
+668.6s 76 [  601.4s]   epoch 5/8 step 9000/16840  avg loss 0.0237  lr 9.31e-06
+681.5s 77 [  614.3s]   epoch 5/8 step 9200/16840  avg loss 0.0269  lr 9.07e-06
+694.5s 78 [  627.3s]   epoch 5/8 step 9400/16840  avg loss 0.0226  lr 8.84e-06
+707.4s 79 [  640.2s]   epoch 5/8 step 9600/16840  avg loss 0.0312  lr 8.60e-06
+720.2s 80 [  653.0s]   epoch 5/8 step 9800/16840  avg loss 0.0249  lr 8.36e-06
+733.2s 81 [  666.0s]   epoch 5/8 step 10000/16840  avg loss 0.0267  lr 8.12e-06
+746.1s 82 [  678.9s]   epoch 5/8 step 10200/16840  avg loss 0.0288  lr 7.89e-06
+759.2s 83 [  692.0s]   epoch 5/8 step 10400/16840  avg loss 0.0241  lr 7.65e-06
+772.4s 84 [  705.2s]   epoch 6/8 step 10600/16840  avg loss 0.0247  lr 7.41e-06
+785.4s 85 [  718.2s]   epoch 6/8 step 10800/16840  avg loss 0.0134  lr 7.17e-06
+798.3s 86 [  731.1s]   epoch 6/8 step 11000/16840  avg loss 0.0153  lr 6.94e-06
+811.3s 87 [  744.1s]   epoch 6/8 step 11200/16840  avg loss 0.0148  lr 6.70e-06
+824.2s 88 [  757.0s]   epoch 6/8 step 11400/16840  avg loss 0.0148  lr 6.46e-06
+837.1s 89 [  769.9s]   epoch 6/8 step 11600/16840  avg loss 0.0135  lr 6.22e-06
+850.1s 90 [  782.9s]   epoch 6/8 step 11800/16840  avg loss 0.0165  lr 5.99e-06
+863.1s 91 [  795.9s]   epoch 6/8 step 12000/16840  avg loss 0.0189  lr 5.75e-06
+876.1s 92 [  808.9s]   epoch 6/8 step 12200/16840  avg loss 0.0198  lr 5.51e-06
+889.1s 93 [  821.9s]   epoch 6/8 step 12400/16840  avg loss 0.0147  lr 5.27e-06
+902.1s 94 [  834.9s]   epoch 6/8 step 12600/16840  avg loss 0.0186  lr 5.04e-06
+915.3s 95 [  848.1s]   epoch 7/8 step 12800/16840  avg loss 0.0109  lr 4.80e-06
+928.2s 96 [  861.0s]   epoch 7/8 step 13000/16840  avg loss 0.0118  lr 4.56e-06
+941.4s 97 [  874.2s]   epoch 7/8 step 13200/16840  avg loss 0.0107  lr 4.32e-06
+954.4s 98 [  887.2s]   epoch 7/8 step 13400/16840  avg loss 0.0091  lr 4.09e-06
+967.3s 99 [  900.1s]   epoch 7/8 step 13600/16840  avg loss 0.0123  lr 3.85e-06
+980.2s 100 [  913.0s]   epoch 7/8 step 13800/16840  avg loss 0.0148  lr 3.61e-06
+993.1s 101 [  925.9s]   epoch 7/8 step 14000/16840  avg loss 0.0118  lr 3.37e-06
+1006.2s 102 [  939.0s]   epoch 7/8 step 14200/16840  avg loss 0.0109  lr 3.14e-06
+1019.0s 103 [  951.8s]   epoch 7/8 step 14400/16840  avg loss 0.0140  lr 2.90e-06
+1031.9s 104 [  964.7s]   epoch 7/8 step 14600/16840  avg loss 0.0140  lr 2.66e-06
+1045.0s 105 [  977.8s]   epoch 8/8 step 14800/16840  avg loss 0.0108  lr 2.42e-06
+1057.9s 106 [  990.7s]   epoch 8/8 step 15000/16840  avg loss 0.0083  lr 2.19e-06
+1070.9s 107 [ 1003.7s]   epoch 8/8 step 15200/16840  avg loss 0.0066  lr 1.95e-06
+1084.0s 108 [ 1016.8s]   epoch 8/8 step 15400/16840  avg loss 0.0077  lr 1.71e-06
+1096.9s 109 [ 1029.7s]   epoch 8/8 step 15600/16840  avg loss 0.0083  lr 1.47e-06
+1109.7s 110 [ 1042.5s]   epoch 8/8 step 15800/16840  avg loss 0.0071  lr 1.24e-06
+1122.6s 111 [ 1055.4s]   epoch 8/8 step 16000/16840  avg loss 0.0070  lr 9.98e-07
+1135.5s 112 [ 1068.3s]   epoch 8/8 step 16200/16840  avg loss 0.0089  lr 7.60e-07
+1148.3s 113 [ 1081.1s]   epoch 8/8 step 16400/16840  avg loss 0.0068  lr 5.23e-07
+1161.3s 114 [ 1094.1s]   epoch 8/8 step 16600/16840  avg loss 0.0067  lr 2.85e-07
+1174.1s 115 [ 1106.9s]   epoch 8/8 step 16800/16840  avg loss 0.0069  lr 4.75e-08
+1176.8s 116 [ 1109.6s]   epoch 8/8 step 16840/16840  avg loss 0.0095  lr 0.00e+00
+1177.3s 117 [ 1110.1s]   after fine-tune acc 0.8911
+1177.3s 118 [ 1110.1s] [4/6] importance (metric=gradient, calib_n=2048)
+1179.5s 119 [ 1112.3s]   calibration batch 20/64
+1181.8s 120 [ 1114.6s]   calibration batch 40/64
+1184.0s 121 [ 1116.8s]   calibration batch 60/64
+1184.4s 122 [ 1117.2s]   calibration batch 64/64
+1184.6s 123 [ 1117.4s] [5/6] SLC/MLC split (slc_frac=0.2, scope=layer) -> /kaggle/working/outputs/distilbert-sst2
+1184.7s 124 [ 1117.5s]   distilbert.transformer.layer.0.attention.q_lin          rank  384  SLC   77  MLC  307
+1184.7s 125 [ 1117.5s]   distilbert.transformer.layer.0.attention.k_lin          rank  384  SLC   77  MLC  307
+1184.7s 126 [ 1117.5s]   distilbert.transformer.layer.0.attention.v_lin          rank  384  SLC   77  MLC  307
+1184.7s 127 [ 1117.5s]   distilbert.transformer.layer.0.attention.out_lin        rank  384  SLC   77  MLC  307
+1184.7s 128 [ 1117.5s]   distilbert.transformer.layer.0.ffn.lin1                 rank  614  SLC  123  MLC  491
+1184.7s 129 [ 1117.5s]   distilbert.transformer.layer.0.ffn.lin2                 rank  614  SLC  123  MLC  491
+1184.8s 130 [ 1117.6s]   distilbert.transformer.layer.1.attention.q_lin          rank  384  SLC   77  MLC  307
+1184.8s 131 [ 1117.6s]   distilbert.transformer.layer.1.attention.k_lin          rank  384  SLC   77  MLC  307
+1184.8s 132 [ 1117.6s]   distilbert.transformer.layer.1.attention.v_lin          rank  384  SLC   77  MLC  307
+1184.8s 133 [ 1117.6s]   distilbert.transformer.layer.1.attention.out_lin        rank  384  SLC   77  MLC  307
+1184.8s 134 [ 1117.6s]   distilbert.transformer.layer.1.ffn.lin1                 rank  614  SLC  123  MLC  491
+1184.8s 135 [ 1117.6s]   distilbert.transformer.layer.1.ffn.lin2                 rank  614  SLC  123  MLC  491
+1184.8s 136 [ 1117.6s]   distilbert.transformer.layer.2.attention.q_lin          rank  384  SLC   77  MLC  307
+1184.8s 137 [ 1117.6s]   distilbert.transformer.layer.2.attention.k_lin          rank  384  SLC   77  MLC  307
+1184.8s 138 [ 1117.6s]   distilbert.transformer.layer.2.attention.v_lin          rank  384  SLC   77  MLC  307
+1184.8s 139 [ 1117.6s]   distilbert.transformer.layer.2.attention.out_lin        rank  384  SLC   77  MLC  307
+1184.9s 140 [ 1117.7s]   distilbert.transformer.layer.2.ffn.lin1                 rank  614  SLC  123  MLC  491
+1184.9s 141 [ 1117.7s]   distilbert.transformer.layer.2.ffn.lin2                 rank  614  SLC  123  MLC  491
+1184.9s 142 [ 1117.7s]   distilbert.transformer.layer.3.attention.q_lin          rank  384  SLC   77  MLC  307
+1184.9s 143 [ 1117.7s]   distilbert.transformer.layer.3.attention.k_lin          rank  384  SLC   77  MLC  307
+1184.9s 144 [ 1117.7s]   distilbert.transformer.layer.3.attention.v_lin          rank  384  SLC   77  MLC  307
+1184.9s 145 [ 1117.7s]   distilbert.transformer.layer.3.attention.out_lin        rank  384  SLC   77  MLC  307
+1184.9s 146 [ 1117.7s]   distilbert.transformer.layer.3.ffn.lin1                 rank  614  SLC  123  MLC  491
+1184.9s 147 [ 1117.7s]   distilbert.transformer.layer.3.ffn.lin2                 rank  614  SLC  123  MLC  491
+1185.0s 148 [ 1117.8s]   distilbert.transformer.layer.4.attention.q_lin          rank  384  SLC   77  MLC  307
+1185.0s 149 [ 1117.8s]   distilbert.transformer.layer.4.attention.k_lin          rank  384  SLC   77  MLC  307
+1185.0s 150 [ 1117.8s]   distilbert.transformer.layer.4.attention.v_lin          rank  384  SLC   77  MLC  307
+1185.0s 151 [ 1117.8s]   distilbert.transformer.layer.4.attention.out_lin        rank  384  SLC   77  MLC  307
+1185.0s 152 [ 1117.8s]   distilbert.transformer.layer.4.ffn.lin1                 rank  614  SLC  123  MLC  491
+1185.0s 153 [ 1117.8s]   distilbert.transformer.layer.4.ffn.lin2                 rank  614  SLC  123  MLC  491
+1185.0s 154 [ 1117.8s]   distilbert.transformer.layer.5.attention.q_lin          rank  384  SLC   77  MLC  307
+1185.0s 155 [ 1117.8s]   distilbert.transformer.layer.5.attention.k_lin          rank  384  SLC   77  MLC  307
+1185.0s 156 [ 1117.8s]   distilbert.transformer.layer.5.attention.v_lin          rank  384  SLC   77  MLC  307
+1185.0s 157 [ 1117.8s]   distilbert.transformer.layer.5.attention.out_lin        rank  384  SLC   77  MLC  307
+1185.0s 158 [ 1117.8s]   distilbert.transformer.layer.5.ffn.lin1                 rank  614  SLC  123  MLC  491
+1185.1s 159 [ 1117.9s]   distilbert.transformer.layer.5.ffn.lin2                 rank  614  SLC  123  MLC  491
+1185.7s 160 [ 1118.5s]   wrote SLC/, MLC/, tier_map.json, importance.pt, importance.csv, svd_model.pt
+1185.7s 161 [ 1118.5s] [6/6] verify SLC + MLC == U·diag(S)·Vh, write summary
+1186.4s 162 [ 1119.2s]   reconstruction max abs error 3.815e-06
+1186.5s 163 {
+1186.5s 164 "accuracy": {
+1186.5s 165 "baseline": 0.9105504587155964,
+1186.5s 166 "svd_truncated": 0.8967889908256881,
+1186.5s 167 "svd_finetuned": 0.8910550458715596
+1186.5s 168 },
+1186.5s 169 "components": {
+1186.5s 170 "SLC": 3324,
+1186.5s 171 "MLC": 13260,
+1186.5s 172 "slc_fraction": 0.20043415340086831
+1186.5s 173 },
+1186.5s 174 "weights": {
+1186.5s 175 "SLC": 8506368,
+1186.5s 176 "MLC": 33942528,
+1186.5s 177 "slc_fraction": 0.20039079461571863
+1186.5s 178 },
+1186.5s 179 "runtime_s": 1119.1
+1186.5s 180 }
+1186.5s 181 [ 1119.3s] ========== bert-base-sst2 (textattack/bert-base-uncased-SST-2) ==========
+1186.5s 182 [ 1119.3s] [1/6] loading model, tokenizer, SST-2
+1195.5s 183 [ 1128.3s]   params: 109.5M
+1196.1s 184 [ 1128.9s]   SST-2 validation: 872 sentences, 7 batches of 128
+1200.8s 185 [ 1133.6s]   SST-2 train: 67349 sentences, 2105 batches of 32
+1201.3s 186 [ 1134.1s]   SST-2 train: 2048 sentences, 64 batches of 32
+1202.0s 187 [ 1134.8s]   baseline acc 0.9243
+1202.0s 188 [ 1134.8s] [2/6] SVD factorisation (rank_mode=param)
+1208.0s 189 [ 1140.8s]   W 768x768 -> U 768x384 + ΣVᵀ 384x768  (rank 384 of 768)
+1208.0s 190 [ 1140.8s]   W 768x3072 -> U 768x614 + ΣVᵀ 614x3072  (rank 614 of 768)
+1208.0s 191 [ 1140.8s]   W 3072x768 -> U 3072x614 + ΣVᵀ 614x768  (rank 614 of 768)
+1208.9s 192 [ 1141.7s]   factorised 72 layers; acc 0.8933
+1208.9s 193 [ 1141.7s] [3/6] recovery fine-tune (8 epoch, lr 2e-05, amp=True)
+1232.8s 194 [ 1165.6s]   epoch 1/8 step 200/16840  avg loss 0.1403  lr 1.98e-05
+1256.7s 195 [ 1189.5s]   epoch 1/8 step 400/16840  avg loss 0.1415  lr 1.95e-05
+1280.1s 196 [ 1212.9s]   epoch 1/8 step 600/16840  avg loss 0.1468  lr 1.93e-05
+1303.4s 197 [ 1236.2s]   epoch 1/8 step 800/16840  avg loss 0.1405  lr 1.90e-05
+1327.1s 198 [ 1259.9s]   epoch 1/8 step 1000/16840  avg loss 0.1443  lr 1.88e-05
+1350.8s 199 [ 1283.6s]   epoch 1/8 step 1200/16840  avg loss 0.1329  lr 1.86e-05
+1374.3s 200 [ 1307.1s]   epoch 1/8 step 1400/16840  avg loss 0.1496  lr 1.83e-05
+1397.7s 201 [ 1330.5s]   epoch 1/8 step 1600/16840  avg loss 0.1336  lr 1.81e-05
+1421.4s 202 [ 1354.2s]   epoch 1/8 step 1800/16840  avg loss 0.1391  lr 1.79e-05
+1445.1s 203 [ 1377.9s]   epoch 1/8 step 2000/16840  avg loss 0.1458  lr 1.76e-05
+1468.8s 204 [ 1401.6s]   epoch 2/8 step 2200/16840  avg loss 0.1041  lr 1.74e-05
+1492.4s 205 [ 1425.2s]   epoch 2/8 step 2400/16840  avg loss 0.0883  lr 1.71e-05
+1516.1s 206 [ 1448.8s]   epoch 2/8 step 2600/16840  avg loss 0.0831  lr 1.69e-05
+1539.6s 207 [ 1472.4s]   epoch 2/8 step 2800/16840  avg loss 0.0807  lr 1.67e-05
+1563.1s 208 [ 1495.9s]   epoch 2/8 step 3000/16840  avg loss 0.0877  lr 1.64e-05
+1586.7s 209 [ 1519.5s]   epoch 2/8 step 3200/16840  avg loss 0.0895  lr 1.62e-05
+1610.2s 210 [ 1543.0s]   epoch 2/8 step 3400/16840  avg loss 0.0932  lr 1.60e-05
+1633.9s 211 [ 1566.7s]   epoch 2/8 step 3600/16840  avg loss 0.1058  lr 1.57e-05
+1657.4s 212 [ 1590.2s]   epoch 2/8 step 3800/16840  avg loss 0.0926  lr 1.55e-05
+1680.7s 213 [ 1613.5s]   epoch 2/8 step 4000/16840  avg loss 0.0933  lr 1.52e-05
+1704.6s 214 [ 1637.4s]   epoch 2/8 step 4200/16840  avg loss 0.0947  lr 1.50e-05
+1728.5s 215 [ 1661.3s]   epoch 3/8 step 4400/16840  avg loss 0.0556  lr 1.48e-05
+1752.3s 216 [ 1685.0s]   epoch 3/8 step 4600/16840  avg loss 0.0659  lr 1.45e-05
+1775.7s 217 [ 1708.5s]   epoch 3/8 step 4800/16840  avg loss 0.0631  lr 1.43e-05
+1799.2s 218 [ 1732.0s]   epoch 3/8 step 5000/16840  avg loss 0.0636  lr 1.41e-05
+1822.8s 219 [ 1755.6s]   epoch 3/8 step 5200/16840  avg loss 0.0596  lr 1.38e-05
+1846.3s 220 [ 1779.1s]   epoch 3/8 step 5400/16840  avg loss 0.0600  lr 1.36e-05
+1869.8s 221 [ 1802.6s]   epoch 3/8 step 5600/16840  avg loss 0.0656  lr 1.33e-05
+1893.4s 222 [ 1826.2s]   epoch 3/8 step 5800/16840  avg loss 0.0653  lr 1.31e-05
+1917.1s 223 [ 1849.9s]   epoch 3/8 step 6000/16840  avg loss 0.0650  lr 1.29e-05
+1940.9s 224 [ 1873.7s]   epoch 3/8 step 6200/16840  avg loss 0.0600  lr 1.26e-05
+1964.6s 225 [ 1897.4s]   epoch 4/8 step 6400/16840  avg loss 0.0544  lr 1.24e-05
+1988.0s 226 [ 1920.8s]   epoch 4/8 step 6600/16840  avg loss 0.0371  lr 1.22e-05
+2011.6s 227 [ 1944.4s]   epoch 4/8 step 6800/16840  avg loss 0.0376  lr 1.19e-05
+2035.3s 228 [ 1968.1s]   epoch 4/8 step 7000/16840  avg loss 0.0408  lr 1.17e-05
+2058.6s 229 [ 1991.4s]   epoch 4/8 step 7200/16840  avg loss 0.0394  lr 1.14e-05
+2082.2s 230 [ 2015.0s]   epoch 4/8 step 7400/16840  avg loss 0.0417  lr 1.12e-05
+2105.7s 231 [ 2038.5s]   epoch 4/8 step 7600/16840  avg loss 0.0403  lr 1.10e-05
+2129.3s 232 [ 2062.1s]   epoch 4/8 step 7800/16840  avg loss 0.0438  lr 1.07e-05
+2153.0s 233 [ 2085.8s]   epoch 4/8 step 8000/16840  avg loss 0.0471  lr 1.05e-05
+2176.8s 234 [ 2109.6s]   epoch 4/8 step 8200/16840  avg loss 0.0416  lr 1.03e-05
+2200.2s 235 [ 2133.0s]   epoch 4/8 step 8400/16840  avg loss 0.0438  lr 1.00e-05
+2224.0s 236 [ 2156.7s]   epoch 5/8 step 8600/16840  avg loss 0.0340  lr 9.79e-06
+2247.5s 237 [ 2180.3s]   epoch 5/8 step 8800/16840  avg loss 0.0259  lr 9.55e-06
+2271.1s 238 [ 2203.9s]   epoch 5/8 step 9000/16840  avg loss 0.0291  lr 9.31e-06
+2294.8s 239 [ 2227.6s]   epoch 5/8 step 9200/16840  avg loss 0.0279  lr 9.07e-06
+2318.3s 240 [ 2251.1s]   epoch 5/8 step 9400/16840  avg loss 0.0280  lr 8.84e-06
+2341.7s 241 [ 2274.5s]   epoch 5/8 step 9600/16840  avg loss 0.0228  lr 8.60e-06
+2365.2s 242 [ 2298.0s]   epoch 5/8 step 9800/16840  avg loss 0.0297  lr 8.36e-06
+2388.6s 243 [ 2321.4s]   epoch 5/8 step 10000/16840  avg loss 0.0325  lr 8.12e-06
+2412.1s 244 [ 2344.9s]   epoch 5/8 step 10200/16840  avg loss 0.0286  lr 7.89e-06
+2435.9s 245 [ 2368.7s]   epoch 5/8 step 10400/16840  avg loss 0.0296  lr 7.65e-06
+2459.7s 246 [ 2392.5s]   epoch 6/8 step 10600/16840  avg loss 0.0276  lr 7.41e-06
+2483.2s 247 [ 2416.0s]   epoch 6/8 step 10800/16840  avg loss 0.0156  lr 7.17e-06
+2507.0s 248 [ 2439.8s]   epoch 6/8 step 11000/16840  avg loss 0.0213  lr 6.94e-06
+2530.5s 249 [ 2463.4s]   epoch 6/8 step 11200/16840  avg loss 0.0162  lr 6.70e-06
+2554.0s 250 [ 2486.8s]   epoch 6/8 step 11400/16840  avg loss 0.0167  lr 6.46e-06
+2577.7s 251 [ 2510.5s]   epoch 6/8 step 11600/16840  avg loss 0.0171  lr 6.22e-06
+2601.3s 252 [ 2534.1s]   epoch 6/8 step 11800/16840  avg loss 0.0216  lr 5.99e-06
+2625.1s 253 [ 2557.9s]   epoch 6/8 step 12000/16840  avg loss 0.0206  lr 5.75e-06
+2648.8s 254 [ 2581.5s]   epoch 6/8 step 12200/16840  avg loss 0.0203  lr 5.51e-06
+2672.1s 255 [ 2604.9s]   epoch 6/8 step 12400/16840  avg loss 0.0150  lr 5.27e-06
+2695.7s 256 [ 2628.5s]   epoch 6/8 step 12600/16840  avg loss 0.0182  lr 5.04e-06
+2719.5s 257 [ 2652.3s]   epoch 7/8 step 12800/16840  avg loss 0.0145  lr 4.80e-06
+2743.0s 258 [ 2675.8s]   epoch 7/8 step 13000/16840  avg loss 0.0120  lr 4.56e-06
+2766.7s 259 [ 2699.5s]   epoch 7/8 step 13200/16840  avg loss 0.0076  lr 4.32e-06
+2790.4s 260 [ 2723.2s]   epoch 7/8 step 13400/16840  avg loss 0.0091  lr 4.09e-06
+2813.9s 261 [ 2746.7s]   epoch 7/8 step 13600/16840  avg loss 0.0138  lr 3.85e-06
+2837.4s 262 [ 2770.2s]   epoch 7/8 step 13800/16840  avg loss 0.0116  lr 3.61e-06
+2860.9s 263 [ 2793.7s]   epoch 7/8 step 14000/16840  avg loss 0.0118  lr 3.37e-06
+2884.6s 264 [ 2817.4s]   epoch 7/8 step 14200/16840  avg loss 0.0102  lr 3.14e-06
+2908.0s 265 [ 2840.8s]   epoch 7/8 step 14400/16840  avg loss 0.0131  lr 2.90e-06
+2931.5s 266 [ 2864.3s]   epoch 7/8 step 14600/16840  avg loss 0.0123  lr 2.66e-06
+2955.0s 267 [ 2887.8s]   epoch 8/8 step 14800/16840  avg loss 0.0126  lr 2.42e-06
+2978.5s 268 [ 2911.3s]   epoch 8/8 step 15000/16840  avg loss 0.0073  lr 2.19e-06
+3002.1s 269 [ 2934.9s]   epoch 8/8 step 15200/16840  avg loss 0.0072  lr 1.95e-06
+3025.6s 270 [ 2958.4s]   epoch 8/8 step 15400/16840  avg loss 0.0084  lr 1.71e-06
+3049.2s 271 [ 2982.0s]   epoch 8/8 step 15600/16840  avg loss 0.0068  lr 1.47e-06
+3073.0s 272 [ 3005.7s]   epoch 8/8 step 15800/16840  avg loss 0.0084  lr 1.24e-06
+3096.5s 273 [ 3029.3s]   epoch 8/8 step 16000/16840  avg loss 0.0068  lr 9.98e-07
+3119.9s 274 [ 3052.7s]   epoch 8/8 step 16200/16840  avg loss 0.0070  lr 7.60e-07
+3143.5s 275 [ 3076.3s]   epoch 8/8 step 16400/16840  avg loss 0.0073  lr 5.23e-07
+3166.8s 276 [ 3099.6s]   epoch 8/8 step 16600/16840  avg loss 0.0077  lr 2.85e-07
+3190.2s 277 [ 3123.0s]   epoch 8/8 step 16800/16840  avg loss 0.0093  lr 4.75e-08
+3195.1s 278 [ 3127.9s]   epoch 8/8 step 16840/16840  avg loss 0.0052  lr 0.00e+00
+3196.0s 279 [ 3128.8s]   after fine-tune acc 0.9014
+3196.0s 280 [ 3128.8s] [4/6] importance (metric=gradient, calib_n=2048)
+3200.4s 281 [ 3133.1s]   calibration batch 20/64
+3204.9s 282 [ 3137.7s]   calibration batch 40/64
+3209.2s 283 [ 3142.0s]   calibration batch 60/64
+3210.2s 284 [ 3143.0s]   calibration batch 64/64
+3210.3s 285 [ 3143.1s] [5/6] SLC/MLC split (slc_frac=0.2, scope=layer) -> /kaggle/working/outputs/bert-base-sst2
+3210.3s 286 [ 3143.2s]   bert.encoder.layer.0.attention.self.query               rank  384  SLC   77  MLC  307
+3210.4s 287 [ 3143.2s]   bert.encoder.layer.0.attention.self.key                 rank  384  SLC   77  MLC  307
+3210.4s 288 [ 3143.2s]   bert.encoder.layer.0.attention.self.value               rank  384  SLC   77  MLC  307
+3210.4s 289 [ 3143.2s]   bert.encoder.layer.0.attention.output.dense             rank  384  SLC   77  MLC  307
+3210.4s 290 [ 3143.2s]   bert.encoder.layer.0.intermediate.dense                 rank  614  SLC  123  MLC  491
+3210.4s 291 [ 3143.2s]   bert.encoder.layer.0.output.dense                       rank  614  SLC  123  MLC  491
+3210.4s 292 [ 3143.2s]   bert.encoder.layer.1.attention.self.query               rank  384  SLC   77  MLC  307
+3210.4s 293 [ 3143.2s]   bert.encoder.layer.1.attention.self.key                 rank  384  SLC   77  MLC  307
+3210.4s 294 [ 3143.2s]   bert.encoder.layer.1.attention.self.value               rank  384  SLC   77  MLC  307
+3210.4s 295 [ 3143.2s]   bert.encoder.layer.1.attention.output.dense             rank  384  SLC   77  MLC  307
+3210.4s 296 [ 3143.2s]   bert.encoder.layer.1.intermediate.dense                 rank  614  SLC  123  MLC  491
+3210.4s 297 [ 3143.2s]   bert.encoder.layer.1.output.dense                       rank  614  SLC  123  MLC  491
+3210.4s 298 [ 3143.2s]   bert.encoder.layer.2.attention.self.query               rank  384  SLC   77  MLC  307
+3210.4s 299 [ 3143.3s]   bert.encoder.layer.2.attention.self.key                 rank  384  SLC   77  MLC  307
+3210.5s 300 [ 3143.3s]   bert.encoder.layer.2.attention.self.value               rank  384  SLC   77  MLC  307
+3210.5s 301 [ 3143.3s]   bert.encoder.layer.2.attention.output.dense             rank  384  SLC   77  MLC  307
+3210.5s 302 [ 3143.3s]   bert.encoder.layer.2.intermediate.dense                 rank  614  SLC  123  MLC  491
+3210.5s 303 [ 3143.3s]   bert.encoder.layer.2.output.dense                       rank  614  SLC  123  MLC  491
+3210.5s 304 [ 3143.3s]   bert.encoder.layer.3.attention.self.query               rank  384  SLC   77  MLC  307
+3210.5s 305 [ 3143.3s]   bert.encoder.layer.3.attention.self.key                 rank  384  SLC   77  MLC  307
+3210.5s 306 [ 3143.3s]   bert.encoder.layer.3.attention.self.value               rank  384  SLC   77  MLC  307
+3210.5s 307 [ 3143.3s]   bert.encoder.layer.3.attention.output.dense             rank  384  SLC   77  MLC  307
+3210.5s 308 [ 3143.3s]   bert.encoder.layer.3.intermediate.dense                 rank  614  SLC  123  MLC  491
+3210.5s 309 [ 3143.3s]   bert.encoder.layer.3.output.dense                       rank  614  SLC  123  MLC  491
+3210.5s 310 [ 3143.3s]   bert.encoder.layer.4.attention.self.query               rank  384  SLC   77  MLC  307
+3210.5s 311 [ 3143.3s]   bert.encoder.layer.4.attention.self.key                 rank  384  SLC   77  MLC  307
+3210.5s 312 [ 3143.3s]   bert.encoder.layer.4.attention.self.value               rank  384  SLC   77  MLC  307
+3210.6s 313 [ 3143.4s]   bert.encoder.layer.4.attention.output.dense             rank  384  SLC   77  MLC  307
+3210.6s 314 [ 3143.4s]   bert.encoder.layer.4.intermediate.dense                 rank  614  SLC  123  MLC  491
+3210.6s 315 [ 3143.4s]   bert.encoder.layer.4.output.dense                       rank  614  SLC  123  MLC  491
+3210.6s 316 [ 3143.4s]   bert.encoder.layer.5.attention.self.query               rank  384  SLC   77  MLC  307
+3210.6s 317 [ 3143.4s]   bert.encoder.layer.5.attention.self.key                 rank  384  SLC   77  MLC  307
+3210.6s 318 [ 3143.4s]   bert.encoder.layer.5.attention.self.value               rank  384  SLC   77  MLC  307
+3210.6s 319 [ 3143.4s]   bert.encoder.layer.5.attention.output.dense             rank  384  SLC   77  MLC  307
+3210.6s 320 [ 3143.4s]   bert.encoder.layer.5.intermediate.dense                 rank  614  SLC  123  MLC  491
+3210.6s 321 [ 3143.4s]   bert.encoder.layer.5.output.dense                       rank  614  SLC  123  MLC  491
+3210.6s 322 [ 3143.4s]   bert.encoder.layer.6.attention.self.query               rank  384  SLC   77  MLC  307
+3210.6s 323 [ 3143.4s]   bert.encoder.layer.6.attention.self.key                 rank  384  SLC   77  MLC  307
+3210.6s 324 [ 3143.4s]   bert.encoder.layer.6.attention.self.value               rank  384  SLC   77  MLC  307
+3210.6s 325 [ 3143.4s]   bert.encoder.layer.6.attention.output.dense             rank  384  SLC   77  MLC  307
+3210.7s 326 [ 3143.5s]   bert.encoder.layer.6.intermediate.dense                 rank  614  SLC  123  MLC  491
+3210.7s 327 [ 3143.5s]   bert.encoder.layer.6.output.dense                       rank  614  SLC  123  MLC  491
+3210.7s 328 [ 3143.5s]   bert.encoder.layer.7.attention.self.query               rank  384  SLC   77  MLC  307
+3210.7s 329 [ 3143.5s]   bert.encoder.layer.7.attention.self.key                 rank  384  SLC   77  MLC  307
+3210.7s 330 [ 3143.5s]   bert.encoder.layer.7.attention.self.value               rank  384  SLC   77  MLC  307
+3210.7s 331 [ 3143.5s]   bert.encoder.layer.7.attention.output.dense             rank  384  SLC   77  MLC  307
+3210.7s 332 [ 3143.5s]   bert.encoder.layer.7.intermediate.dense                 rank  614  SLC  123  MLC  491
+3210.7s 333 [ 3143.5s]   bert.encoder.layer.7.output.dense                       rank  614  SLC  123  MLC  491
+3210.7s 334 [ 3143.5s]   bert.encoder.layer.8.attention.self.query               rank  384  SLC   77  MLC  307
+3210.7s 335 [ 3143.5s]   bert.encoder.layer.8.attention.self.key                 rank  384  SLC   77  MLC  307
+3210.7s 336 [ 3143.5s]   bert.encoder.layer.8.attention.self.value               rank  384  SLC   77  MLC  307
+3210.7s 337 [ 3143.5s]   bert.encoder.layer.8.attention.output.dense             rank  384  SLC   77  MLC  307
+3210.7s 338 [ 3143.5s]   bert.encoder.layer.8.intermediate.dense                 rank  614  SLC  123  MLC  491
+3210.8s 339 [ 3143.6s]   bert.encoder.layer.8.output.dense                       rank  614  SLC  123  MLC  491
+3210.8s 340 [ 3143.6s]   bert.encoder.layer.9.attention.self.query               rank  384  SLC   77  MLC  307
+3210.8s 341 [ 3143.6s]   bert.encoder.layer.9.attention.self.key                 rank  384  SLC   77  MLC  307
+3210.8s 342 [ 3143.6s]   bert.encoder.layer.9.attention.self.value               rank  384  SLC   77  MLC  307
+3210.8s 343 [ 3143.6s]   bert.encoder.layer.9.attention.output.dense             rank  384  SLC   77  MLC  307
+3210.8s 344 [ 3143.6s]   bert.encoder.layer.9.intermediate.dense                 rank  614  SLC  123  MLC  491
+3210.8s 345 [ 3143.6s]   bert.encoder.layer.9.output.dense                       rank  614  SLC  123  MLC  491
+3210.8s 346 [ 3143.6s]   bert.encoder.layer.10.attention.self.query              rank  384  SLC   77  MLC  307
+3210.8s 347 [ 3143.6s]   bert.encoder.layer.10.attention.self.key                rank  384  SLC   77  MLC  307
+3210.8s 348 [ 3143.6s]   bert.encoder.layer.10.attention.self.value              rank  384  SLC   77  MLC  307
+3210.8s 349 [ 3143.6s]   bert.encoder.layer.10.attention.output.dense            rank  384  SLC   77  MLC  307
+3210.9s 350 [ 3143.7s]   bert.encoder.layer.10.intermediate.dense                rank  614  SLC  123  MLC  491
+3210.9s 351 [ 3143.7s]   bert.encoder.layer.10.output.dense                      rank  614  SLC  123  MLC  491
+3210.9s 352 [ 3143.7s]   bert.encoder.layer.11.attention.self.query              rank  384  SLC   77  MLC  307
+3210.9s 353 [ 3143.7s]   bert.encoder.layer.11.attention.self.key                rank  384  SLC   77  MLC  307
+3210.9s 354 [ 3143.7s]   bert.encoder.layer.11.attention.self.value              rank  384  SLC   77  MLC  307
+3210.9s 355 [ 3143.7s]   bert.encoder.layer.11.attention.output.dense            rank  384  SLC   77  MLC  307
+3210.9s 356 [ 3143.7s]   bert.encoder.layer.11.intermediate.dense                rank  614  SLC  123  MLC  491
+3210.9s 357 [ 3143.7s]   bert.encoder.layer.11.output.dense                      rank  614  SLC  123  MLC  491
+3211.9s 358 [ 3144.7s]   wrote SLC/, MLC/, tier_map.json, importance.pt, importance.csv, svd_model.pt
+3211.9s 359 [ 3144.7s] [6/6] verify SLC + MLC == U·diag(S)·Vh, write summary
+3213.1s 360 [ 3145.9s]   reconstruction max abs error 2.623e-06
+3213.3s 361 {
+3213.3s 362 "accuracy": {
+3213.3s 363 "baseline": 0.9243119266055045,
+3213.3s 364 "svd_truncated": 0.893348623853211,
+3213.3s 365 "svd_finetuned": 0.9013761467889908
+3213.3s 366 },
+3213.3s 367 "components": {
+3213.3s 368 "SLC": 6648,
+3213.3s 369 "MLC": 26520,
+3213.3s 370 "slc_fraction": 0.20043415340086831
+3213.3s 371 },
+3213.3s 372 "weights": {
+3213.3s 373 "SLC": 17012736,
+3213.3s 374 "MLC": 67885056,
+3213.3s 375 "slc_fraction": 0.20039079461571863
+3213.3s 376 },
+3213.3s 377 "runtime_s": 2026.6
+3213.3s 378 }
+3213.3s 379 [ 3146.1s] zipping outputs
+3266.8s 380 [ 3199.6s] done. download /kaggle/working/outputs.zip from the Output panel
+3273.1s 381 /usr/local/lib/python3.13/dist-packages/mistune.py:435: SyntaxWarning: invalid escape sequence '\|'
+3273.1s 382 cells[i][c] = re.sub('\\\\\|', '|', cell)
+3273.3s 383 /usr/local/lib/python3.13/dist-packages/nbconvert/filters/filter_links.py:36: SyntaxWarning: invalid escape sequence '\_'
+3273.3s 384 text = re.sub(r'_', '\_', text) # Escape underscores in display text
+3274.1s 385 [NbConvertApp] Converting notebook __notebook__.ipynb to notebook
+3274.2s 386 [NbConvertApp] Writing 425539 bytes to __notebook__.ipynb
+3276.6s 387 [NbConvertApp] Converting notebook __notebook__.ipynb to html
+3277.2s 388 [NbConvertApp] Writing 684491 bytes to __results__.html

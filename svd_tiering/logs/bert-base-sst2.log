@@ -1,0 +1,22 @@
+WARNING: All log messages before absl::InitializeLog() is called are written to STDERR
+I0000 00:00:1792093490.722014   49200 port.cc:153] oneDNN custom operations are on. You may see slightly different numerical results due to floating-point round-off errors from different computation orders. To turn them off, set the environment variable `TF_ENABLE_ONEDNN_OPTS=0`.
+WARNING: All log messages before absl::InitializeLog() is called are written to STDERR
+I0000 00:00:1792093492.082212   49200 port.cc:153] oneDNN custom operations are on. You may see slightly different numerical results due to floating-point round-off errors from different computation orders. To turn them off, set the environment variable `TF_ENABLE_ONEDNN_OPTS=0`.
+C:\Users\Sarvesh\AppData\Local\Programs\Python\Python313\Lib\site-packages\huggingface_hub\file_download.py:143: UserWarning: `huggingface_hub` cache-system uses symlinks by default to efficiently store duplicated files but your machine does not support them in C:\Users\Sarvesh\.cache\huggingface\hub\models--textattack--bert-base-uncased-SST-2. Caching files will still work but in a degraded version that might require more space on your disk. This warning can be disabled by setting the `HF_HUB_DISABLE_SYMLINKS_WARNING` environment variable. For more details, see https://huggingface.co/docs/huggingface_hub/how-to-cache#limitations.
+To support symlinks on Windows, you either need to activate Developer Mode or to run Python as an administrator. In order to activate developer mode, see this article: https://docs.microsoft.com/en-us/windows/apps/get-started/enable-your-device-for-development
+  warnings.warn(message)
+Xet Storage is enabled for this repo, but the 'hf_xet' package is not installed. Falling back to regular HTTP download. For better performance, install the package with: `pip install huggingface_hub[hf_xet]` or `pip install hf_xet`
+Xet Storage is enabled for this repo, but the 'hf_xet' package is not installed. Falling back to regular HTTP download. For better performance, install the package with: `pip install huggingface_hub[hf_xet]` or `pip install hf_xet`
+Map:   0%|          | 0/872 [00:00<?, ? examples/s]Map: 100%|##########| 872/872 [00:00<00:00, 9916.77 examples/s]
+Map:   0%|          | 0/8000 [00:00<?, ? examples/s]Map:  25%|##5       | 2000/8000 [00:00<00:00, 9969.29 examples/s]Map:  38%|###7      | 3000/8000 [00:00<00:00, 8644.04 examples/s]Map:  50%|#####     | 4000/8000 [00:00<00:00, 8027.45 examples/s]Map:  62%|######2   | 5000/8000 [00:00<00:00, 7613.78 examples/s]Map:  75%|#######5  | 6000/8000 [00:00<00:00, 7336.07 examples/s]Map:  88%|########7 | 7000/8000 [00:00<00:00, 7195.73 examples/s]Map: 100%|##########| 8000/8000 [00:01<00:00, 7135.17 examples/s]Map: 100%|##########| 8000/8000 [00:01<00:00, 7517.13 examples/s]
+Map:   0%|          | 0/512 [00:00<?, ? examples/s]Map: 100%|##########| 512/512 [00:00<00:00, 10924.67 examples/s]
+[bert-base-sst2] baseline acc 0.9243
+[bert-base-sst2] factorised 72 layers (param); acc 0.8933
+  finetune step 1/200  loss 0.2605
+  finetune step 21/200  loss 0.0175
+  finetune step 41/200  loss 0.2370
+  finetune step 61/200  loss 0.0568
+  finetune step 81/200  loss 0.1463
+  finetune step 101/200  loss 0.0519
+  finetune step 121/200  loss 0.0637
+  finetune step 141/200  loss 0.4000
