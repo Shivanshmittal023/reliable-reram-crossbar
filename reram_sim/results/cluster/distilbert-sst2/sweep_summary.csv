@@ -1,0 +1,16 @@
+policy,slc_frac,param,value,acc_mean,acc_std,acc_min,n
+all_slc,1.0,fault_mode,uniform,0.741972,0.086365,0.587156,10
+all_slc,1.0,fault_mode,cluster,0.802523,0.036865,0.737385,10
+all_slc,1.0,fault_mode,line,0.712156,0.118854,0.509174,10
+all_mlc,0.0,fault_mode,uniform,0.512385,0.017481,0.485092,10
+all_mlc,0.0,fault_mode,cluster,0.511697,0.014118,0.488532,10
+all_mlc,0.0,fault_mode,line,0.508371,0.015014,0.46789,10
+magnitude,0.2,fault_mode,uniform,0.625344,0.070918,0.521789,10
+magnitude,0.2,fault_mode,cluster,0.561468,0.050334,0.516055,10
+magnitude,0.2,fault_mode,line,0.547018,0.045018,0.509174,10
+gradient,0.2,fault_mode,uniform,0.550229,0.045233,0.509174,10
+gradient,0.2,fault_mode,cluster,0.564335,0.049318,0.509174,10
+gradient,0.2,fault_mode,line,0.522133,0.035823,0.486239,10
+fisher,0.2,fault_mode,uniform,0.6,0.068558,0.490826,10
+fisher,0.2,fault_mode,cluster,0.57305,0.068439,0.509174,10
+fisher,0.2,fault_mode,line,0.562959,0.0557,0.509174,10

@@ -1,0 +1,16 @@
+policy,slc_frac,param,value,acc_mean,acc_std,acc_min,n
+all_slc,1.0,mlc_level_sigma,x1/1/1/1,0.881652,0.011534,0.862385,10
+all_slc,1.0,mlc_level_sigma,x1/1.5/1.5/1,0.881652,0.011534,0.862385,10
+all_slc,1.0,mlc_level_sigma,x1/2/2/1,0.881652,0.011534,0.862385,10
+all_mlc,0.0,mlc_level_sigma,x1/1/1/1,0.672821,0.060955,0.576835,10
+all_mlc,0.0,mlc_level_sigma,x1/1.5/1.5/1,0.64656,0.066397,0.547018,10
+all_mlc,0.0,mlc_level_sigma,x1/2/2/1,0.625229,0.072954,0.53211,10
+magnitude,0.2,mlc_level_sigma,x1/1/1/1,0.888876,0.00539,0.877294,10
+magnitude,0.2,mlc_level_sigma,x1/1.5/1.5/1,0.887156,0.005082,0.877294,10
+magnitude,0.2,mlc_level_sigma,x1/2/2/1,0.883716,0.007202,0.873853,10
+gradient,0.2,mlc_level_sigma,x1/1/1/1,0.883486,0.006073,0.872706,10
+gradient,0.2,mlc_level_sigma,x1/1.5/1.5/1,0.880963,0.008024,0.865826,10
+gradient,0.2,mlc_level_sigma,x1/2/2/1,0.878326,0.009777,0.862385,10
+fisher,0.2,mlc_level_sigma,x1/1/1/1,0.890138,0.004887,0.881881,10
+fisher,0.2,mlc_level_sigma,x1/1.5/1.5/1,0.889106,0.00484,0.881881,10
+fisher,0.2,mlc_level_sigma,x1/2/2/1,0.88383,0.007181,0.869266,10

@@ -1,0 +1,364 @@
+\documentclass[10pt,a4paper]{article}
+\usepackage[margin=2.2cm]{geometry}
+\usepackage{amsmath,amssymb}
+\usepackage{booktabs,tabularx,array,multirow}
+\usepackage{xcolor}
+\usepackage{tikz}
+\usepackage{fancyhdr}
+\usepackage{titlesec}
+\usepackage{enumitem}
+\usepackage[hidelinks]{hyperref}
+\usepackage{tcolorbox}
+\usepackage{float}
+
+\definecolor{accent}{HTML}{1F4E79}
+\definecolor{keybg}{HTML}{EEF3F6}
+\definecolor{cmag}{HTML}{1F6F8B}
+\definecolor{cfis}{HTML}{6A8F3A}
+\definecolor{cgrad}{HTML}{C0612B}
+\definecolor{crand}{HTML}{8A939C}
+
+\newcommand{\best}[1]{\textcolor{cmag}{\textbf{#1}}}
+
+\titleformat{\section}{\large\bfseries\color{accent}}{\thesection}{0.6em}{}
+\titleformat{\subsection}{\normalsize\bfseries}{\thesubsection}{0.5em}{}
+\setlist{itemsep=2pt,topsep=3pt}
+
+\pagestyle{fancy}
+\fancyhf{}
+\fancyhead[L]{\small Reliable and Secure ReRAM Crossbar Accelerators}
+\fancyhead[R]{\small CS5290 -- Phase 1 Results}
+\fancyfoot[C]{\small\thepage}
+
+\begin{document}
+
+\begin{center}
+{\small CS5290 Memory-Centric Computer Architecture $\cdot$ Results Report (24 October 2026)}\\[6pt]
+{\LARGE\bfseries Protecting the Right Weights on a Noisy ReRAM Chip}\\[6pt]
+{\large Phase 1 results for BERT-Base and DistilBERT on a hybrid SLC/MLC crossbar}
+\end{center}
+
+\begin{tcolorbox}[colback=keybg,colframe=accent,boxrule=0.5pt,arc=1pt,left=6pt,right=6pt,top=4pt,bottom=4pt,
+  title={Main findings},fonttitle=\bfseries\small,coltitle=white]
+\begin{enumerate}[leftmargin=*]
+\item Storing a transformer only in dense two-bit cells (MLC) does not work: at realistic programming
+noise, BERT-Base falls from 90\% to near coin-flip accuracy.
+\item Keeping a small share of SVD components in reliable one-bit cells (SLC) recovers almost all of this
+loss, but only if the right components are chosen.
+\item Ranking components by their \textbf{singular value (magnitude)} is as good as the best placement we
+could construct. A Fisher-information estimate of each component's expected damage on the chip reaches
+the same accuracy (within one sentence in 872 on average over 600 chips), while a HyFlexPIM-style gradient
+loses 3--12 points at high noise.
+\item With magnitude ranking, 5--10\% SLC suffices at 5\% noise and about 30\% at 7.5\% noise, using
+roughly 60--70\% of the memory cells of an all-SLC chip.
+\item The conclusions hold on a more realistic chip (read noise, level-dependent noise, fixed ADC, IR drop),
+and a 6-bit ADC is enough for a hybrid chip.
+\item Stuck cells are the one problem placement cannot solve: all-MLC fails at 0.1\% stuck cells and
+all-SLC at 1\%. This motivates fault-aware mapping, our next step.
+\end{enumerate}
+\end{tcolorbox}
+
+\section{Problem and Questions}
+A ReRAM crossbar computes a matrix--vector product inside memory: each weight is stored as the
+conductance of resistive cells, and the currents of a column add up to the result. This avoids most of the
+data movement of conventional hardware, but a cell cannot be programmed exactly, so every weight carries
+random error. A cell can hold one bit (SLC), with two well-separated levels that tolerate noise, or two
+bits (MLC), which is denser but more fragile. In our set-up an 8-bit weight needs 7 SLC or 4 MLC cells per
+sign.
+
+HyFlexPIM (ISCA 2025) splits each weight matrix with singular value decomposition (SVD) into components,
+stores the most important ones in SLC and the rest in MLC, and ranks importance by the loss gradient. We
+asked: (i) does this hybrid scheme hold up in a bit-accurate hardware simulation, (ii) which components
+should be protected, and how many, and (iii) which hardware effects still break it.
+
+\section{Method}
+We used two pretrained sentiment classifiers, \textbf{BERT-Base} (72 weight matrices on the crossbar) and
+\textbf{DistilBERT} (36), evaluated on all 872 validation sentences of SST-2. Each matrix is factorised
+with SVD (384 components for a $768\times768$ layer) and the model is fine-tuned for 8 epochs. The
+simulator stores 8-bit weights on differential cell pairs split into bit slices. Programming noise $\sigma$
+is added to every cell as a fraction of the maximum conductance. One \emph{chip} is one random draw of all
+cell errors; results are averaged over 5--20 chips, and we also report the worst chip. Every placement is
+evaluated on the same chips, so differences between placements are not due to chance draws. The SVD model
+is built once: a placement only decides which cells each component is stored in.
+
+\subsection{Placements}
+\begin{itemize}
+\item \textbf{All SLC} and \textbf{All MLC}: the two extremes, giving the best and the cheapest chip.
+\item \textbf{Random}: a share of components chosen at random, as a control.
+\item \textbf{Magnitude}: the components with the largest singular values $\sigma_r$.
+\item \textbf{Gradient (HyFlexPIM-style)}: $\sum_b |\partial L_b/\partial\sigma_r|$, absolute loss gradients
+summed over batches of 32 training sentences with dropout on.
+\item \textbf{Fisher}: the expected rise in loss if component $r$ is left in MLC,
+\[
+  D_r \;=\; \sum_{e\,\in\,\text{entries of } r} F_e\,\mathrm{Var}(\text{noise}_e),
+\]
+summed over every stored entry of the component (its row $\sigma_r v_r$ and its column $u_r$). $F_e$ is
+the empirical Fisher information of entry $e$ over 2{,}048 training sentences, and the noise variance
+follows our cell model: fixed cell noise becomes weight noise in proportion to the 8-bit scale of the
+crossbar row that holds the entry.
+\end{itemize}
+
+\noindent Two design choices follow from how the chip behaves. The gradient takes absolute values per
+batch, because on a trained model the gradients of individual sentences point in opposite directions and
+would largely cancel in a single sum. The Fisher score covers every stored entry of a component, because
+chip noise disturbs all of them, not only $\sigma_r$.
+
+\section{Baseline: the Cost of SVD}
+
+\begin{table}[h]
+\centering\small
+\begin{tabular}{@{}lcccc@{}}
+\toprule
+Model & Original FP32 & Original INT8 & SVD, before fine-tune & SVD, after fine-tune \\
+\midrule
+BERT-Base  & 92.43 & 91.86 & 89.33 & 90.14 \\
+DistilBERT & 91.06 & 90.37 & 89.68 & 89.11 \\
+\bottomrule
+\end{tabular}
+\caption{SST-2 accuracy (\%) with no hardware error.}
+\end{table}
+
+8-bit quantisation costs only about 0.6 points. SVD costs about 2 points even after fine-tuning; for
+DistilBERT, 8 epochs slightly over-fitted (HyFlexPIM uses 1--3). This loss is paid before any hardware
+error and applies equally to every placement. With no noise, the simulated chip matches the SVD model to
+within 0.5 points for every placement, confirming that the simulator adds no hidden error.
+
+\section{Programming Noise}
+
+\begin{table}[h]
+\centering\small
+\begin{tabular}{@{}lcccccc@{}}
+\toprule
+Placement & $\sigma=0$ & 2\% & 3\% & 5\% & 7.5\% & 10\% \\
+\midrule
+All SLC & 89.9 & 89.3 & 89.1 & 87.8 & 85.9 & 79.7 \\
+All MLC & 90.0 & 87.3 & 83.9 & 66.3 & 52.2 & 51.3 \\
+\midrule
+Magnitude, 20\% SLC & 89.7 & 89.9 & \best{90.0} & 88.6 & 83.5 & 72.0 \\
+Fisher, 20\% SLC    & 89.1 & 90.1 & \best{90.0} & \best{89.0} & \best{84.5} & \best{73.7} \\
+Gradient, 20\% SLC  & 89.8 & \best{90.2} & \best{90.0} & 88.0 & 79.3 & 67.7 \\
+Random, 20\% SLC    & 90.0 & 89.9 & 87.7 & 78.8 & 58.8 & 49.1 \\
+\bottomrule
+\end{tabular}
+\caption{BERT-Base, mean accuracy (\%) over 5 chips. DistilBERT behaves the same way (Appendix~A).}
+\end{table}
+
+All-MLC collapses once noise reaches 5\%. Protecting 20\% of the components by magnitude or Fisher
+recovers nearly all of the loss, the gradient recovers less at high noise, and a random 20\% recovers
+little: \emph{which} components are protected matters more than how many.
+
+\section{Choosing and Sizing the Protected Set}
+
+\begin{figure}[h]
+\centering
+\begin{tikzpicture}[x=0.105cm,y=0.13cm]
+  \foreach \v in {50,60,70,80,90} {
+    \draw[gray!30] (0,\v-50) -- (100,\v-50);
+    \node[left,font=\scriptsize] at (0,\v-50) {\v\%};
+  }
+  \foreach \v in {0,20,40,60,80,100}
+    \node[below,font=\scriptsize] at (\v,0) {\v\%};
+  \node[font=\small] at (50,-6.5) {share of components in SLC};
+  \node[rotate=90,font=\small] at (-13,20) {SST-2 accuracy};
+  \draw[gray,dashed] (0,40.14) -- (100,40.14);
+  \node[above left,font=\scriptsize,gray] at (100,40.14) {SVD model, no hardware error (90.1\%)};
+  \draw[crand,thick] plot[mark=*,mark size=1.3pt] coordinates
+    {(0,3.0) (5,3.6) (10,4.2) (20,5.2) (30,7.5) (50,17.3) (100,35.7)};
+  \draw[cgrad,thick] plot[mark=*,mark size=1.3pt] coordinates
+    {(0,3.0) (5,17.5) (10,29.0) (20,31.2) (30,32.4) (50,33.2) (100,35.7)};
+  \draw[cfis,thick] plot[mark=*,mark size=1.3pt] coordinates
+    {(0,3.0) (5,30.0) (10,32.2) (20,34.2) (30,35.1) (50,35.8) (100,35.7)};
+  \draw[cmag,thick,dashed] plot[mark=*,mark size=1.3pt] coordinates
+    {(0,3.0) (5,29.4) (10,31.8) (20,34.1) (30,35.5) (50,35.6) (100,35.7)};
+  \node[right,font=\scriptsize] at (5,8.5) {all MLC 53.0\%};
+  \node[above left,font=\scriptsize] at (100,36.0) {all SLC 85.7\%};
+  \begin{scope}[shift={(60,8)},font=\scriptsize]
+    \draw[cmag,thick,dashed] (0,12) -- (5,12); \node[right] at (5,12) {Magnitude};
+    \draw[cfis,thick] (0,8) -- (5,8);   \node[right] at (5,8) {Fisher};
+    \draw[cgrad,thick] (0,4) -- (5,4);  \node[right] at (5,4) {Gradient (HyFlexPIM-style)};
+    \draw[crand,thick] (0,0) -- (5,0);  \node[right] at (5,0) {Random};
+  \end{scope}
+\end{tikzpicture}
+\caption{BERT-Base at $\sigma=7.5\%$, mean of 20 chips. 0\% and 100\% are all-MLC and all-SLC.
+Magnitude (dashed) and Fisher lie on top of each other.}
+\end{figure}
+
+\begin{table}[h]
+\centering\small
+\begin{tabular}{@{}llccccccc@{}}
+\toprule
+Noise & Placement & 0\% & 5\% & 10\% & 20\% & 30\% & 50\% & 100\% \\
+\midrule
+\multirow{4}{*}{$\sigma=5\%$}
+ & Magnitude & \multirow{4}{*}{66.8} & \best{88.0} & \best{88.6} & 88.7 & \best{88.9} & \best{88.9} & \multirow{4}{*}{88.0} \\
+ & Fisher    & & 87.9 & \best{88.6} & \best{88.8} & \best{88.9} & \best{88.9} & \\
+ & Gradient  & & 84.2 & 88.2 & 88.4 & 88.4 & 88.1 & \\
+ & Random    & & 72.5 & 73.6 & 76.2 & 77.8 & 83.4 & \\
+\midrule
+\multirow{4}{*}{$\sigma=7.5\%$}
+ & Magnitude & \multirow{4}{*}{53.0} & 79.4 & 81.8 & 84.1 & \best{85.5} & 85.6 & \multirow{4}{*}{85.7} \\
+ & Fisher    & & \best{80.0} & \best{82.2} & \best{84.2} & 85.1 & \best{85.8} & \\
+ & Gradient  & & 67.5 & 79.0 & 81.2 & 82.4 & 83.2 & \\
+ & Random    & & 53.6 & 54.2 & 55.2 & 57.5 & 67.3 & \\
+\bottomrule
+\end{tabular}
+\caption{BERT-Base, mean accuracy (\%) over 20 chips by share of components in SLC. DistilBERT,
+$\sigma=3\%$ and worst-chip results are in Appendix~A.}
+\end{table}
+
+\subsection{Magnitude and Fisher are equivalent; the gradient falls behind}
+Because every placement is tested on the same 20 chips, we can compare them chip by chip. Over all 300
+chips of the SLC-share study (3 noise levels, 5 SLC shares), Fisher differs from magnitude by
+$+0.4\pm0.7$ sentences per chip on BERT-Base and $-0.6\pm0.7$ on DistilBERT (mean $\pm$ standard error,
+out of 872): no measurable difference. The gradient is clearly worse, by $17.3\pm2.0$ and $7.8\pm1.1$
+sentences; at $\sigma=7.5\%$ it trails by 3 points with 20\% SLC and by 12 points with 5\% SLC. Random selection is far behind everywhere.
+
+\subsection{Why magnitude is enough}
+After SVD, component $r$ is stored as the row $\sigma_r v_r$ and the column $u_r$. Each row is quantised
+with its own scale, set by its largest value, so the same cell noise produces a weight error proportional
+to $\sigma_r$. The harm a component does when left in MLC is its sensitivity times the size of the noise
+it receives, and the Fisher score estimates exactly this product over all of the component's stored
+entries. That this principled estimate ends up choosing essentially the same components as magnitude
+shows that noise size, set by $\sigma_r$, dominates the damage: magnitude ranking is close to the best
+placement available under this noise model. It also needs no data or gradients. The gradient falls short
+because it measures sensitivity to small changes of $\sigma_r$ alone, ignoring both the size of the noise
+and the other stored entries.
+
+\subsection{How much SLC is needed}
+With magnitude ranking, the SLC share needed to come within half a point of an all-SLC chip is about 5\%
+at $\sigma=3\%$, 5--10\% at $\sigma=5\%$ and about 30\% at $\sigma=7.5\%$; DistilBERT needs 30--50\% at
+$\sigma=7.5\%$. Counting only weight cells, a share $f$ in SLC needs $7f+4(1-f)$ cells per weight against 7
+for all-SLC: 61\% of the cells at 10\% SLC and 70\% at 30\% (all-MLC: 57\%). At moderate noise a hybrid
+chip therefore approaches MLC density at SLC accuracy.
+
+\section{Stuck-At Faults}
+A stuck cell reads fully on or fully off, whatever was written. We made a share of all cells stuck, half
+on and half off, with no programming noise and 20\% SLC.
+
+\begin{table}[h]
+\centering\small
+\begin{tabular}{@{}lccccccc@{}}
+\toprule
+Placement & 0\% & 0.1\% & 0.2\% & 0.5\% & 1\% & 2\% & 5\% \\
+\midrule
+All SLC & 89.9 & 88.3 & 85.6 & \best{79.0} & \best{62.7} & 51.4 & 49.6 \\
+All MLC & 90.0 & 58.6 & 52.6 & 50.8 & 51.2 & 49.6 & 49.6 \\
+\midrule
+Magnitude, 20\% SLC & 89.7 & 89.6 & \best{88.6} & 76.8 & 57.9 & 51.0 & 50.0 \\
+Fisher, 20\% SLC    & 89.1 & \best{89.7} & 88.4 & 75.6 & 55.5 & 49.5 & 50.3 \\
+Gradient, 20\% SLC  & 89.8 & 89.4 & 87.5 & 71.0 & 52.8 & 50.2 & 49.5 \\
+Random, 20\% SLC    & 90.0 & 67.9 & 55.8 & 50.7 & 50.6 & 50.2 & 49.9 \\
+\bottomrule
+\end{tabular}
+\caption{BERT-Base, mean accuracy (\%) over 20 chips versus the share of stuck cells.}
+\end{table}
+
+Faults are far more harmful than noise, because a stuck cell in a high-order slice shifts its weight by a
+large, fixed amount. All-MLC fails when one cell in a thousand is stuck, and even all-SLC fails at 1\%. Up
+to 0.2\%, magnitude and Fisher with 20\% SLC are as good as all-SLC; the gradient degrades sooner. Near
+the collapse point, accuracy varies by 6--9 points from chip to chip, so survival depends on \emph{where}
+the faults land. Reported stuck-cell rates for real arrays are of the order of a few percent, well past
+the point where every placement fails, so fault-aware mapping is required.
+
+\section{A More Realistic Chip}
+We added the main effects missing from the basic simulator and tested each on its own, after checking the
+new simulator against exact results.
+
+\begin{table}[h]
+\centering\small
+\begin{tabular}{@{}lccccc@{}}
+\toprule
+Condition & All SLC & All MLC & Magnitude & Fisher & Gradient \\
+\midrule
+No non-idealities & 89.7 & 90.4 & 90.6 & 89.6 & 90.3 \\
+Read noise 2\% (fresh at every read) & 89.0 & 77.3 & \best{90.1} & 89.7 & 89.8 \\
+Read noise 5\% & 80.0 & 53.0 & 82.5 & \best{82.7} & 76.6 \\
+Middle MLC levels $2\times$ noisier ($\sigma=5\%$) & 88.2 & 62.5 & \best{88.4} & \best{88.4} & 87.8 \\
+1\% stuck cells, scattered & \best{61.3} & 50.7 & 56.4 & 55.6 & 52.6 \\
+1\% stuck cells, $3\times3$ clusters & \best{66.7} & 50.8 & 54.0 & 53.1 & 51.5 \\
+1\% stuck cells, whole bit lines & \best{57.0} & 50.4 & 50.4 & 52.2 & 51.0 \\
+Fixed ADC with bit-serial inputs, 6 bits & 89.3 & 83.0 & 90.0 & \best{90.5} & 89.6 \\
+Fixed ADC with bit-serial inputs, 5 bits & 51.1 & 51.1 & 51.1 & 51.6 & 53.0 \\
+IR drop, $r=3\times10^{-4}$ & 88.9 & 89.8 & 90.4 & \best{91.1} & 90.5 \\
+IR drop, $r=3\times10^{-3}$ & 58.5 & \best{79.1} & 76.8 & 72.8 & 76.4 \\
+\bottomrule
+\end{tabular}
+\caption{BERT-Base, mean accuracy (\%); hybrids keep 20\% of components in SLC. Digital SVD model:
+90.1\%. $r$ is the resistance of one wire segment relative to a cell's on-resistance. DistilBERT results
+are in Appendix~A.}
+\end{table}
+
+\begin{itemize}
+\item \textbf{Read noise and level-dependent noise} behave like programming noise: all-MLC fails, while
+magnitude and Fisher stay within about a point of all-SLC. The gradient loses 6 points at 5\% read noise.
+\item \textbf{ADC resolution.} With the ADC range fixed by calibration, 6 bits is enough for all-SLC and the
+hybrids, all-MLC needs 7 bits, and 5 bits fails for every placement. With 5\% programming noise
+(DistilBERT), 6 bits still holds the magnitude hybrid at 88.5\% while all-MLC drops to 56.0\%. Since ADCs
+dominate crossbar energy, this sets the target for the hardware-cost study.
+\item \textbf{IR drop} has no effect at realistic wire resistance ($r\lesssim3\times10^{-4}$ in
+$128\times128$ tiles). When large, it hurts SLC most: an SLC cell storing a 1 sits at full conductance and
+loses the most current to wire resistance.
+\item \textbf{Fault patterns.} Clustered faults affect fewer weights than scattered ones, and whole broken
+bit lines are worst. At 1\% every placement is already near failure, confirming Section~6.
+\end{itemize}
+Random selection was not repeated for these effects: as a control, it is already far behind in every
+experiment above.
+
+\section{Relation to HyFlexPIM}
+Our results agree with HyFlexPIM that a hybrid SLC/MLC layout works, but not on how to rank components.
+HyFlexPIM reports that its gradient ranking beats ranking by singular value by about a point or less, on
+MRPC and CoLA at a single noise level. We find no difference at mild noise ($\sigma=3\%$) and the reverse
+at high noise, so the two findings need not conflict. Three differences in set-up matter:
+\begin{itemize}
+\item \textbf{Noise model.} HyFlexPIM applies relative noise to whole weights, $\tilde W=W\odot(1+\eta)$, so
+small weights are almost exact. We add noise to each cell, as real hardware and standard simulators do,
+so even a zero weight carries the error of its two drifting cells. The paper gives no reason for its choice;
+its citations support only the noise level, a 4.04\% bit error rate measured on 3 million real MLC cells,
+which is itself a per-cell quantity.
+\item \textbf{Noise range.} The paper evaluates one fixed noise level. Our sweeps cover 2--10\%, and the
+ranking differences appear only at $\sigma\geq5\%$.
+\item \textbf{When gradients are taken.} HyFlexPIM records gradients during fine-tuning; ours are taken on
+the trained model. A re-run of their fine-tuning was not pursued, since magnitude already matches the
+best placement we could construct.
+\end{itemize}
+
+\section{Conclusions}
+\begin{itemize}
+\item A hybrid SLC/MLC layout is necessary: all-MLC storage fails at realistic noise.
+\item Ranking components by singular value is the recommended placement. A Fisher estimate of each
+component's expected damage chooses essentially the same components and reaches the same accuracy, which
+shows that magnitude is close to the best placement under this noise model; it needs no data or
+gradients. A HyFlexPIM-style gradient is clearly weaker at high noise.
+\item The SLC share should follow the expected noise: about 10\% at moderate noise and 30\% at high noise,
+saving 30--40\% of the cells of an all-SLC chip.
+\item The conclusions hold under read noise, level-dependent noise, a fixed 6-bit ADC and realistic IR drop.
+\item Stuck cells break every placement at rates below those reported for real arrays, so fault-aware
+mapping is necessary, not optional.
+\end{itemize}
+
+\section{Limitations}
+\begin{itemize}
+\item Each non-ideality was tested on its own; their combined effect is not yet measured. The IR-drop model
+is static, and the ADC range is set by the maximum calibration value rather than a percentile.
+\item Inputs are quantised to 8 bits with one scale per batch of sentences, so accuracy shifts slightly
+with batch size (by up to about one point without noise). All placements within an experiment use the same
+batches, so comparisons are unaffected; per-sentence input scaling will be added.
+\item The SVD step costs about 2 points, and DistilBERT's fine-tuning needs early stopping.
+\item All results are on SST-2; MRPC and the CNN models follow in Phase 2. Literature figures for stuck-cell
+rates and wire resistance are still to be confirmed with citations.
+\end{itemize}
+
+\section{Next Steps}
+Stuck cells are the one effect placement cannot handle. Fault-aware mapping, and its extension that
+jointly accounts for cell type, faults and IR drop, come next; they need no retraining, only a smarter
+assignment of components to crossbar positions. Noise-aware training, including a variant that applies
+SLC- and MLC-specific noise during fine-tuning, follows.
+
+\vspace{6pt}
+\noindent{\footnotesize\color{gray} Models: textattack/bert-base-uncased-SST-2 and
+distilbert-base-uncased-finetuned-sst-2-english. Simulator: 8-bit weights, on/off ratio 100, differential
+cell pairs, $128\times128$ tiles. Ranking scores computed on 2{,}048 SST-2 training sentences.}
+
+\input{appendix_tables}
+
+\end{document}

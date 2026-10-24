@@ -1,13 +1,24 @@
 __pycache__/
 *.pyc
-.pytest_cache/
 .DS_Store
 .venv/
 venv/
-data/
 
-# Only the INT8 golden exports are versioned (D14); everything else lives on Drive.
-checkpoints/*
-!checkpoints/README.md
-!checkpoints/*_int8_seed*.pt
-!checkpoints/*_int8_seed*.npz
+# model weights, scores and Kaggle archives (regenerate with the Kaggle scripts)
+*.pt
+*.zip
+results_smoke/
+
+# LaTeX build files
+*.aux
+*.log
+!svd_tiering/logs/*.log
+*.out
+*.toc
+
+# editors and notebooks
+.vscode/
+.idea/
+.ipynb_checkpoints/
+.pytest_cache/
+*.synctex.gz
