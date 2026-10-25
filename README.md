@@ -12,6 +12,8 @@ Models: **BERT-Base** and **DistilBERT**, fine-tuned on **SST-2** (sentiment cla
 ```
 svd_tiering/   step 1: SVD factorisation, fine-tuning and component scores (Kaggle script + outputs)
 reram_sim/     step 2: crossbar simulator and every experiment in the report (one Kaggle script + results)
+mapping/       step 3: mapping techniques, one subfolder each (script + results)
+  fault_aware/   fault-aware mapping and C1 on tested chips
 docs/          project plan and results report (PDF and LaTeX)
 ```
 
@@ -23,6 +25,9 @@ Everything runs on Kaggle (GPU T4, Internet on). Each script is one self-contain
 2. **`reram_sim/kaggle_reram_experiments.py`**: add the step 1 notebook as input, then set
    `EXPERIMENT` to `"smoke"` (a quick check), an experiment name, or `"all"`. The script self-tests the
    simulator, computes the placement scores, and writes `results/<experiment>/<model>/sweep.csv`.
+3. **`mapping/<technique>/`**: each mapping technique has its own Kaggle script with the same input as
+   step 2 and writes `results/<experiment>/<model>/sweep.csv` in the same format. See
+   [`mapping/README.md`](mapping/README.md).
 
 Model weights (`*.pt`) are not stored in the repository; regenerate them with step 1.
 
@@ -34,7 +39,9 @@ Model weights (`*.pt`) are not stored in the repository; regenerate them with st
   10–30% of components in SLC, magnitude ranking matches an all-SLC chip and saves 30–40% of the
   memory cells.
 - The conclusions hold under read noise, level-dependent noise, a fixed 6-bit ADC and realistic IR drop.
-- Stuck-at faults break every placement at rates below those reported for real arrays, which
-  motivates fault-aware mapping (the next step).
+- Stuck-at faults break every fixed placement at rates below those reported for real arrays.
+  Fault-aware mapping (choosing which component goes in which slot once the stuck cells are known)
+  recovers most of this loss at no hardware cost, e.g. 76.6% → 85.6% on BERT at 0.5% stuck cells.
+  Also choosing the SLC set per chip (C1) gives no reliable extra gain.
 
 See [`docs/results_report.pdf`](docs/results_report.pdf) for the full analysis.

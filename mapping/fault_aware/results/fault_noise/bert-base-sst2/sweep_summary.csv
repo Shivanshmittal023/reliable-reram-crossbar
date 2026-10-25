@@ -1,0 +1,16 @@
+policy,slc_frac,param,value,acc_mean,acc_std,acc_min,n
+all_slc,1.0,fault_rate,0.002,0.856422,0.022165,0.814220,10
+all_slc_remap,1.0,fault_rate,0.002,0.861468,0.038923,0.752294,10
+magnitude,0.2,fault_rate,0.002,0.848968,0.018292,0.817661,10
+magnitude_remap,0.2,fault_rate,0.002,0.874312,0.009501,0.860092,10
+c1,0.2,fault_rate,0.002,0.871674,0.013593,0.836009,10
+all_slc,1.0,fault_rate,0.005,0.783945,0.055392,0.638761,10
+all_slc_remap,1.0,fault_rate,0.005,0.823739,0.036751,0.736239,10
+magnitude,0.2,fault_rate,0.005,0.702523,0.071175,0.579128,10
+magnitude_remap,0.2,fault_rate,0.005,0.804128,0.029621,0.729358,10
+c1,0.2,fault_rate,0.005,0.779128,0.056518,0.649083,10
+all_slc,1.0,fault_rate,0.01,0.646445,0.084143,0.509174,10
+all_slc_remap,1.0,fault_rate,0.01,0.765023,0.052611,0.655963,10
+magnitude,0.2,fault_rate,0.01,0.521330,0.026847,0.472477,10
+magnitude_remap,0.2,fault_rate,0.01,0.581193,0.049492,0.510321,10
+c1,0.2,fault_rate,0.01,0.616858,0.044667,0.527523,10
