@@ -1,0 +1,1002 @@
+7.9s 1 0.00s - Debugger warning: It seems that frozen modules are being used, which may
+7.9s 2 0.00s - make the debugger miss breakpoints. Please pass -Xfrozen_modules=off
+7.9s 3 0.00s - to python to disable frozen modules.
+7.9s 4 0.00s - Note: Debugging will proceed. Set PYDEVD_DISABLE_FILE_VALIDATION=1 to disable this validation.
+8.6s 5 0.00s - Debugger warning: It seems that frozen modules are being used, which may
+8.6s 6 0.00s - make the debugger miss breakpoints. Please pass -Xfrozen_modules=off
+8.6s 7 0.00s - to python to disable frozen modules.
+8.6s 8 0.00s - Note: Debugging will proceed. Set PYDEVD_DISABLE_FILE_VALIDATION=1 to disable this validation.
+10.9s 9 /kaggle/input/notebooks/sarveshjoshi29/svd-wts/outputs.zip
+10.9s 10 /kaggle/input/notebooks/sarveshjoshi29/svd-wts/__results__.html
+10.9s 11 /kaggle/input/notebooks/sarveshjoshi29/svd-wts/__huggingface_repos__.json
+10.9s 12 /kaggle/input/notebooks/sarveshjoshi29/svd-wts/__notebook__.ipynb
+10.9s 13 /kaggle/input/notebooks/sarveshjoshi29/svd-wts/__output__.json
+10.9s 14 /kaggle/input/notebooks/sarveshjoshi29/svd-wts/custom.css
+10.9s 15 /kaggle/input/notebooks/sarveshjoshi29/svd-wts/outputs/distilbert-sst2/importance.csv
+10.9s 16 /kaggle/input/notebooks/sarveshjoshi29/svd-wts/outputs/distilbert-sst2/svd_model.pt
+10.9s 17 /kaggle/input/notebooks/sarveshjoshi29/svd-wts/outputs/distilbert-sst2/summary.json
+10.9s 18 /kaggle/input/notebooks/sarveshjoshi29/svd-wts/outputs/distilbert-sst2/tier_map.json
+10.9s 19 /kaggle/input/notebooks/sarveshjoshi29/svd-wts/outputs/distilbert-sst2/importance.pt
+10.9s 20 /kaggle/input/notebooks/sarveshjoshi29/svd-wts/outputs/distilbert-sst2/SLC/distilbert.transformer.layer.3.ffn.lin1.pt
+10.9s 21 /kaggle/input/notebooks/sarveshjoshi29/svd-wts/outputs/distilbert-sst2/SLC/distilbert.transformer.layer.5.attention.q_lin.pt
+10.9s 22 /kaggle/input/notebooks/sarveshjoshi29/svd-wts/outputs/distilbert-sst2/SLC/distilbert.transformer.layer.2.ffn.lin2.pt
+10.9s 23 /kaggle/input/notebooks/sarveshjoshi29/svd-wts/outputs/distilbert-sst2/SLC/distilbert.transformer.layer.2.attention.q_lin.pt
+10.9s 24 /kaggle/input/notebooks/sarveshjoshi29/svd-wts/outputs/distilbert-sst2/SLC/distilbert.transformer.layer.1.attention.q_lin.pt
+10.9s 25 /kaggle/input/notebooks/sarveshjoshi29/svd-wts/outputs/distilbert-sst2/SLC/distilbert.transformer.layer.2.attention.out_lin.pt
+10.9s 26 /kaggle/input/notebooks/sarveshjoshi29/svd-wts/outputs/distilbert-sst2/SLC/distilbert.transformer.layer.0.ffn.lin1.pt
+10.9s 27 /kaggle/input/notebooks/sarveshjoshi29/svd-wts/outputs/distilbert-sst2/SLC/distilbert.transformer.layer.3.attention.k_lin.pt
+10.9s 28 /kaggle/input/notebooks/sarveshjoshi29/svd-wts/outputs/distilbert-sst2/SLC/distilbert.transformer.layer.4.attention.k_lin.pt
+10.9s 29 /kaggle/input/notebooks/sarveshjoshi29/svd-wts/outputs/distilbert-sst2/SLC/distilbert.transformer.layer.0.attention.v_lin.pt
+10.9s 30 /kaggle/input/notebooks/sarveshjoshi29/svd-wts/outputs/distilbert-sst2/SLC/distilbert.transformer.layer.0.attention.q_lin.pt
+10.9s 31 /kaggle/input/notebooks/sarveshjoshi29/svd-wts/outputs/distilbert-sst2/SLC/distilbert.transformer.layer.4.ffn.lin2.pt
+10.9s 32 /kaggle/input/notebooks/sarveshjoshi29/svd-wts/outputs/distilbert-sst2/SLC/distilbert.transformer.layer.5.ffn.lin2.pt
+10.9s 33 /kaggle/input/notebooks/sarveshjoshi29/svd-wts/outputs/distilbert-sst2/SLC/distilbert.transformer.layer.1.attention.k_lin.pt
+10.9s 34 /kaggle/input/notebooks/sarveshjoshi29/svd-wts/outputs/distilbert-sst2/SLC/distilbert.transformer.layer.5.attention.k_lin.pt
+10.9s 35 /kaggle/input/notebooks/sarveshjoshi29/svd-wts/outputs/distilbert-sst2/SLC/distilbert.transformer.layer.1.ffn.lin1.pt
+10.9s 36 /kaggle/input/notebooks/sarveshjoshi29/svd-wts/outputs/distilbert-sst2/SLC/distilbert.transformer.layer.2.attention.v_lin.pt
+10.9s 37 /kaggle/input/notebooks/sarveshjoshi29/svd-wts/outputs/distilbert-sst2/SLC/distilbert.transformer.layer.0.attention.k_lin.pt
+10.9s 38 /kaggle/input/notebooks/sarveshjoshi29/svd-wts/outputs/distilbert-sst2/SLC/distilbert.transformer.layer.4.attention.q_lin.pt
+10.9s 39 /kaggle/input/notebooks/sarveshjoshi29/svd-wts/outputs/distilbert-sst2/SLC/distilbert.transformer.layer.3.ffn.lin2.pt
+10.9s 40 /kaggle/input/notebooks/sarveshjoshi29/svd-wts/outputs/distilbert-sst2/SLC/distilbert.transformer.layer.5.ffn.lin1.pt
+10.9s 41 /kaggle/input/notebooks/sarveshjoshi29/svd-wts/outputs/distilbert-sst2/SLC/distilbert.transformer.layer.5.attention.v_lin.pt
+10.9s 42 /kaggle/input/notebooks/sarveshjoshi29/svd-wts/outputs/distilbert-sst2/SLC/distilbert.transformer.layer.4.attention.v_lin.pt
+10.9s 43 /kaggle/input/notebooks/sarveshjoshi29/svd-wts/outputs/distilbert-sst2/SLC/distilbert.transformer.layer.4.ffn.lin1.pt
+10.9s 44 /kaggle/input/notebooks/sarveshjoshi29/svd-wts/outputs/distilbert-sst2/SLC/distilbert.transformer.layer.2.attention.k_lin.pt
+10.9s 45 /kaggle/input/notebooks/sarveshjoshi29/svd-wts/outputs/distilbert-sst2/SLC/distilbert.transformer.layer.0.ffn.lin2.pt
+10.9s 46 /kaggle/input/notebooks/sarveshjoshi29/svd-wts/outputs/distilbert-sst2/SLC/distilbert.transformer.layer.0.attention.out_lin.pt
+10.9s 47 /kaggle/input/notebooks/sarveshjoshi29/svd-wts/outputs/distilbert-sst2/SLC/distilbert.transformer.layer.1.attention.out_lin.pt
+10.9s 48 /kaggle/input/notebooks/sarveshjoshi29/svd-wts/outputs/distilbert-sst2/SLC/distilbert.transformer.layer.1.ffn.lin2.pt
+10.9s 49 /kaggle/input/notebooks/sarveshjoshi29/svd-wts/outputs/distilbert-sst2/SLC/distilbert.transformer.layer.2.ffn.lin1.pt
+10.9s 50 /kaggle/input/notebooks/sarveshjoshi29/svd-wts/outputs/distilbert-sst2/SLC/distilbert.transformer.layer.4.attention.out_lin.pt
+10.9s 51 /kaggle/input/notebooks/sarveshjoshi29/svd-wts/outputs/distilbert-sst2/SLC/distilbert.transformer.layer.3.attention.q_lin.pt
+10.9s 52 /kaggle/input/notebooks/sarveshjoshi29/svd-wts/outputs/distilbert-sst2/SLC/distilbert.transformer.layer.3.attention.out_lin.pt
+10.9s 53 /kaggle/input/notebooks/sarveshjoshi29/svd-wts/outputs/distilbert-sst2/SLC/distilbert.transformer.layer.1.attention.v_lin.pt
+10.9s 54 /kaggle/input/notebooks/sarveshjoshi29/svd-wts/outputs/distilbert-sst2/SLC/distilbert.transformer.layer.5.attention.out_lin.pt
+10.9s 55 /kaggle/input/notebooks/sarveshjoshi29/svd-wts/outputs/distilbert-sst2/SLC/distilbert.transformer.layer.3.attention.v_lin.pt
+10.9s 56 /kaggle/input/notebooks/sarveshjoshi29/svd-wts/outputs/distilbert-sst2/MLC/distilbert.transformer.layer.3.ffn.lin1.pt
+10.9s 57 /kaggle/input/notebooks/sarveshjoshi29/svd-wts/outputs/distilbert-sst2/MLC/distilbert.transformer.layer.5.attention.q_lin.pt
+10.9s 58 /kaggle/input/notebooks/sarveshjoshi29/svd-wts/outputs/distilbert-sst2/MLC/distilbert.transformer.layer.2.ffn.lin2.pt
+10.9s 59 /kaggle/input/notebooks/sarveshjoshi29/svd-wts/outputs/distilbert-sst2/MLC/distilbert.transformer.layer.2.attention.q_lin.pt
+10.9s 60 /kaggle/input/notebooks/sarveshjoshi29/svd-wts/outputs/distilbert-sst2/MLC/distilbert.transformer.layer.1.attention.q_lin.pt
+10.9s 61 /kaggle/input/notebooks/sarveshjoshi29/svd-wts/outputs/distilbert-sst2/MLC/distilbert.transformer.layer.2.attention.out_lin.pt
+10.9s 62 /kaggle/input/notebooks/sarveshjoshi29/svd-wts/outputs/distilbert-sst2/MLC/distilbert.transformer.layer.0.ffn.lin1.pt
+10.9s 63 /kaggle/input/notebooks/sarveshjoshi29/svd-wts/outputs/distilbert-sst2/MLC/distilbert.transformer.layer.3.attention.k_lin.pt
+10.9s 64 /kaggle/input/notebooks/sarveshjoshi29/svd-wts/outputs/distilbert-sst2/MLC/distilbert.transformer.layer.4.attention.k_lin.pt
+10.9s 65 /kaggle/input/notebooks/sarveshjoshi29/svd-wts/outputs/distilbert-sst2/MLC/distilbert.transformer.layer.0.attention.v_lin.pt
+10.9s 66 /kaggle/input/notebooks/sarveshjoshi29/svd-wts/outputs/distilbert-sst2/MLC/distilbert.transformer.layer.0.attention.q_lin.pt
+10.9s 67 /kaggle/input/notebooks/sarveshjoshi29/svd-wts/outputs/distilbert-sst2/MLC/distilbert.transformer.layer.4.ffn.lin2.pt
+10.9s 68 /kaggle/input/notebooks/sarveshjoshi29/svd-wts/outputs/distilbert-sst2/MLC/distilbert.transformer.layer.5.ffn.lin2.pt
+10.9s 69 /kaggle/input/notebooks/sarveshjoshi29/svd-wts/outputs/distilbert-sst2/MLC/distilbert.transformer.layer.1.attention.k_lin.pt
+10.9s 70 /kaggle/input/notebooks/sarveshjoshi29/svd-wts/outputs/distilbert-sst2/MLC/distilbert.transformer.layer.5.attention.k_lin.pt
+10.9s 71 /kaggle/input/notebooks/sarveshjoshi29/svd-wts/outputs/distilbert-sst2/MLC/distilbert.transformer.layer.1.ffn.lin1.pt
+10.9s 72 /kaggle/input/notebooks/sarveshjoshi29/svd-wts/outputs/distilbert-sst2/MLC/distilbert.transformer.layer.2.attention.v_lin.pt
+10.9s 73 /kaggle/input/notebooks/sarveshjoshi29/svd-wts/outputs/distilbert-sst2/MLC/distilbert.transformer.layer.0.attention.k_lin.pt
+10.9s 74 /kaggle/input/notebooks/sarveshjoshi29/svd-wts/outputs/distilbert-sst2/MLC/distilbert.transformer.layer.4.attention.q_lin.pt
+10.9s 75 /kaggle/input/notebooks/sarveshjoshi29/svd-wts/outputs/distilbert-sst2/MLC/distilbert.transformer.layer.3.ffn.lin2.pt
+10.9s 76 /kaggle/input/notebooks/sarveshjoshi29/svd-wts/outputs/distilbert-sst2/MLC/distilbert.transformer.layer.5.ffn.lin1.pt
+10.9s 77 /kaggle/input/notebooks/sarveshjoshi29/svd-wts/outputs/distilbert-sst2/MLC/distilbert.transformer.layer.5.attention.v_lin.pt
+10.9s 78 /kaggle/input/notebooks/sarveshjoshi29/svd-wts/outputs/distilbert-sst2/MLC/distilbert.transformer.layer.4.attention.v_lin.pt
+10.9s 79 /kaggle/input/notebooks/sarveshjoshi29/svd-wts/outputs/distilbert-sst2/MLC/distilbert.transformer.layer.4.ffn.lin1.pt
+10.9s 80 /kaggle/input/notebooks/sarveshjoshi29/svd-wts/outputs/distilbert-sst2/MLC/distilbert.transformer.layer.2.attention.k_lin.pt
+10.9s 81 /kaggle/input/notebooks/sarveshjoshi29/svd-wts/outputs/distilbert-sst2/MLC/distilbert.transformer.layer.0.ffn.lin2.pt
+10.9s 82 /kaggle/input/notebooks/sarveshjoshi29/svd-wts/outputs/distilbert-sst2/MLC/distilbert.transformer.layer.0.attention.out_lin.pt
+10.9s 83 /kaggle/input/notebooks/sarveshjoshi29/svd-wts/outputs/distilbert-sst2/MLC/distilbert.transformer.layer.1.attention.out_lin.pt
+10.9s 84 /kaggle/input/notebooks/sarveshjoshi29/svd-wts/outputs/distilbert-sst2/MLC/distilbert.transformer.layer.1.ffn.lin2.pt
+10.9s 85 /kaggle/input/notebooks/sarveshjoshi29/svd-wts/outputs/distilbert-sst2/MLC/distilbert.transformer.layer.2.ffn.lin1.pt
+10.9s 86 /kaggle/input/notebooks/sarveshjoshi29/svd-wts/outputs/distilbert-sst2/MLC/distilbert.transformer.layer.4.attention.out_lin.pt
+10.9s 87 /kaggle/input/notebooks/sarveshjoshi29/svd-wts/outputs/distilbert-sst2/MLC/distilbert.transformer.layer.3.attention.q_lin.pt
+10.9s 88 /kaggle/input/notebooks/sarveshjoshi29/svd-wts/outputs/distilbert-sst2/MLC/distilbert.transformer.layer.3.attention.out_lin.pt
+10.9s 89 /kaggle/input/notebooks/sarveshjoshi29/svd-wts/outputs/distilbert-sst2/MLC/distilbert.transformer.layer.1.attention.v_lin.pt
+10.9s 90 /kaggle/input/notebooks/sarveshjoshi29/svd-wts/outputs/distilbert-sst2/MLC/distilbert.transformer.layer.5.attention.out_lin.pt
+10.9s 91 /kaggle/input/notebooks/sarveshjoshi29/svd-wts/outputs/distilbert-sst2/MLC/distilbert.transformer.layer.3.attention.v_lin.pt
+10.9s 92 /kaggle/input/notebooks/sarveshjoshi29/svd-wts/outputs/bert-base-sst2/importance.csv
+10.9s 93 /kaggle/input/notebooks/sarveshjoshi29/svd-wts/outputs/bert-base-sst2/svd_model.pt
+10.9s 94 /kaggle/input/notebooks/sarveshjoshi29/svd-wts/outputs/bert-base-sst2/summary.json
+10.9s 95 /kaggle/input/notebooks/sarveshjoshi29/svd-wts/outputs/bert-base-sst2/tier_map.json
+10.9s 96 /kaggle/input/notebooks/sarveshjoshi29/svd-wts/outputs/bert-base-sst2/importance.pt
+10.9s 97 /kaggle/input/notebooks/sarveshjoshi29/svd-wts/outputs/bert-base-sst2/SLC/bert.encoder.layer.7.output.dense.pt
+10.9s 98 /kaggle/input/notebooks/sarveshjoshi29/svd-wts/outputs/bert-base-sst2/SLC/bert.encoder.layer.8.attention.self.value.pt
+10.9s 99 /kaggle/input/notebooks/sarveshjoshi29/svd-wts/outputs/bert-base-sst2/SLC/bert.encoder.layer.10.intermediate.dense.pt
+10.9s 100 /kaggle/input/notebooks/sarveshjoshi29/svd-wts/outputs/bert-base-sst2/SLC/bert.encoder.layer.5.intermediate.dense.pt
+10.9s 101 /kaggle/input/notebooks/sarveshjoshi29/svd-wts/outputs/bert-base-sst2/SLC/bert.encoder.layer.0.attention.self.query.pt
+10.9s 102 /kaggle/input/notebooks/sarveshjoshi29/svd-wts/outputs/bert-base-sst2/SLC/bert.encoder.layer.5.output.dense.pt
+10.9s 103 /kaggle/input/notebooks/sarveshjoshi29/svd-wts/outputs/bert-base-sst2/SLC/bert.encoder.layer.9.attention.self.value.pt
+10.9s 104 /kaggle/input/notebooks/sarveshjoshi29/svd-wts/outputs/bert-base-sst2/SLC/bert.encoder.layer.7.attention.self.value.pt
+10.9s 105 /kaggle/input/notebooks/sarveshjoshi29/svd-wts/outputs/bert-base-sst2/SLC/bert.encoder.layer.1.attention.self.key.pt
+10.9s 106 /kaggle/input/notebooks/sarveshjoshi29/svd-wts/outputs/bert-base-sst2/SLC/bert.encoder.layer.3.attention.self.query.pt
+10.9s 107 /kaggle/input/notebooks/sarveshjoshi29/svd-wts/outputs/bert-base-sst2/SLC/bert.encoder.layer.8.attention.self.query.pt
+10.9s 108 /kaggle/input/notebooks/sarveshjoshi29/svd-wts/outputs/bert-base-sst2/SLC/bert.encoder.layer.11.attention.self.value.pt
+10.9s 109 /kaggle/input/notebooks/sarveshjoshi29/svd-wts/outputs/bert-base-sst2/SLC/bert.encoder.layer.5.attention.self.value.pt
+10.9s 110 /kaggle/input/notebooks/sarveshjoshi29/svd-wts/outputs/bert-base-sst2/SLC/bert.encoder.layer.0.output.dense.pt
+10.9s 111 /kaggle/input/notebooks/sarveshjoshi29/svd-wts/outputs/bert-base-sst2/SLC/bert.encoder.layer.4.intermediate.dense.pt
+10.9s 112 /kaggle/input/notebooks/sarveshjoshi29/svd-wts/outputs/bert-base-sst2/SLC/bert.encoder.layer.0.attention.output.dense.pt
+10.9s 113 /kaggle/input/notebooks/sarveshjoshi29/svd-wts/outputs/bert-base-sst2/SLC/bert.encoder.layer.8.attention.output.dense.pt
+10.9s 114 /kaggle/input/notebooks/sarveshjoshi29/svd-wts/outputs/bert-base-sst2/SLC/bert.encoder.layer.1.output.dense.pt
+10.9s 115 /kaggle/input/notebooks/sarveshjoshi29/svd-wts/outputs/bert-base-sst2/SLC/bert.encoder.layer.0.attention.self.value.pt
+10.9s 116 /kaggle/input/notebooks/sarveshjoshi29/svd-wts/outputs/bert-base-sst2/SLC/bert.encoder.layer.2.attention.self.query.pt
+10.9s 117 /kaggle/input/notebooks/sarveshjoshi29/svd-wts/outputs/bert-base-sst2/SLC/bert.encoder.layer.2.attention.self.key.pt
+10.9s 118 /kaggle/input/notebooks/sarveshjoshi29/svd-wts/outputs/bert-base-sst2/SLC/bert.encoder.layer.11.attention.self.query.pt
+10.9s 119 /kaggle/input/notebooks/sarveshjoshi29/svd-wts/outputs/bert-base-sst2/SLC/bert.encoder.layer.7.attention.output.dense.pt
+10.9s 120 /kaggle/input/notebooks/sarveshjoshi29/svd-wts/outputs/bert-base-sst2/SLC/bert.encoder.layer.5.attention.self.query.pt
+10.9s 121 /kaggle/input/notebooks/sarveshjoshi29/svd-wts/outputs/bert-base-sst2/SLC/bert.encoder.layer.3.attention.self.value.pt
+10.9s 122 /kaggle/input/notebooks/sarveshjoshi29/svd-wts/outputs/bert-base-sst2/SLC/bert.encoder.layer.1.attention.self.value.pt
+10.9s 123 /kaggle/input/notebooks/sarveshjoshi29/svd-wts/outputs/bert-base-sst2/SLC/bert.encoder.layer.3.output.dense.pt
+10.9s 124 /kaggle/input/notebooks/sarveshjoshi29/svd-wts/outputs/bert-base-sst2/SLC/bert.encoder.layer.1.attention.output.dense.pt
+10.9s 125 /kaggle/input/notebooks/sarveshjoshi29/svd-wts/outputs/bert-base-sst2/SLC/bert.encoder.layer.2.intermediate.dense.pt
+10.9s 126 /kaggle/input/notebooks/sarveshjoshi29/svd-wts/outputs/bert-base-sst2/SLC/bert.encoder.layer.4.attention.self.key.pt
+10.9s 127 /kaggle/input/notebooks/sarveshjoshi29/svd-wts/outputs/bert-base-sst2/SLC/bert.encoder.layer.5.attention.self.key.pt
+10.9s 128 /kaggle/input/notebooks/sarveshjoshi29/svd-wts/outputs/bert-base-sst2/SLC/bert.encoder.layer.7.intermediate.dense.pt
+10.9s 129 /kaggle/input/notebooks/sarveshjoshi29/svd-wts/outputs/bert-base-sst2/SLC/bert.encoder.layer.4.attention.self.value.pt
+10.9s 130 /kaggle/input/notebooks/sarveshjoshi29/svd-wts/outputs/bert-base-sst2/SLC/bert.encoder.layer.0.intermediate.dense.pt
+10.9s 131 /kaggle/input/notebooks/sarveshjoshi29/svd-wts/outputs/bert-base-sst2/SLC/bert.encoder.layer.3.attention.output.dense.pt
+10.9s 132 /kaggle/input/notebooks/sarveshjoshi29/svd-wts/outputs/bert-base-sst2/SLC/bert.encoder.layer.0.attention.self.key.pt
+10.9s 133 /kaggle/input/notebooks/sarveshjoshi29/svd-wts/outputs/bert-base-sst2/SLC/bert.encoder.layer.3.intermediate.dense.pt
+10.9s 134 /kaggle/input/notebooks/sarveshjoshi29/svd-wts/outputs/bert-base-sst2/SLC/bert.encoder.layer.8.output.dense.pt
+10.9s 135 /kaggle/input/notebooks/sarveshjoshi29/svd-wts/outputs/bert-base-sst2/SLC/bert.encoder.layer.11.intermediate.dense.pt
+10.9s 136 /kaggle/input/notebooks/sarveshjoshi29/svd-wts/outputs/bert-base-sst2/SLC/bert.encoder.layer.9.attention.self.query.pt
+10.9s 137 /kaggle/input/notebooks/sarveshjoshi29/svd-wts/outputs/bert-base-sst2/SLC/bert.encoder.layer.1.attention.self.query.pt
+10.9s 138 /kaggle/input/notebooks/sarveshjoshi29/svd-wts/outputs/bert-base-sst2/SLC/bert.encoder.layer.6.output.dense.pt
+10.9s 139 /kaggle/input/notebooks/sarveshjoshi29/svd-wts/outputs/bert-base-sst2/SLC/bert.encoder.layer.10.attention.self.query.pt
+10.9s 140 /kaggle/input/notebooks/sarveshjoshi29/svd-wts/outputs/bert-base-sst2/SLC/bert.encoder.layer.2.output.dense.pt
+10.9s 141 /kaggle/input/notebooks/sarveshjoshi29/svd-wts/outputs/bert-base-sst2/SLC/bert.encoder.layer.3.attention.self.key.pt
+10.9s 142 /kaggle/input/notebooks/sarveshjoshi29/svd-wts/outputs/bert-base-sst2/SLC/bert.encoder.layer.4.output.dense.pt
+10.9s 143 /kaggle/input/notebooks/sarveshjoshi29/svd-wts/outputs/bert-base-sst2/SLC/bert.encoder.layer.11.output.dense.pt
+10.9s 144 /kaggle/input/notebooks/sarveshjoshi29/svd-wts/outputs/bert-base-sst2/SLC/bert.encoder.layer.6.intermediate.dense.pt
+10.9s 145 /kaggle/input/notebooks/sarveshjoshi29/svd-wts/outputs/bert-base-sst2/SLC/bert.encoder.layer.10.attention.output.dense.pt
+10.9s 146 /kaggle/input/notebooks/sarveshjoshi29/svd-wts/outputs/bert-base-sst2/SLC/bert.encoder.layer.8.attention.self.key.pt
+10.9s 147 /kaggle/input/notebooks/sarveshjoshi29/svd-wts/outputs/bert-base-sst2/SLC/bert.encoder.layer.7.attention.self.key.pt
+10.9s 148 /kaggle/input/notebooks/sarveshjoshi29/svd-wts/outputs/bert-base-sst2/SLC/bert.encoder.layer.6.attention.self.query.pt
+10.9s 149 /kaggle/input/notebooks/sarveshjoshi29/svd-wts/outputs/bert-base-sst2/SLC/bert.encoder.layer.6.attention.output.dense.pt
+10.9s 150 /kaggle/input/notebooks/sarveshjoshi29/svd-wts/outputs/bert-base-sst2/SLC/bert.encoder.layer.10.output.dense.pt
+10.9s 151 /kaggle/input/notebooks/sarveshjoshi29/svd-wts/outputs/bert-base-sst2/SLC/bert.encoder.layer.10.attention.self.key.pt
+10.9s 152 /kaggle/input/notebooks/sarveshjoshi29/svd-wts/outputs/bert-base-sst2/SLC/bert.encoder.layer.4.attention.self.query.pt
+10.9s 153 /kaggle/input/notebooks/sarveshjoshi29/svd-wts/outputs/bert-base-sst2/SLC/bert.encoder.layer.1.intermediate.dense.pt
+10.9s 154 /kaggle/input/notebooks/sarveshjoshi29/svd-wts/outputs/bert-base-sst2/SLC/bert.encoder.layer.4.attention.output.dense.pt
+10.9s 155 /kaggle/input/notebooks/sarveshjoshi29/svd-wts/outputs/bert-base-sst2/SLC/bert.encoder.layer.9.attention.self.key.pt
+10.9s 156 /kaggle/input/notebooks/sarveshjoshi29/svd-wts/outputs/bert-base-sst2/SLC/bert.encoder.layer.10.attention.self.value.pt
+10.9s 157 /kaggle/input/notebooks/sarveshjoshi29/svd-wts/outputs/bert-base-sst2/SLC/bert.encoder.layer.9.attention.output.dense.pt
+10.9s 158 /kaggle/input/notebooks/sarveshjoshi29/svd-wts/outputs/bert-base-sst2/SLC/bert.encoder.layer.2.attention.output.dense.pt
+10.9s 159 /kaggle/input/notebooks/sarveshjoshi29/svd-wts/outputs/bert-base-sst2/SLC/bert.encoder.layer.7.attention.self.query.pt
+10.9s 160 /kaggle/input/notebooks/sarveshjoshi29/svd-wts/outputs/bert-base-sst2/SLC/bert.encoder.layer.5.attention.output.dense.pt
+10.9s 161 /kaggle/input/notebooks/sarveshjoshi29/svd-wts/outputs/bert-base-sst2/SLC/bert.encoder.layer.8.intermediate.dense.pt
+10.9s 162 /kaggle/input/notebooks/sarveshjoshi29/svd-wts/outputs/bert-base-sst2/SLC/bert.encoder.layer.6.attention.self.value.pt
+10.9s 163 /kaggle/input/notebooks/sarveshjoshi29/svd-wts/outputs/bert-base-sst2/SLC/bert.encoder.layer.2.attention.self.value.pt
+10.9s 164 /kaggle/input/notebooks/sarveshjoshi29/svd-wts/outputs/bert-base-sst2/SLC/bert.encoder.layer.11.attention.output.dense.pt
+10.9s 165 /kaggle/input/notebooks/sarveshjoshi29/svd-wts/outputs/bert-base-sst2/SLC/bert.encoder.layer.9.intermediate.dense.pt
+10.9s 166 /kaggle/input/notebooks/sarveshjoshi29/svd-wts/outputs/bert-base-sst2/SLC/bert.encoder.layer.11.attention.self.key.pt
+10.9s 167 /kaggle/input/notebooks/sarveshjoshi29/svd-wts/outputs/bert-base-sst2/SLC/bert.encoder.layer.9.output.dense.pt
+10.9s 168 /kaggle/input/notebooks/sarveshjoshi29/svd-wts/outputs/bert-base-sst2/SLC/bert.encoder.layer.6.attention.self.key.pt
+11.2s 169 /kaggle/input/notebooks/sarveshjoshi29/svd-wts/outputs/bert-base-sst2/MLC/bert.encoder.layer.7.output.dense.pt
+11.2s 170 /kaggle/input/notebooks/sarveshjoshi29/svd-wts/outputs/bert-base-sst2/MLC/bert.encoder.layer.8.attention.self.value.pt
+11.2s 171 /kaggle/input/notebooks/sarveshjoshi29/svd-wts/outputs/bert-base-sst2/MLC/bert.encoder.layer.10.intermediate.dense.pt
+11.2s 172 /kaggle/input/notebooks/sarveshjoshi29/svd-wts/outputs/bert-base-sst2/MLC/bert.encoder.layer.5.intermediate.dense.pt
+11.2s 173 /kaggle/input/notebooks/sarveshjoshi29/svd-wts/outputs/bert-base-sst2/MLC/bert.encoder.layer.0.attention.self.query.pt
+11.2s 174 /kaggle/input/notebooks/sarveshjoshi29/svd-wts/outputs/bert-base-sst2/MLC/bert.encoder.layer.5.output.dense.pt
+11.2s 175 /kaggle/input/notebooks/sarveshjoshi29/svd-wts/outputs/bert-base-sst2/MLC/bert.encoder.layer.9.attention.self.value.pt
+11.2s 176 /kaggle/input/notebooks/sarveshjoshi29/svd-wts/outputs/bert-base-sst2/MLC/bert.encoder.layer.7.attention.self.value.pt
+11.2s 177 /kaggle/input/notebooks/sarveshjoshi29/svd-wts/outputs/bert-base-sst2/MLC/bert.encoder.layer.1.attention.self.key.pt
+11.2s 178 /kaggle/input/notebooks/sarveshjoshi29/svd-wts/outputs/bert-base-sst2/MLC/bert.encoder.layer.3.attention.self.query.pt
+11.2s 179 /kaggle/input/notebooks/sarveshjoshi29/svd-wts/outputs/bert-base-sst2/MLC/bert.encoder.layer.8.attention.self.query.pt
+11.2s 180 /kaggle/input/notebooks/sarveshjoshi29/svd-wts/outputs/bert-base-sst2/MLC/bert.encoder.layer.11.attention.self.value.pt
+11.2s 181 /kaggle/input/notebooks/sarveshjoshi29/svd-wts/outputs/bert-base-sst2/MLC/bert.encoder.layer.5.attention.self.value.pt
+11.2s 182 /kaggle/input/notebooks/sarveshjoshi29/svd-wts/outputs/bert-base-sst2/MLC/bert.encoder.layer.0.output.dense.pt
+11.2s 183 /kaggle/input/notebooks/sarveshjoshi29/svd-wts/outputs/bert-base-sst2/MLC/bert.encoder.layer.4.intermediate.dense.pt
+11.2s 184 /kaggle/input/notebooks/sarveshjoshi29/svd-wts/outputs/bert-base-sst2/MLC/bert.encoder.layer.0.attention.output.dense.pt
+11.2s 185 /kaggle/input/notebooks/sarveshjoshi29/svd-wts/outputs/bert-base-sst2/MLC/bert.encoder.layer.8.attention.output.dense.pt
+11.2s 186 /kaggle/input/notebooks/sarveshjoshi29/svd-wts/outputs/bert-base-sst2/MLC/bert.encoder.layer.1.output.dense.pt
+11.2s 187 /kaggle/input/notebooks/sarveshjoshi29/svd-wts/outputs/bert-base-sst2/MLC/bert.encoder.layer.0.attention.self.value.pt
+11.2s 188 /kaggle/input/notebooks/sarveshjoshi29/svd-wts/outputs/bert-base-sst2/MLC/bert.encoder.layer.2.attention.self.query.pt
+11.2s 189 /kaggle/input/notebooks/sarveshjoshi29/svd-wts/outputs/bert-base-sst2/MLC/bert.encoder.layer.2.attention.self.key.pt
+11.2s 190 /kaggle/input/notebooks/sarveshjoshi29/svd-wts/outputs/bert-base-sst2/MLC/bert.encoder.layer.11.attention.self.query.pt
+11.2s 191 /kaggle/input/notebooks/sarveshjoshi29/svd-wts/outputs/bert-base-sst2/MLC/bert.encoder.layer.7.attention.output.dense.pt
+11.2s 192 /kaggle/input/notebooks/sarveshjoshi29/svd-wts/outputs/bert-base-sst2/MLC/bert.encoder.layer.5.attention.self.query.pt
+11.2s 193 /kaggle/input/notebooks/sarveshjoshi29/svd-wts/outputs/bert-base-sst2/MLC/bert.encoder.layer.3.attention.self.value.pt
+11.2s 194 /kaggle/input/notebooks/sarveshjoshi29/svd-wts/outputs/bert-base-sst2/MLC/bert.encoder.layer.1.attention.self.value.pt
+11.2s 195 /kaggle/input/notebooks/sarveshjoshi29/svd-wts/outputs/bert-base-sst2/MLC/bert.encoder.layer.3.output.dense.pt
+11.2s 196 /kaggle/input/notebooks/sarveshjoshi29/svd-wts/outputs/bert-base-sst2/MLC/bert.encoder.layer.1.attention.output.dense.pt
+11.2s 197 /kaggle/input/notebooks/sarveshjoshi29/svd-wts/outputs/bert-base-sst2/MLC/bert.encoder.layer.2.intermediate.dense.pt
+11.2s 198 /kaggle/input/notebooks/sarveshjoshi29/svd-wts/outputs/bert-base-sst2/MLC/bert.encoder.layer.4.attention.self.key.pt
+11.2s 199 /kaggle/input/notebooks/sarveshjoshi29/svd-wts/outputs/bert-base-sst2/MLC/bert.encoder.layer.5.attention.self.key.pt
+11.2s 200 /kaggle/input/notebooks/sarveshjoshi29/svd-wts/outputs/bert-base-sst2/MLC/bert.encoder.layer.7.intermediate.dense.pt
+11.2s 201 /kaggle/input/notebooks/sarveshjoshi29/svd-wts/outputs/bert-base-sst2/MLC/bert.encoder.layer.4.attention.self.value.pt
+11.2s 202 /kaggle/input/notebooks/sarveshjoshi29/svd-wts/outputs/bert-base-sst2/MLC/bert.encoder.layer.0.intermediate.dense.pt
+11.2s 203 /kaggle/input/notebooks/sarveshjoshi29/svd-wts/outputs/bert-base-sst2/MLC/bert.encoder.layer.3.attention.output.dense.pt
+11.2s 204 /kaggle/input/notebooks/sarveshjoshi29/svd-wts/outputs/bert-base-sst2/MLC/bert.encoder.layer.0.attention.self.key.pt
+11.2s 205 /kaggle/input/notebooks/sarveshjoshi29/svd-wts/outputs/bert-base-sst2/MLC/bert.encoder.layer.3.intermediate.dense.pt
+11.2s 206 /kaggle/input/notebooks/sarveshjoshi29/svd-wts/outputs/bert-base-sst2/MLC/bert.encoder.layer.8.output.dense.pt
+11.2s 207 /kaggle/input/notebooks/sarveshjoshi29/svd-wts/outputs/bert-base-sst2/MLC/bert.encoder.layer.11.intermediate.dense.pt
+11.2s 208 /kaggle/input/notebooks/sarveshjoshi29/svd-wts/outputs/bert-base-sst2/MLC/bert.encoder.layer.9.attention.self.query.pt
+11.2s 209 /kaggle/input/notebooks/sarveshjoshi29/svd-wts/outputs/bert-base-sst2/MLC/bert.encoder.layer.1.attention.self.query.pt
+11.2s 210 /kaggle/input/notebooks/sarveshjoshi29/svd-wts/outputs/bert-base-sst2/MLC/bert.encoder.layer.6.output.dense.pt
+11.2s 211 /kaggle/input/notebooks/sarveshjoshi29/svd-wts/outputs/bert-base-sst2/MLC/bert.encoder.layer.10.attention.self.query.pt
+11.2s 212 /kaggle/input/notebooks/sarveshjoshi29/svd-wts/outputs/bert-base-sst2/MLC/bert.encoder.layer.2.output.dense.pt
+11.2s 213 /kaggle/input/notebooks/sarveshjoshi29/svd-wts/outputs/bert-base-sst2/MLC/bert.encoder.layer.3.attention.self.key.pt
+11.2s 214 /kaggle/input/notebooks/sarveshjoshi29/svd-wts/outputs/bert-base-sst2/MLC/bert.encoder.layer.4.output.dense.pt
+11.2s 215 /kaggle/input/notebooks/sarveshjoshi29/svd-wts/outputs/bert-base-sst2/MLC/bert.encoder.layer.11.output.dense.pt
+11.2s 216 /kaggle/input/notebooks/sarveshjoshi29/svd-wts/outputs/bert-base-sst2/MLC/bert.encoder.layer.6.intermediate.dense.pt
+11.2s 217 /kaggle/input/notebooks/sarveshjoshi29/svd-wts/outputs/bert-base-sst2/MLC/bert.encoder.layer.10.attention.output.dense.pt
+11.2s 218 /kaggle/input/notebooks/sarveshjoshi29/svd-wts/outputs/bert-base-sst2/MLC/bert.encoder.layer.8.attention.self.key.pt
+11.2s 219 /kaggle/input/notebooks/sarveshjoshi29/svd-wts/outputs/bert-base-sst2/MLC/bert.encoder.layer.7.attention.self.key.pt
+11.2s 220 /kaggle/input/notebooks/sarveshjoshi29/svd-wts/outputs/bert-base-sst2/MLC/bert.encoder.layer.6.attention.self.query.pt
+11.2s 221 /kaggle/input/notebooks/sarveshjoshi29/svd-wts/outputs/bert-base-sst2/MLC/bert.encoder.layer.6.attention.output.dense.pt
+11.2s 222 /kaggle/input/notebooks/sarveshjoshi29/svd-wts/outputs/bert-base-sst2/MLC/bert.encoder.layer.10.output.dense.pt
+11.2s 223 /kaggle/input/notebooks/sarveshjoshi29/svd-wts/outputs/bert-base-sst2/MLC/bert.encoder.layer.10.attention.self.key.pt
+11.2s 224 /kaggle/input/notebooks/sarveshjoshi29/svd-wts/outputs/bert-base-sst2/MLC/bert.encoder.layer.4.attention.self.query.pt
+11.2s 225 /kaggle/input/notebooks/sarveshjoshi29/svd-wts/outputs/bert-base-sst2/MLC/bert.encoder.layer.1.intermediate.dense.pt
+11.2s 226 /kaggle/input/notebooks/sarveshjoshi29/svd-wts/outputs/bert-base-sst2/MLC/bert.encoder.layer.4.attention.output.dense.pt
+11.2s 227 /kaggle/input/notebooks/sarveshjoshi29/svd-wts/outputs/bert-base-sst2/MLC/bert.encoder.layer.9.attention.self.key.pt
+11.2s 228 /kaggle/input/notebooks/sarveshjoshi29/svd-wts/outputs/bert-base-sst2/MLC/bert.encoder.layer.10.attention.self.value.pt
+11.2s 229 /kaggle/input/notebooks/sarveshjoshi29/svd-wts/outputs/bert-base-sst2/MLC/bert.encoder.layer.9.attention.output.dense.pt
+11.2s 230 /kaggle/input/notebooks/sarveshjoshi29/svd-wts/outputs/bert-base-sst2/MLC/bert.encoder.layer.2.attention.output.dense.pt
+11.2s 231 /kaggle/input/notebooks/sarveshjoshi29/svd-wts/outputs/bert-base-sst2/MLC/bert.encoder.layer.7.attention.self.query.pt
+11.2s 232 /kaggle/input/notebooks/sarveshjoshi29/svd-wts/outputs/bert-base-sst2/MLC/bert.encoder.layer.5.attention.output.dense.pt
+11.2s 233 /kaggle/input/notebooks/sarveshjoshi29/svd-wts/outputs/bert-base-sst2/MLC/bert.encoder.layer.8.intermediate.dense.pt
+11.2s 234 /kaggle/input/notebooks/sarveshjoshi29/svd-wts/outputs/bert-base-sst2/MLC/bert.encoder.layer.6.attention.self.value.pt
+11.2s 235 /kaggle/input/notebooks/sarveshjoshi29/svd-wts/outputs/bert-base-sst2/MLC/bert.encoder.layer.2.attention.self.value.pt
+11.2s 236 /kaggle/input/notebooks/sarveshjoshi29/svd-wts/outputs/bert-base-sst2/MLC/bert.encoder.layer.11.attention.output.dense.pt
+11.2s 237 /kaggle/input/notebooks/sarveshjoshi29/svd-wts/outputs/bert-base-sst2/MLC/bert.encoder.layer.9.intermediate.dense.pt
+11.2s 238 /kaggle/input/notebooks/sarveshjoshi29/svd-wts/outputs/bert-base-sst2/MLC/bert.encoder.layer.11.attention.self.key.pt
+11.2s 239 /kaggle/input/notebooks/sarveshjoshi29/svd-wts/outputs/bert-base-sst2/MLC/bert.encoder.layer.9.output.dense.pt
+11.2s 240 /kaggle/input/notebooks/sarveshjoshi29/svd-wts/outputs/bert-base-sst2/MLC/bert.encoder.layer.6.attention.self.key.pt
+46.1s 241 [    0.1s] device: cuda Tesla T4
+46.1s 242 [    0.1s] torch 2.11.0+cu128
+46.1s 243 [    0.1s] config:
+46.1s 244 {
+46.1s 245 "models": [
+46.1s 246 "distilbert-sst2",
+46.1s 247 "bert-base-sst2"
+46.1s 248 ],
+46.1s 249 "experiments": [
+46.1s 250 {
+46.1s 251 "name": "A_hyflexpim_slc_rate",
+46.1s 252 "x": "slc_frac",
+46.1s 253 "noise_model": "multiplicative",
+46.1s 254 "noisy_tiers": [
+46.1s 255 "MLC"
+46.1s 256 ],
+46.1s 257 "sigmas": [
+46.1s 258 0.025
+46.1s 259 ],
+46.1s 260 "policies": [
+46.1s 261 "all_slc",
+46.1s 262 "all_mlc",
+46.1s 263 "gradient",
+46.1s 264 "rank",
+46.1s 265 "random"
+46.1s 266 ],
+46.1s 267 "slc_fracs": [
+46.1s 268 0.05,
+46.1s 269 0.1,
+46.1s 270 0.2,
+46.1s 271 0.3,
+46.1s 272 0.5
+46.1s 273 ],
+46.1s 274 "fault_rates": [
+46.1s 275 0.0
+46.1s 276 ]
+46.1s 277 },
+46.1s 278 {
+46.1s 279 "name": "B_cell_slc_rate",
+46.1s 280 "x": "slc_frac",
+46.1s 281 "noise_model": "cell",
+46.1s 282 "noisy_tiers": [
+46.1s 283 "SLC",
+46.1s 284 "MLC"
+46.1s 285 ],
+46.1s 286 "sigmas": [
+46.1s 287 0.095
+46.1s 288 ],
+46.1s 289 "policies": [
+46.1s 290 "all_slc",
+46.1s 291 "all_mlc",
+46.1s 292 "gradient",
+46.1s 293 "gradient_net",
+46.1s 294 "rank",
+46.1s 295 "random"
+46.1s 296 ],
+46.1s 297 "slc_fracs": [
+46.1s 298 0.05,
+46.1s 299 0.1,
+46.1s 300 0.2,
+46.1s 301 0.3,
+46.1s 302 0.5
+46.1s 303 ],
+46.1s 304 "fault_rates": [
+46.1s 305 0.0
+46.1s 306 ]
+46.1s 307 },
+46.1s 308 {
+46.1s 309 "name": "C_cell_noise_sweep",
+46.1s 310 "x": "sigma",
+46.1s 311 "noise_model": "cell",
+46.1s 312 "noisy_tiers": [
+46.1s 313 "SLC",
+46.1s 314 "MLC"
+46.1s 315 ],
+46.1s 316 "sigmas": [
+46.1s 317 0.0,
+46.1s 318 0.02,
+46.1s 319 0.04,
+46.1s 320 0.06,
+46.1s 321 0.08,
+46.1s 322 0.095,
+46.1s 323 0.12
+46.1s 324 ],
+46.1s 325 "policies": [
+46.1s 326 "all_slc",
+46.1s 327 "all_mlc",
+46.1s 328 "gradient",
+46.1s 329 "gradient_net",
+46.1s 330 "rank",
+46.1s 331 "random"
+46.1s 332 ],
+46.1s 333 "slc_fracs": [
+46.1s 334 0.2
+46.1s 335 ],
+46.1s 336 "fault_rates": [
+46.1s 337 0.0
+46.1s 338 ]
+46.1s 339 },
+46.1s 340 {
+46.1s 341 "name": "D_fault_sweep",
+46.1s 342 "x": "fault_rate",
+46.1s 343 "noise_model": "cell",
+46.1s 344 "noisy_tiers": [
+46.1s 345 "SLC",
+46.1s 346 "MLC"
+46.1s 347 ],
+46.1s 348 "sigmas": [
+46.1s 349 0.0
+46.1s 350 ],
+46.1s 351 "policies": [
+46.1s 352 "all_slc",
+46.1s 353 "all_mlc",
+46.1s 354 "gradient",
+46.1s 355 "rank",
+46.1s 356 "random"
+46.1s 357 ],
+46.1s 358 "slc_fracs": [
+46.1s 359 0.2
+46.1s 360 ],
+46.1s 361 "fault_rates": [
+46.1s 362 0.0,
+46.1s 363 0.0005,
+46.1s 364 0.001,
+46.1s 365 0.002,
+46.1s 366 0.005,
+46.1s 367 0.01,
+46.1s 368 0.02,
+46.1s 369 0.05
+46.1s 370 ]
+46.1s 371 },
+46.1s 372 {
+46.1s 373 "name": "E_sa1_share",
+46.1s 374 "x": "sa1_frac",
+46.1s 375 "noise_model": "cell",
+46.1s 376 "noisy_tiers": [
+46.1s 377 "SLC",
+46.1s 378 "MLC"
+46.1s 379 ],
+46.1s 380 "sigmas": [
+46.1s 381 0.0
+46.1s 382 ],
+46.1s 383 "policies": [
+46.1s 384 "all_slc",
+46.1s 385 "all_mlc",
+46.1s 386 "gradient"
+46.1s 387 ],
+46.1s 388 "slc_fracs": [
+46.1s 389 0.2
+46.1s 390 ],
+46.1s 391 "fault_rates": [
+46.1s 392 0.002,
+46.1s 393 0.01
+46.1s 394 ],
+46.1s 395 "sa1_fracs": [
+46.1s 396 0.0,
+46.1s 397 0.5,
+46.1s 398 1.0
+46.1s 399 ]
+46.1s 400 }
+46.1s 401 ],
+46.1s 402 "sa1_frac": 0.5,
+46.1s 403 "seeds": 5,
+46.1s 404 "calib_n": 512,
+46.1s 405 "calib_batch": 32,
+46.1s 406 "slc_bits": 1,
+46.1s 407 "mlc_bits": 2,
+46.1s 408 "w_bits": 8,
+46.1s 409 "in_bits": 8,
+46.1s 410 "adc_bits": null,
+46.1s 411 "tile_rows": 64,
+46.1s 412 "on_off": 150.0,
+46.1s 413 "svd_input": "/kaggle/input/notebooks/sarveshjoshi29/svd-wts",
+46.1s 414 "eval_n": null,
+46.1s 415 "batch_size": 128,
+46.1s 416 "out": "/kaggle/working/reram_results"
+46.1s 417 }
+46.1s 418 [    0.1s] ========== distilbert-sst2 ==========
+46.1s 419 [    0.1s] [1/5] locating SVD-tiering outputs
+46.1s 420 [    0.1s]   searching /kaggle/input/notebooks/sarveshjoshi29/svd-wts
+46.1s 421 [    0.1s]   /kaggle/input/notebooks/sarveshjoshi29/svd-wts/outputs/distilbert-sst2
+46.1s 422 [    0.1s] [2/5] loading SVD model and SST-2 validation
+46.3s 423 Warning: You are sending unauthenticated requests to the HF Hub. Please set a HF_TOKEN to enable higher rate limits and faster downloads.
+46.3s 424 
+46.3s 425 Warning: You are sending unauthenticated requests to the HF Hub. Please set a HF_TOKEN to enable higher rate limits and faster downloads.
+59.0s 426 [   13.0s]   36 factorised layers, 872 sentences
+59.0s 427 [   13.0s] [3/5] gradient importance (mean per-batch |dL/dsigma|, 512 SST-2 train sentences, batch 32)
+60.6s 428 [   14.6s]     calibration batch 4/16
+60.9s 429 [   14.9s]     calibration batch 8/16
+61.1s 430 [   15.1s]     calibration batch 12/16
+61.4s 431 [   15.4s]     calibration batch 16/16
+61.7s 432 [   15.7s]   done in 3 s; saved importance_scores.pt
+61.8s 433 [   15.8s]     gradient     vs gradient_net: Spearman +0.226, top-20% overlap 37.0%
+61.8s 434 [   15.8s]     gradient     vs rank        : Spearman +0.327, top-20% overlap 45.5%
+61.8s 435 [   15.8s]     gradient_net vs rank        : Spearman +0.194, top-20% overlap 36.8%
+61.8s 436 [   15.8s] [4/5] digital reference
+63.2s 437 [   17.2s]   digital SVD model acc 0.8911
+63.2s 438 [   17.2s] [5/5] 5 experiments
+63.2s 439 [   17.2s]   ---- experiment A_hyflexpim_slc_rate (x = slc_frac, noise_model = multiplicative, noisy tiers = ['MLC'])
+63.2s 440 [   17.2s]     17 policy/SLC-rate pairs x 1 sigmas x 1 fault rates x 1 SA1 shares x 5 chips = 85 evaluations
+63.6s 441 [   17.5s]     pair 1/17: all_slc, 100.0% of components in SLC (built in 0 s, GPU mem 0.27 GB)
+72.1s 442 [   26.1s]     [   5/85] all_slc      slc 100.0% sigma 0.025 fault 0.0000 sa1 0.5  acc 0.8899 +- 0.0000 (min 0.8899; chips 0.890 0.890 0.890 0.890 0.890)  ETA 2.4 min
+72.5s 443 [   26.5s]     pair 2/17: all_mlc, 0.0% of components in SLC (built in 0 s, GPU mem 0.27 GB)
+80.9s 444 [   34.9s]     [  10/85] all_mlc      slc  0.0% sigma 0.025 fault 0.0000 sa1 0.5  acc 0.8851 +- 0.0037 (min 0.8807; chips 0.889 0.881 0.890 0.884 0.882)  ETA 2.2 min
+81.3s 445 [   35.3s]     pair 3/17: gradient, 5.1% of components in SLC (built in 0 s, GPU mem 0.27 GB)
+92.6s 446 [   46.6s]     [  15/85] gradient     slc  5.1% sigma 0.025 fault 0.0000 sa1 0.5  acc 0.8878 +- 0.0071 (min 0.8796; chips 0.883 0.886 0.890 0.880 0.900)  ETA 2.3 min
+93.0s 447 [   47.0s]     pair 4/17: gradient, 10.1% of components in SLC (built in 0 s, GPU mem 0.27 GB)
+104.6s 448 [   58.6s]     [  20/85] gradient     slc 10.1% sigma 0.025 fault 0.0000 sa1 0.5  acc 0.8888 +- 0.0026 (min 0.8853; chips 0.888 0.889 0.889 0.893 0.885)  ETA 2.2 min
+104.9s 449 [   58.9s]     pair 5/17: gradient, 20.0% of components in SLC (built in 0 s, GPU mem 0.27 GB)
+116.4s 450 [   70.4s]     [  25/85] gradient     slc 20.0% sigma 0.025 fault 0.0000 sa1 0.5  acc 0.8869 +- 0.0053 (min 0.8819; chips 0.883 0.883 0.893 0.882 0.893)  ETA 2.1 min
+116.7s 451 [   70.7s]     pair 6/17: gradient, 30.2% of components in SLC (built in 0 s, GPU mem 0.27 GB)
+128.7s 452 [   82.7s]     [  30/85] gradient     slc 30.2% sigma 0.025 fault 0.0000 sa1 0.5  acc 0.8853 +- 0.0035 (min 0.8796; chips 0.888 0.884 0.880 0.885 0.890)  ETA 2.0 min
+129.0s 453 [   83.0s]     pair 7/17: gradient, 50.0% of components in SLC (built in 0 s, GPU mem 0.27 GB)
+141.1s 454 [   95.0s]     [  35/85] gradient     slc 50.0% sigma 0.025 fault 0.0000 sa1 0.5  acc 0.8856 +- 0.0035 (min 0.8807; chips 0.891 0.884 0.881 0.884 0.888)  ETA 1.9 min
+141.3s 455 [   95.3s]     pair 8/17: rank, 5.1% of components in SLC (built in 0 s, GPU mem 0.27 GB)
+153.6s 456 [  107.6s]     [  40/85] rank         slc  5.1% sigma 0.025 fault 0.0000 sa1 0.5  acc 0.8897 +- 0.0029 (min 0.8853; chips 0.893 0.888 0.885 0.892 0.890)  ETA 1.7 min
+153.9s 457 [  107.9s]     pair 9/17: rank, 10.1% of components in SLC (built in 0 s, GPU mem 0.27 GB)
+166.6s 458 [  120.6s]     [  45/85] rank         slc 10.1% sigma 0.025 fault 0.0000 sa1 0.5  acc 0.8892 +- 0.0037 (min 0.8842; chips 0.888 0.884 0.896 0.889 0.890)  ETA 1.5 min
+166.9s 459 [  120.9s]     pair 10/17: rank, 20.0% of components in SLC (built in 0 s, GPU mem 0.27 GB)
+179.1s 460 [  133.1s]     [  50/85] rank         slc 20.0% sigma 0.025 fault 0.0000 sa1 0.5  acc 0.8878 +- 0.0030 (min 0.8830; chips 0.889 0.892 0.889 0.886 0.883)  ETA 1.4 min
+179.4s 461 [  133.4s]     pair 11/17: rank, 30.2% of components in SLC (built in 0 s, GPU mem 0.27 GB)
+191.7s 462 [  145.7s]     [  55/85] rank         slc 30.2% sigma 0.025 fault 0.0000 sa1 0.5  acc 0.8881 +- 0.0039 (min 0.8830; chips 0.889 0.889 0.885 0.883 0.894)  ETA 1.2 min
+192.0s 463 [  146.0s]     pair 12/17: rank, 50.0% of components in SLC (built in 0 s, GPU mem 0.27 GB)
+204.1s 464 [  158.1s]     [  60/85] rank         slc 50.0% sigma 0.025 fault 0.0000 sa1 0.5  acc 0.8883 +- 0.0052 (min 0.8819; chips 0.882 0.894 0.893 0.883 0.889)  ETA 59 s
+204.4s 465 [  158.4s]     pair 13/17: random, 5.1% of components in SLC (built in 0 s, GPU mem 0.27 GB)
+216.4s 466 [  170.4s]     [  65/85] random       slc  5.1% sigma 0.025 fault 0.0000 sa1 0.5  acc 0.8876 +- 0.0042 (min 0.8807; chips 0.892 0.891 0.889 0.881 0.885)  ETA 47 s
+216.7s 467 [  170.7s]     pair 14/17: random, 10.1% of components in SLC (built in 0 s, GPU mem 0.27 GB)
+229.0s 468 [  183.0s]     [  70/85] random       slc 10.1% sigma 0.025 fault 0.0000 sa1 0.5  acc 0.8874 +- 0.0049 (min 0.8807; chips 0.890 0.894 0.881 0.883 0.889)  ETA 36 s
+229.3s 469 [  183.3s]     pair 15/17: random, 20.0% of components in SLC (built in 0 s, GPU mem 0.27 GB)
+241.4s 470 [  195.4s]     [  75/85] random       slc 20.0% sigma 0.025 fault 0.0000 sa1 0.5  acc 0.8883 +- 0.0021 (min 0.8853; chips 0.890 0.885 0.891 0.889 0.886)  ETA 24 s
+241.7s 471 [  195.7s]     pair 16/17: random, 30.2% of components in SLC (built in 0 s, GPU mem 0.27 GB)
+254.2s 472 [  208.2s]     [  80/85] random       slc 30.2% sigma 0.025 fault 0.0000 sa1 0.5  acc 0.8881 +- 0.0056 (min 0.8796; chips 0.896 0.880 0.885 0.892 0.888)  ETA 12 s
+254.5s 473 [  208.5s]     pair 17/17: random, 50.0% of components in SLC (built in 0 s, GPU mem 0.27 GB)
+266.7s 474 [  220.7s]     [  85/85] random       slc 50.0% sigma 0.025 fault 0.0000 sa1 0.5  acc 0.8872 +- 0.0047 (min 0.8830; chips 0.891 0.884 0.883 0.894 0.883)  ETA 0 s
+266.8s 475 [  220.8s]     summary (slc_frac; mean acc over 5 chips; digital 0.8911):
+266.8s 476 [  220.8s]       policy                 0.0514   0.1013   0.2004   0.3017   0.5000
+266.8s 477 [  220.8s]       all_slc                0.8899  (all x)
+266.8s 478 [  220.8s]       all_mlc                0.8851  (all x)
+266.8s 479 [  220.8s]       gradient               0.8878   0.8888   0.8869   0.8853   0.8856
+266.8s 480 [  220.8s]       rank                   0.8897   0.8892   0.8878   0.8881   0.8883
+266.8s 481 [  220.8s]       random                 0.8876   0.8874   0.8883   0.8881   0.8872
+266.8s 482 [  220.8s]     experiment A_hyflexpim_slc_rate done in 3.4 min
+267.1s 483 [  221.1s]     plot -> /kaggle/working/reram_results/distilbert-sst2/A_hyflexpim_slc_rate.png
+267.1s 484 [  221.1s]   ---- experiment B_cell_slc_rate (x = slc_frac, noise_model = cell, noisy tiers = ['SLC', 'MLC'])
+267.1s 485 [  221.1s]     22 policy/SLC-rate pairs x 1 sigmas x 1 fault rates x 1 SA1 shares x 5 chips = 110 evaluations
+267.3s 486 [  221.3s]     pair 1/22: all_slc, 100.0% of components in SLC (built in 0 s, GPU mem 0.27 GB)
+277.1s 487 [  231.1s]     [   5/110] all_slc      slc 100.0% sigma 0.095 fault 0.0000 sa1 0.5  acc 0.8626 +- 0.0083 (min 0.8521; chips 0.874 0.865 0.854 0.868 0.852)  ETA 3.5 min
+277.4s 488 [  231.4s]     pair 2/22: all_mlc, 0.0% of components in SLC (built in 0 s, GPU mem 0.27 GB)
+286.8s 489 [  240.8s]     [  10/110] all_mlc      slc  0.0% sigma 0.095 fault 0.0000 sa1 0.5  acc 0.5700 +- 0.0558 (min 0.5092; chips 0.509 0.661 0.587 0.513 0.580)  ETA 3.3 min
+287.1s 490 [  241.1s]     pair 3/22: gradient, 5.1% of components in SLC (built in 0 s, GPU mem 0.27 GB)
+299.6s 491 [  253.6s]     [  15/110] gradient     slc  5.1% sigma 0.095 fault 0.0000 sa1 0.5  acc 0.6628 +- 0.0661 (min 0.5791; chips 0.766 0.579 0.704 0.615 0.650)  ETA 3.4 min
+299.9s 492 [  253.9s]     pair 4/22: gradient, 10.1% of components in SLC (built in 0 s, GPU mem 0.27 GB)
+312.6s 493 [  266.6s]     [  20/110] gradient     slc 10.1% sigma 0.095 fault 0.0000 sa1 0.5  acc 0.7018 +- 0.0571 (min 0.5952; chips 0.697 0.761 0.727 0.728 0.595)  ETA 3.4 min
+312.9s 494 [  266.9s]     pair 5/22: gradient, 20.0% of components in SLC (built in 0 s, GPU mem 0.27 GB)
+325.4s 495 [  279.4s]     [  25/110] gradient     slc 20.0% sigma 0.095 fault 0.0000 sa1 0.5  acc 0.7433 +- 0.0499 (min 0.6502; chips 0.755 0.749 0.763 0.800 0.650)  ETA 3.3 min
+325.8s 496 [  279.7s]     pair 6/22: gradient, 30.2% of components in SLC (built in 0 s, GPU mem 0.27 GB)
+338.7s 497 [  292.6s]     [  30/110] gradient     slc 30.2% sigma 0.095 fault 0.0000 sa1 0.5  acc 0.7830 +- 0.0365 (min 0.7179; chips 0.806 0.771 0.799 0.821 0.718)  ETA 3.2 min
+339.0s 498 [  292.9s]     pair 7/22: gradient, 50.0% of components in SLC (built in 0 s, GPU mem 0.27 GB)
+351.6s 499 [  305.6s]     [  35/110] gradient     slc 50.0% sigma 0.095 fault 0.0000 sa1 0.5  acc 0.8275 +- 0.0089 (min 0.8177; chips 0.842 0.818 0.822 0.822 0.834)  ETA 3.0 min
+352.0s 500 [  305.9s]     pair 8/22: gradient_net, 5.1% of components in SLC (built in 0 s, GPU mem 0.27 GB)
+364.5s 501 [  318.5s]     [  40/110] gradient_net slc  5.1% sigma 0.095 fault 0.0000 sa1 0.5  acc 0.5819 +- 0.0491 (min 0.5310; chips 0.531 0.671 0.544 0.588 0.576)  ETA 2.8 min
+364.8s 502 [  318.8s]     pair 9/22: gradient_net, 10.1% of components in SLC (built in 0 s, GPU mem 0.27 GB)
+377.5s 503 [  331.5s]     [  45/110] gradient_net slc 10.1% sigma 0.095 fault 0.0000 sa1 0.5  acc 0.7161 +- 0.0328 (min 0.6525; chips 0.653 0.745 0.735 0.724 0.724)  ETA 2.7 min
+377.8s 504 [  331.8s]     pair 10/22: gradient_net, 20.0% of components in SLC (built in 0 s, GPU mem 0.27 GB)
+390.3s 505 [  344.3s]     [  50/110] gradient_net slc 20.0% sigma 0.095 fault 0.0000 sa1 0.5  acc 0.6846 +- 0.0557 (min 0.6296; chips 0.642 0.739 0.630 0.765 0.648)  ETA 2.5 min
+390.6s 506 [  344.6s]     pair 11/22: gradient_net, 30.2% of components in SLC (built in 0 s, GPU mem 0.27 GB)
+403.4s 507 [  357.4s]     [  55/110] gradient_net slc 30.2% sigma 0.095 fault 0.0000 sa1 0.5  acc 0.6711 +- 0.0759 (min 0.5505; chips 0.778 0.634 0.685 0.709 0.550)  ETA 2.3 min
+403.8s 508 [  357.8s]     pair 12/22: gradient_net, 50.0% of components in SLC (built in 0 s, GPU mem 0.27 GB)
+416.4s 509 [  370.4s]     [  60/110] gradient_net slc 50.0% sigma 0.095 fault 0.0000 sa1 0.5  acc 0.8037 +- 0.0216 (min 0.7787; chips 0.829 0.797 0.784 0.779 0.829)  ETA 2.1 min
+416.7s 510 [  370.7s]     pair 13/22: rank, 5.1% of components in SLC (built in 0 s, GPU mem 0.27 GB)
+429.3s 511 [  383.2s]     [  65/110] rank         slc  5.1% sigma 0.095 fault 0.0000 sa1 0.5  acc 0.6661 +- 0.0629 (min 0.5757; chips 0.576 0.615 0.748 0.712 0.680)  ETA 1.9 min
+429.6s 512 [  383.6s]     pair 14/22: rank, 10.1% of components in SLC (built in 0 s, GPU mem 0.27 GB)
+442.3s 513 [  396.3s]     [  70/110] rank         slc 10.1% sigma 0.095 fault 0.0000 sa1 0.5  acc 0.7509 +- 0.0329 (min 0.6858; chips 0.763 0.761 0.686 0.775 0.769)  ETA 1.7 min
+442.6s 514 [  396.6s]     pair 15/22: rank, 20.0% of components in SLC (built in 0 s, GPU mem 0.27 GB)
+455.1s 515 [  409.1s]     [  75/110] rank         slc 20.0% sigma 0.095 fault 0.0000 sa1 0.5  acc 0.8037 +- 0.0137 (min 0.7810; chips 0.781 0.795 0.814 0.815 0.813)  ETA 1.5 min
+455.4s 516 [  409.4s]     pair 16/22: rank, 30.2% of components in SLC (built in 0 s, GPU mem 0.27 GB)
+468.3s 517 [  422.2s]     [  80/110] rank         slc 30.2% sigma 0.095 fault 0.0000 sa1 0.5  acc 0.8071 +- 0.0507 (min 0.7076; chips 0.842 0.838 0.814 0.834 0.708)  ETA 1.3 min
+468.6s 518 [  422.6s]     pair 17/22: rank, 50.0% of components in SLC (built in 0 s, GPU mem 0.27 GB)
+481.2s 519 [  435.2s]     [  85/110] rank         slc 50.0% sigma 0.095 fault 0.0000 sa1 0.5  acc 0.8452 +- 0.0131 (min 0.8245; chips 0.862 0.825 0.849 0.837 0.853)  ETA 1.0 min
+481.5s 520 [  435.5s]     pair 18/22: random, 5.1% of components in SLC (built in 0 s, GPU mem 0.27 GB)
+494.1s 521 [  448.0s]     [  90/110] random       slc  5.1% sigma 0.095 fault 0.0000 sa1 0.5  acc 0.5213 +- 0.0200 (min 0.5092; chips 0.509 0.561 0.509 0.518 0.509)  ETA 50 s
+494.4s 522 [  448.4s]     pair 19/22: random, 10.1% of components in SLC (built in 0 s, GPU mem 0.27 GB)
+507.2s 523 [  461.1s]     [  95/110] random       slc 10.1% sigma 0.095 fault 0.0000 sa1 0.5  acc 0.5305 +- 0.0177 (min 0.5092; chips 0.509 0.547 0.509 0.548 0.539)  ETA 38 s
+507.5s 524 [  461.5s]     pair 20/22: random, 20.0% of components in SLC (built in 0 s, GPU mem 0.27 GB)
+520.0s 525 [  474.0s]     [ 100/110] random       slc 20.0% sigma 0.095 fault 0.0000 sa1 0.5  acc 0.5241 +- 0.0160 (min 0.5080; chips 0.515 0.534 0.508 0.550 0.513)  ETA 25 s
+520.3s 526 [  474.3s]     pair 21/22: random, 30.2% of components in SLC (built in 0 s, GPU mem 0.27 GB)
+533.1s 527 [  487.1s]     [ 105/110] random       slc 30.2% sigma 0.095 fault 0.0000 sa1 0.5  acc 0.5706 +- 0.0438 (min 0.5138; chips 0.614 0.593 0.514 0.522 0.611)  ETA 13 s
+533.5s 528 [  487.4s]     pair 22/22: random, 50.0% of components in SLC (built in 0 s, GPU mem 0.27 GB)
+546.1s 529 [  500.1s]     [ 110/110] random       slc 50.0% sigma 0.095 fault 0.0000 sa1 0.5  acc 0.6353 +- 0.0476 (min 0.5745; chips 0.575 0.609 0.650 0.717 0.626)  ETA 0 s
+546.2s 530 [  500.2s]     summary (slc_frac; mean acc over 5 chips; digital 0.8911):
+546.2s 531 [  500.2s]       policy                 0.0514   0.1013   0.2004   0.3017   0.5000
+546.2s 532 [  500.2s]       all_slc                0.8626  (all x)
+546.2s 533 [  500.2s]       all_mlc                0.5700  (all x)
+546.2s 534 [  500.2s]       gradient               0.6628   0.7018   0.7433   0.7830   0.8275
+546.2s 535 [  500.2s]       gradient_net           0.5819   0.7161   0.6846   0.6711   0.8037
+546.2s 536 [  500.2s]       rank                   0.6661   0.7509   0.8037   0.8071   0.8452
+546.2s 537 [  500.2s]       random                 0.5213   0.5305   0.5241   0.5706   0.6353
+546.2s 538 [  500.2s]     experiment B_cell_slc_rate done in 4.7 min
+546.4s 539 [  500.4s]     plot -> /kaggle/working/reram_results/distilbert-sst2/B_cell_slc_rate.png
+546.4s 540 [  500.4s]   ---- experiment C_cell_noise_sweep (x = sigma, noise_model = cell, noisy tiers = ['SLC', 'MLC'])
+546.4s 541 [  500.4s]     6 policy/SLC-rate pairs x 7 sigmas x 1 fault rates x 1 SA1 shares x 5 chips = 210 evaluations
+546.8s 542 [  500.7s]     pair 1/6: all_slc, 100.0% of components in SLC (built in 0 s, GPU mem 0.27 GB)
+556.3s 543 [  510.2s]     [   5/210] all_slc      slc 100.0% sigma 0.000 fault 0.0000 sa1 0.5  acc 0.8899 +- 0.0000 (min 0.8899; chips 0.890 0.890 0.890 0.890 0.890)  ETA 6.7 min
+566.1s 544 [  520.1s]     [  10/210] all_slc      slc 100.0% sigma 0.020 fault 0.0000 sa1 0.5  acc 0.8892 +- 0.0061 (min 0.8830; chips 0.883 0.898 0.883 0.888 0.894)  ETA 6.6 min
+576.0s 545 [  530.0s]     [  15/210] all_slc      slc 100.0% sigma 0.040 fault 0.0000 sa1 0.5  acc 0.8881 +- 0.0051 (min 0.8784; chips 0.889 0.890 0.878 0.890 0.893)  ETA 6.4 min
+585.9s 546 [  539.9s]     [  20/210] all_slc      slc 100.0% sigma 0.060 fault 0.0000 sa1 0.5  acc 0.8830 +- 0.0064 (min 0.8750; chips 0.892 0.883 0.875 0.888 0.877)  ETA 6.2 min
+595.8s 547 [  549.8s]     [  25/210] all_slc      slc 100.0% sigma 0.080 fault 0.0000 sa1 0.5  acc 0.8780 +- 0.0043 (min 0.8727; chips 0.882 0.884 0.876 0.875 0.873)  ETA 6.1 min
+605.7s 548 [  559.7s]     [  30/210] all_slc      slc 100.0% sigma 0.095 fault 0.0000 sa1 0.5  acc 0.8626 +- 0.0083 (min 0.8521; chips 0.874 0.865 0.854 0.868 0.852)  ETA 5.9 min
+615.6s 549 [  569.6s]     [  35/210] all_slc      slc 100.0% sigma 0.120 fault 0.0000 sa1 0.5  acc 0.8356 +- 0.0141 (min 0.8188; chips 0.856 0.830 0.825 0.849 0.819)  ETA 5.8 min
+616.0s 550 [  569.9s]     pair 2/6: all_mlc, 0.0% of components in SLC (built in 0 s, GPU mem 0.27 GB)
+625.2s 551 [  579.2s]     [  40/210] all_mlc      slc  0.0% sigma 0.000 fault 0.0000 sa1 0.5  acc 0.8911 +- 0.0000 (min 0.8911; chips 0.891 0.891 0.891 0.891 0.891)  ETA 5.6 min
+634.6s 552 [  588.6s]     [  45/210] all_mlc      slc  0.0% sigma 0.020 fault 0.0000 sa1 0.5  acc 0.8814 +- 0.0078 (min 0.8693; chips 0.883 0.890 0.876 0.869 0.889)  ETA 5.4 min
+644.1s 553 [  598.1s]     [  50/210] all_mlc      slc  0.0% sigma 0.040 fault 0.0000 sa1 0.5  acc 0.8296 +- 0.0305 (min 0.7821; chips 0.817 0.875 0.842 0.782 0.833)  ETA 5.2 min
+653.6s 554 [  607.5s]     [  55/210] all_mlc      slc  0.0% sigma 0.060 fault 0.0000 sa1 0.5  acc 0.6888 +- 0.1062 (min 0.5424; chips 0.577 0.780 0.781 0.542 0.764)  ETA 5.0 min
+663.0s 555 [  617.0s]     [  60/210] all_mlc      slc  0.0% sigma 0.080 fault 0.0000 sa1 0.5  acc 0.6014 +- 0.0776 (min 0.5092; chips 0.509 0.700 0.664 0.514 0.620)  ETA 4.9 min
+672.4s 556 [  626.4s]     [  65/210] all_mlc      slc  0.0% sigma 0.095 fault 0.0000 sa1 0.5  acc 0.5700 +- 0.0558 (min 0.5092; chips 0.509 0.661 0.587 0.513 0.580)  ETA 4.7 min
+681.8s 557 [  635.8s]     [  70/210] all_mlc      slc  0.0% sigma 0.120 fault 0.0000 sa1 0.5  acc 0.5158 +- 0.0101 (min 0.5080; chips 0.509 0.536 0.514 0.508 0.513)  ETA 4.5 min
+682.1s 558 [  636.1s]     pair 3/6: gradient, 20.0% of components in SLC (built in 0 s, GPU mem 0.27 GB)
+694.1s 559 [  648.1s]     [  75/210] gradient     slc 20.0% sigma 0.000 fault 0.0000 sa1 0.5  acc 0.8819 +- 0.0000 (min 0.8819; chips 0.882 0.882 0.882 0.882 0.882)  ETA 4.4 min
+706.5s 560 [  660.5s]     [  80/210] gradient     slc 20.0% sigma 0.020 fault 0.0000 sa1 0.5  acc 0.8906 +- 0.0057 (min 0.8819; chips 0.891 0.893 0.882 0.888 0.899)  ETA 4.3 min
+719.0s 561 [  673.0s]     [  85/210] gradient     slc 20.0% sigma 0.040 fault 0.0000 sa1 0.5  acc 0.8869 +- 0.0042 (min 0.8807; chips 0.890 0.890 0.881 0.883 0.891)  ETA 4.2 min
+731.4s 562 [  685.4s]     [  90/210] gradient     slc 20.0% sigma 0.060 fault 0.0000 sa1 0.5  acc 0.8716 +- 0.0085 (min 0.8635; chips 0.864 0.883 0.865 0.866 0.881)  ETA 4.1 min
+743.8s 563 [  697.8s]     [  95/210] gradient     slc 20.0% sigma 0.080 fault 0.0000 sa1 0.5  acc 0.8138 +- 0.0210 (min 0.7856; chips 0.814 0.842 0.796 0.831 0.786)  ETA 4.0 min
+756.3s 564 [  710.3s]     [ 100/210] gradient     slc 20.0% sigma 0.095 fault 0.0000 sa1 0.5  acc 0.7433 +- 0.0499 (min 0.6502; chips 0.755 0.749 0.763 0.800 0.650)  ETA 3.8 min
+768.7s 565 [  722.7s]     [ 105/210] gradient     slc 20.0% sigma 0.120 fault 0.0000 sa1 0.5  acc 0.5972 +- 0.0729 (min 0.5103; chips 0.570 0.546 0.711 0.649 0.510)  ETA 3.7 min
+769.0s 566 [  723.0s]     pair 4/6: gradient_net, 20.0% of components in SLC (built in 0 s, GPU mem 0.27 GB)
+781.0s 567 [  735.0s]     [ 110/210] gradient_net slc 20.0% sigma 0.000 fault 0.0000 sa1 0.5  acc 0.8968 +- 0.0000 (min 0.8968; chips 0.897 0.897 0.897 0.897 0.897)  ETA 3.6 min
+793.5s 568 [  747.5s]     [ 115/210] gradient_net slc 20.0% sigma 0.020 fault 0.0000 sa1 0.5  acc 0.8789 +- 0.0058 (min 0.8716; chips 0.872 0.875 0.881 0.878 0.889)  ETA 3.4 min
+806.0s 569 [  760.0s]     [ 120/210] gradient_net slc 20.0% sigma 0.040 fault 0.0000 sa1 0.5  acc 0.8771 +- 0.0098 (min 0.8601; chips 0.860 0.883 0.873 0.888 0.882)  ETA 3.2 min
+818.5s 570 [  772.5s]     [ 125/210] gradient_net slc 20.0% sigma 0.060 fault 0.0000 sa1 0.5  acc 0.8500 +- 0.0139 (min 0.8303; chips 0.836 0.862 0.830 0.862 0.859)  ETA 3.1 min
+831.0s 571 [  785.0s]     [ 130/210] gradient_net slc 20.0% sigma 0.080 fault 0.0000 sa1 0.5  acc 0.7943 +- 0.0300 (min 0.7431; chips 0.743 0.822 0.778 0.817 0.812)  ETA 2.9 min
+843.6s 572 [  797.6s]     [ 135/210] gradient_net slc 20.0% sigma 0.095 fault 0.0000 sa1 0.5  acc 0.6846 +- 0.0557 (min 0.6296; chips 0.642 0.739 0.630 0.765 0.648)  ETA 2.8 min
+856.1s 573 [  810.1s]     [ 140/210] gradient_net slc 20.0% sigma 0.120 fault 0.0000 sa1 0.5  acc 0.5576 +- 0.0409 (min 0.5149; chips 0.542 0.627 0.525 0.578 0.515)  ETA 2.6 min
+856.4s 574 [  810.4s]     pair 5/6: rank, 20.0% of components in SLC (built in 0 s, GPU mem 0.27 GB)
+868.4s 575 [  822.4s]     [ 145/210] rank         slc 20.0% sigma 0.000 fault 0.0000 sa1 0.5  acc 0.8911 +- 0.0000 (min 0.8911; chips 0.891 0.891 0.891 0.891 0.891)  ETA 2.4 min
+880.9s 576 [  834.9s]     [ 150/210] rank         slc 20.0% sigma 0.020 fault 0.0000 sa1 0.5  acc 0.8915 +- 0.0074 (min 0.8784; chips 0.899 0.889 0.894 0.878 0.897)  ETA 2.2 min
+893.5s 577 [  847.5s]     [ 155/210] rank         slc 20.0% sigma 0.040 fault 0.0000 sa1 0.5  acc 0.8888 +- 0.0050 (min 0.8830; chips 0.888 0.886 0.889 0.883 0.898)  ETA 2.1 min
+906.0s 578 [  860.0s]     [ 160/210] rank         slc 20.0% sigma 0.060 fault 0.0000 sa1 0.5  acc 0.8798 +- 0.0089 (min 0.8647; chips 0.890 0.876 0.865 0.882 0.886)  ETA 1.9 min
+918.5s 579 [  872.5s]     [ 165/210] rank         slc 20.0% sigma 0.080 fault 0.0000 sa1 0.5  acc 0.8541 +- 0.0074 (min 0.8406; chips 0.856 0.856 0.841 0.856 0.864)  ETA 1.7 min
+931.0s 580 [  885.0s]     [ 170/210] rank         slc 20.0% sigma 0.095 fault 0.0000 sa1 0.5  acc 0.8037 +- 0.0137 (min 0.7810; chips 0.781 0.795 0.814 0.815 0.813)  ETA 1.5 min
+943.5s 581 [  897.5s]     [ 175/210] rank         slc 20.0% sigma 0.120 fault 0.0000 sa1 0.5  acc 0.6780 +- 0.0552 (min 0.5814; chips 0.581 0.701 0.674 0.751 0.682)  ETA 1.3 min
+943.8s 582 [  897.8s]     pair 6/6: random, 20.0% of components in SLC (built in 0 s, GPU mem 0.27 GB)
+955.8s 583 [  909.8s]     [ 180/210] random       slc 20.0% sigma 0.000 fault 0.0000 sa1 0.5  acc 0.8865 +- 0.0000 (min 0.8865; chips 0.886 0.886 0.886 0.886 0.886)  ETA 1.1 min
+968.3s 584 [  922.3s]     [ 185/210] random       slc 20.0% sigma 0.020 fault 0.0000 sa1 0.5  acc 0.8853 +- 0.0060 (min 0.8761; chips 0.876 0.885 0.890 0.882 0.893)  ETA 57 s
+980.8s 585 [  934.8s]     [ 190/210] random       slc 20.0% sigma 0.040 fault 0.0000 sa1 0.5  acc 0.8640 +- 0.0132 (min 0.8463; chips 0.846 0.878 0.850 0.873 0.873)  ETA 46 s
+993.4s 586 [  947.4s]     [ 195/210] random       slc 20.0% sigma 0.060 fault 0.0000 sa1 0.5  acc 0.7791 +- 0.0252 (min 0.7569; chips 0.757 0.826 0.759 0.769 0.784)  ETA 34 s
+1005.9s 587 [  959.9s]     [ 200/210] random       slc 20.0% sigma 0.080 fault 0.0000 sa1 0.5  acc 0.6014 +- 0.0409 (min 0.5505; chips 0.563 0.656 0.638 0.600 0.550)  ETA 23 s
+1018.4s 588 [  972.4s]     [ 205/210] random       slc 20.0% sigma 0.095 fault 0.0000 sa1 0.5  acc 0.5241 +- 0.0160 (min 0.5080; chips 0.515 0.534 0.508 0.550 0.513)  ETA 12 s
+1030.9s 589 [  984.9s]     [ 210/210] random       slc 20.0% sigma 0.120 fault 0.0000 sa1 0.5  acc 0.5170 +- 0.0179 (min 0.5057; chips 0.509 0.506 0.509 0.508 0.553)  ETA 0 s
+1031.0s 590 [  985.0s]     summary (sigma; mean acc over 5 chips; digital 0.8911):
+1031.0s 591 [  985.0s]       policy                 0.0000   0.0200   0.0400   0.0600   0.0800   0.0950   0.1200
+1031.0s 592 [  985.0s]       all_slc                0.8899   0.8892   0.8881   0.8830   0.8780   0.8626   0.8356
+1031.0s 593 [  985.0s]       all_mlc                0.8911   0.8814   0.8296   0.6888   0.6014   0.5700   0.5158
+1031.0s 594 [  985.0s]       gradient               0.8819   0.8906   0.8869   0.8716   0.8138   0.7433   0.5972
+1031.0s 595 [  985.0s]       gradient_net           0.8968   0.8789   0.8771   0.8500   0.7943   0.6846   0.5576
+1031.0s 596 [  985.0s]       rank                   0.8911   0.8915   0.8888   0.8798   0.8541   0.8037   0.6780
+1031.0s 597 [  985.0s]       random                 0.8865   0.8853   0.8640   0.7791   0.6014   0.5241   0.5170
+1031.0s 598 [  985.0s]     experiment C_cell_noise_sweep done in 8.1 min
+1031.3s 599 [  985.2s]     plot -> /kaggle/working/reram_results/distilbert-sst2/C_cell_noise_sweep.png
+1031.3s 600 [  985.2s]   ---- experiment D_fault_sweep (x = fault_rate, noise_model = cell, noisy tiers = ['SLC', 'MLC'])
+1031.3s 601 [  985.2s]     5 policy/SLC-rate pairs x 1 sigmas x 8 fault rates x 1 SA1 shares x 5 chips = 200 evaluations
+1031.5s 602 [  985.5s]     pair 1/5: all_slc, 100.0% of components in SLC (built in 0 s, GPU mem 0.27 GB)
+1041.0s 603 [  995.0s]     [   5/200] all_slc      slc 100.0% sigma 0.000 fault 0.0000 sa1 0.5  acc 0.8899 +- 0.0000 (min 0.8899; chips 0.890 0.890 0.890 0.890 0.890)  ETA 6.3 min
+1051.2s 604 [ 1005.2s]     [  10/200] all_slc      slc 100.0% sigma 0.000 fault 0.0005 sa1 0.5  acc 0.8837 +- 0.0039 (min 0.8796; chips 0.890 0.881 0.882 0.880 0.886)  ETA 6.3 min
+1061.3s 605 [ 1015.3s]     [  15/200] all_slc      slc 100.0% sigma 0.000 fault 0.0010 sa1 0.5  acc 0.8821 +- 0.0037 (min 0.8750; chips 0.884 0.883 0.885 0.883 0.875)  ETA 6.2 min
+1071.4s 606 [ 1025.4s]     [  20/200] all_slc      slc 100.0% sigma 0.000 fault 0.0020 sa1 0.5  acc 0.8741 +- 0.0143 (min 0.8532; chips 0.867 0.886 0.870 0.893 0.853)  ETA 6.0 min
+1081.6s 607 [ 1035.6s]     [  25/200] all_slc      slc 100.0% sigma 0.000 fault 0.0050 sa1 0.5  acc 0.8394 +- 0.0225 (min 0.7982; chips 0.798 0.850 0.866 0.839 0.844)  ETA 5.9 min
+1091.7s 608 [ 1045.7s]     [  30/200] all_slc      slc 100.0% sigma 0.000 fault 0.0100 sa1 0.5  acc 0.6945 +- 0.0899 (min 0.5814; chips 0.713 0.581 0.804 0.600 0.774)  ETA 5.7 min
+1101.8s 609 [ 1055.8s]     [  35/200] all_slc      slc 100.0% sigma 0.000 fault 0.0200 sa1 0.5  acc 0.5936 +- 0.0891 (min 0.5092; chips 0.514 0.509 0.697 0.541 0.706)  ETA 5.5 min
+1111.9s 610 [ 1065.8s]     [  40/200] all_slc      slc 100.0% sigma 0.000 fault 0.0500 sa1 0.5  acc 0.5252 +- 0.0304 (min 0.5092; chips 0.586 0.513 0.509 0.509 0.509)  ETA 5.4 min
+1112.1s 611 [ 1066.1s]     pair 2/5: all_mlc, 0.0% of components in SLC (built in 0 s, GPU mem 0.27 GB)
+1121.3s 612 [ 1075.3s]     [  45/200] all_mlc      slc  0.0% sigma 0.000 fault 0.0000 sa1 0.5  acc 0.8911 +- 0.0000 (min 0.8911; chips 0.891 0.891 0.891 0.891 0.891)  ETA 5.2 min
+1130.9s 613 [ 1084.9s]     [  50/200] all_mlc      slc  0.0% sigma 0.000 fault 0.0005 sa1 0.5  acc 0.8683 +- 0.0148 (min 0.8417; chips 0.842 0.888 0.870 0.872 0.870)  ETA 5.0 min
+1140.4s 614 [ 1094.4s]     [  55/200] all_mlc      slc  0.0% sigma 0.000 fault 0.0010 sa1 0.5  acc 0.5945 +- 0.1142 (min 0.5092; chips 0.817 0.509 0.572 0.565 0.509)  ETA 4.8 min
+1150.0s 615 [ 1104.0s]     [  60/200] all_mlc      slc  0.0% sigma 0.000 fault 0.0020 sa1 0.5  acc 0.5787 +- 0.0913 (min 0.5092; chips 0.735 0.509 0.631 0.509 0.509)  ETA 4.6 min
+1159.5s 616 [ 1113.5s]     [  65/200] all_mlc      slc  0.0% sigma 0.000 fault 0.0050 sa1 0.5  acc 0.5220 +- 0.0336 (min 0.4943; chips 0.494 0.509 0.588 0.509 0.509)  ETA 4.4 min
+1168.9s 617 [ 1122.9s]     [  70/200] all_mlc      slc  0.0% sigma 0.000 fault 0.0100 sa1 0.5  acc 0.5202 +- 0.0320 (min 0.4908; chips 0.509 0.509 0.583 0.509 0.491)  ETA 4.3 min
+1178.4s 618 [ 1132.4s]     [  75/200] all_mlc      slc  0.0% sigma 0.000 fault 0.0200 sa1 0.5  acc 0.4975 +- 0.0162 (min 0.4725; chips 0.509 0.472 0.510 0.511 0.484)  ETA 4.1 min
+1187.9s 619 [ 1141.9s]     [  80/200] all_mlc      slc  0.0% sigma 0.000 fault 0.0500 sa1 0.5  acc 0.4943 +- 0.0105 (min 0.4794; chips 0.492 0.509 0.502 0.479 0.489)  ETA 3.9 min
+1188.2s 620 [ 1142.2s]     pair 3/5: gradient, 20.0% of components in SLC (built in 0 s, GPU mem 0.27 GB)
+1200.1s 621 [ 1154.1s]     [  85/200] gradient     slc 20.0% sigma 0.000 fault 0.0000 sa1 0.5  acc 0.8819 +- 0.0000 (min 0.8819; chips 0.882 0.882 0.882 0.882 0.882)  ETA 3.8 min
+1213.1s 622 [ 1167.1s]     [  90/200] gradient     slc 20.0% sigma 0.000 fault 0.0005 sa1 0.5  acc 0.8823 +- 0.0045 (min 0.8750; chips 0.884 0.880 0.888 0.885 0.875)  ETA 3.7 min
+1226.1s 623 [ 1180.1s]     [  95/200] gradient     slc 20.0% sigma 0.000 fault 0.0010 sa1 0.5  acc 0.8761 +- 0.0109 (min 0.8612; chips 0.893 0.874 0.882 0.870 0.861)  ETA 3.6 min
+1239.1s 624 [ 1193.1s]     [ 100/200] gradient     slc 20.0% sigma 0.000 fault 0.0020 sa1 0.5  acc 0.8649 +- 0.0127 (min 0.8463; chips 0.875 0.853 0.872 0.846 0.878)  ETA 3.5 min
+1252.1s 625 [ 1206.1s]     [ 105/200] gradient     slc 20.0% sigma 0.000 fault 0.0050 sa1 0.5  acc 0.7300 +- 0.1110 (min 0.5092; chips 0.766 0.800 0.786 0.789 0.509)  ETA 3.3 min
+1265.1s 626 [ 1219.1s]     [ 110/200] gradient     slc 20.0% sigma 0.000 fault 0.0100 sa1 0.5  acc 0.5677 +- 0.0492 (min 0.5126; chips 0.513 0.575 0.594 0.642 0.515)  ETA 3.2 min
+1278.1s 627 [ 1232.1s]     [ 115/200] gradient     slc 20.0% sigma 0.000 fault 0.0200 sa1 0.5  acc 0.5126 +- 0.0058 (min 0.5057; chips 0.506 0.509 0.518 0.509 0.521)  ETA 3.0 min
+1291.1s 628 [ 1245.1s]     [ 120/200] gradient     slc 20.0% sigma 0.000 fault 0.0500 sa1 0.5  acc 0.5009 +- 0.0165 (min 0.4736; chips 0.474 0.522 0.505 0.511 0.493)  ETA 2.9 min
+1291.4s 629 [ 1245.4s]     pair 4/5: rank, 20.0% of components in SLC (built in 0 s, GPU mem 0.27 GB)
+1303.4s 630 [ 1257.4s]     [ 125/200] rank         slc 20.0% sigma 0.000 fault 0.0000 sa1 0.5  acc 0.8911 +- 0.0000 (min 0.8911; chips 0.891 0.891 0.891 0.891 0.891)  ETA 2.7 min
+1316.5s 631 [ 1270.5s]     [ 130/200] rank         slc 20.0% sigma 0.000 fault 0.0005 sa1 0.5  acc 0.8833 +- 0.0080 (min 0.8704; chips 0.892 0.883 0.891 0.870 0.880)  ETA 2.6 min
+1329.5s 632 [ 1283.5s]     [ 135/200] rank         slc 20.0% sigma 0.000 fault 0.0010 sa1 0.5  acc 0.8842 +- 0.0153 (min 0.8544; chips 0.897 0.890 0.893 0.854 0.886)  ETA 2.4 min
+1342.6s 633 [ 1296.6s]     [ 140/200] rank         slc 20.0% sigma 0.000 fault 0.0020 sa1 0.5  acc 0.8720 +- 0.0187 (min 0.8349; chips 0.884 0.882 0.882 0.835 0.877)  ETA 2.2 min
+1355.6s 634 [ 1309.6s]     [ 145/200] rank         slc 20.0% sigma 0.000 fault 0.0050 sa1 0.5  acc 0.7463 +- 0.1232 (min 0.5092; chips 0.833 0.835 0.743 0.812 0.509)  ETA 2.1 min
+1368.7s 635 [ 1322.7s]     [ 150/200] rank         slc 20.0% sigma 0.000 fault 0.0100 sa1 0.5  acc 0.5963 +- 0.0497 (min 0.5367; chips 0.678 0.587 0.558 0.537 0.622)  ETA 1.9 min
+1381.7s 636 [ 1335.7s]     [ 155/200] rank         slc 20.0% sigma 0.000 fault 0.0200 sa1 0.5  acc 0.5071 +- 0.0075 (min 0.4931; chips 0.493 0.514 0.513 0.506 0.510)  ETA 1.7 min
+1394.7s 637 [ 1348.7s]     [ 160/200] rank         slc 20.0% sigma 0.000 fault 0.0500 sa1 0.5  acc 0.4899 +- 0.0233 (min 0.4564; chips 0.503 0.456 0.506 0.516 0.468)  ETA 1.5 min
+1395.0s 638 [ 1349.0s]     pair 5/5: random, 20.0% of components in SLC (built in 0 s, GPU mem 0.27 GB)
+1407.0s 639 [ 1361.0s]     [ 165/200] random       slc 20.0% sigma 0.000 fault 0.0000 sa1 0.5  acc 0.8865 +- 0.0000 (min 0.8865; chips 0.886 0.886 0.886 0.886 0.886)  ETA 1.3 min
+1420.0s 640 [ 1374.0s]     [ 170/200] random       slc 20.0% sigma 0.000 fault 0.0005 sa1 0.5  acc 0.8704 +- 0.0169 (min 0.8440; chips 0.860 0.880 0.893 0.875 0.844)  ETA 1.1 min
+1433.1s 641 [ 1387.0s]     [ 175/200] random       slc 20.0% sigma 0.000 fault 0.0010 sa1 0.5  acc 0.8060 +- 0.0566 (min 0.6984; chips 0.843 0.819 0.810 0.860 0.698)  ETA 57 s
+1446.1s 642 [ 1400.1s]     [ 180/200] random       slc 20.0% sigma 0.000 fault 0.0020 sa1 0.5  acc 0.6521 +- 0.0658 (min 0.5241; chips 0.524 0.696 0.698 0.656 0.686)  ETA 46 s
+1459.1s 643 [ 1413.0s]     [ 185/200] random       slc 20.0% sigma 0.000 fault 0.0050 sa1 0.5  acc 0.5055 +- 0.0068 (min 0.4920; chips 0.509 0.492 0.509 0.508 0.509)  ETA 35 s
+1472.0s 644 [ 1426.0s]     [ 190/200] random       slc 20.0% sigma 0.000 fault 0.0100 sa1 0.5  acc 0.5239 +- 0.0321 (min 0.4920; chips 0.509 0.492 0.510 0.523 0.585)  ETA 23 s
+1485.0s 645 [ 1438.9s]     [ 195/200] random       slc 20.0% sigma 0.000 fault 0.0200 sa1 0.5  acc 0.4970 +- 0.0108 (min 0.4839; chips 0.509 0.486 0.497 0.509 0.484)  ETA 12 s
+1497.9s 646 [ 1451.9s]     [ 200/200] random       slc 20.0% sigma 0.000 fault 0.0500 sa1 0.5  acc 0.5005 +- 0.0077 (min 0.4874; chips 0.487 0.501 0.498 0.509 0.507)  ETA 0 s
+1498.0s 647 [ 1452.0s]     summary (fault_rate; mean acc over 5 chips; digital 0.8911):
+1498.0s 648 [ 1452.0s]       policy                 0.0000   0.0005   0.0010   0.0020   0.0050   0.0100   0.0200   0.0500
+1498.0s 649 [ 1452.0s]       all_slc                0.8899   0.8837   0.8821   0.8741   0.8394   0.6945   0.5936   0.5252
+1498.0s 650 [ 1452.0s]       all_mlc                0.8911   0.8683   0.5945   0.5787   0.5220   0.5202   0.4975   0.4943
+1498.0s 651 [ 1452.0s]       gradient               0.8819   0.8823   0.8761   0.8649   0.7300   0.5677   0.5126   0.5009
+1498.0s 652 [ 1452.0s]       rank                   0.8911   0.8833   0.8842   0.8720   0.7463   0.5963   0.5071   0.4899
+1498.0s 653 [ 1452.0s]       random                 0.8865   0.8704   0.8060   0.6521   0.5055   0.5239   0.4970   0.5005
+1498.0s 654 [ 1452.0s]     experiment D_fault_sweep done in 7.8 min
+1498.2s 655 [ 1452.2s]     plot -> /kaggle/working/reram_results/distilbert-sst2/D_fault_sweep.png
+1498.2s 656 [ 1452.2s]   ---- experiment E_sa1_share (x = sa1_frac, noise_model = cell, noisy tiers = ['SLC', 'MLC'])
+1498.2s 657 [ 1452.2s]     3 policy/SLC-rate pairs x 1 sigmas x 2 fault rates x 3 SA1 shares x 5 chips = 90 evaluations
+1498.5s 658 [ 1452.5s]     pair 1/3: all_slc, 100.0% of components in SLC (built in 0 s, GPU mem 0.27 GB)
+1508.6s 659 [ 1462.6s]     [   5/90] all_slc      slc 100.0% sigma 0.000 fault 0.0020 sa1 0.0  acc 0.8851 +- 0.0066 (min 0.8761; chips 0.889 0.878 0.893 0.889 0.876)  ETA 2.9 min
+1518.7s 660 [ 1472.7s]     [  10/90] all_slc      slc 100.0% sigma 0.000 fault 0.0100 sa1 0.0  acc 0.8858 +- 0.0067 (min 0.8761; chips 0.876 0.885 0.882 0.890 0.896)  ETA 2.7 min
+1528.9s 661 [ 1482.8s]     [  15/90] all_slc      slc 100.0% sigma 0.000 fault 0.0020 sa1 0.5  acc 0.8741 +- 0.0143 (min 0.8532; chips 0.867 0.886 0.870 0.893 0.853)  ETA 2.6 min
+1539.0s 662 [ 1493.0s]     [  20/90] all_slc      slc 100.0% sigma 0.000 fault 0.0100 sa1 0.5  acc 0.6945 +- 0.0899 (min 0.5814; chips 0.713 0.581 0.804 0.600 0.774)  ETA 2.4 min
+1549.2s 663 [ 1503.2s]     [  25/90] all_slc      slc 100.0% sigma 0.000 fault 0.0020 sa1 1.0  acc 0.8532 +- 0.0109 (min 0.8349; chips 0.850 0.857 0.857 0.868 0.835)  ETA 2.2 min
+1559.4s 664 [ 1513.3s]     [  30/90] all_slc      slc 100.0% sigma 0.000 fault 0.0100 sa1 1.0  acc 0.6502 +- 0.0756 (min 0.5080; chips 0.683 0.508 0.714 0.705 0.640)  ETA 2.0 min
+1559.6s 665 [ 1513.6s]     pair 2/3: all_mlc, 0.0% of components in SLC (built in 0 s, GPU mem 0.27 GB)
+1569.3s 666 [ 1523.3s]     [  35/90] all_mlc      slc  0.0% sigma 0.000 fault 0.0020 sa1 0.0  acc 0.8894 +- 0.0079 (min 0.8761; chips 0.892 0.885 0.896 0.898 0.876)  ETA 1.9 min
+1578.9s 667 [ 1532.9s]     [  40/90] all_mlc      slc  0.0% sigma 0.000 fault 0.0100 sa1 0.0  acc 0.8901 +- 0.0043 (min 0.8842; chips 0.888 0.889 0.894 0.884 0.896)  ETA 1.7 min
+1588.5s 668 [ 1542.5s]     [  45/90] all_mlc      slc  0.0% sigma 0.000 fault 0.0020 sa1 0.5  acc 0.5787 +- 0.0913 (min 0.5092; chips 0.735 0.509 0.631 0.509 0.509)  ETA 1.5 min
+1598.0s 669 [ 1552.0s]     [  50/90] all_mlc      slc  0.0% sigma 0.000 fault 0.0100 sa1 0.5  acc 0.5202 +- 0.0320 (min 0.4908; chips 0.509 0.509 0.583 0.509 0.491)  ETA 1.3 min
+1607.5s 670 [ 1561.5s]     [  55/90] all_mlc      slc  0.0% sigma 0.000 fault 0.0020 sa1 1.0  acc 0.5323 +- 0.0458 (min 0.5069; chips 0.624 0.509 0.509 0.513 0.507)  ETA 1.2 min
+1617.0s 671 [ 1571.0s]     [  60/90] all_mlc      slc  0.0% sigma 0.000 fault 0.0100 sa1 1.0  acc 0.5018 +- 0.0102 (min 0.4885; chips 0.514 0.507 0.489 0.491 0.509)  ETA 59 s
+1617.3s 672 [ 1571.3s]     pair 3/3: gradient, 20.0% of components in SLC (built in 0 s, GPU mem 0.27 GB)
+1630.3s 673 [ 1584.3s]     [  65/90] gradient     slc 20.0% sigma 0.000 fault 0.0020 sa1 0.0  acc 0.8878 +- 0.0034 (min 0.8819; chips 0.891 0.888 0.891 0.882 0.888)  ETA 51 s
+1643.2s 674 [ 1597.2s]     [  70/90] gradient     slc 20.0% sigma 0.000 fault 0.0100 sa1 0.0  acc 0.8888 +- 0.0050 (min 0.8830; chips 0.889 0.884 0.897 0.883 0.891)  ETA 41 s
+1656.2s 675 [ 1610.2s]     [  75/90] gradient     slc 20.0% sigma 0.000 fault 0.0020 sa1 0.5  acc 0.8649 +- 0.0127 (min 0.8463; chips 0.875 0.853 0.872 0.846 0.878)  ETA 32 s
+1669.2s 676 [ 1623.2s]     [  80/90] gradient     slc 20.0% sigma 0.000 fault 0.0100 sa1 0.5  acc 0.5677 +- 0.0492 (min 0.5126; chips 0.513 0.575 0.594 0.642 0.515)  ETA 21 s
+1682.2s 677 [ 1636.2s]     [  85/90] gradient     slc 20.0% sigma 0.000 fault 0.0020 sa1 1.0  acc 0.8005 +- 0.0323 (min 0.7523; chips 0.837 0.788 0.789 0.752 0.836)  ETA 11 s
+1695.1s 678 [ 1649.1s]     [  90/90] gradient     slc 20.0% sigma 0.000 fault 0.0100 sa1 1.0  acc 0.5099 +- 0.0075 (min 0.5023; chips 0.502 0.509 0.507 0.507 0.524)  ETA 0 s
+1695.2s 679 [ 1649.2s]     summary (sa1_frac; mean acc over 5 chips; digital 0.8911):
+1695.2s 680 [ 1649.2s]       policy                 0.0000   0.5000   1.0000
+1695.2s 681 [ 1649.2s]       all_slc @ 0.2%         0.8851   0.8741   0.8532
+1695.2s 682 [ 1649.2s]       all_slc @ 1.0%         0.8858   0.6945   0.6502
+1695.2s 683 [ 1649.2s]       all_mlc @ 0.2%         0.8894   0.5787   0.5323
+1695.2s 684 [ 1649.2s]       all_mlc @ 1.0%         0.8901   0.5202   0.5018
+1695.2s 685 [ 1649.2s]       gradient @ 0.2%        0.8878   0.8649   0.8005
+1695.2s 686 [ 1649.2s]       gradient @ 1.0%        0.8888   0.5677   0.5099
+1695.2s 687 [ 1649.2s]     experiment E_sa1_share done in 3.3 min
+1695.4s 688 [ 1649.4s]     plot -> /kaggle/working/reram_results/distilbert-sst2/E_sa1_share.png
+1695.4s 689 [ 1649.4s] ========== bert-base-sst2 ==========
+1695.4s 690 [ 1649.4s] [1/5] locating SVD-tiering outputs
+1695.5s 691 [ 1649.4s]   searching /kaggle/input/notebooks/sarveshjoshi29/svd-wts
+1695.5s 692 [ 1649.5s]   /kaggle/input/notebooks/sarveshjoshi29/svd-wts/outputs/bert-base-sst2
+1695.5s 693 [ 1649.5s] [2/5] loading SVD model and SST-2 validation
+1709.5s 694 [ 1663.5s]   72 factorised layers, 872 sentences
+1709.5s 695 [ 1663.5s] [3/5] gradient importance (mean per-batch |dL/dsigma|, 512 SST-2 train sentences, batch 32)
+1710.6s 696 [ 1664.6s]     calibration batch 4/16
+1711.2s 697 [ 1665.2s]     calibration batch 8/16
+1711.7s 698 [ 1665.7s]     calibration batch 12/16
+1712.4s 699 [ 1666.4s]     calibration batch 16/16
+1712.6s 700 [ 1666.6s]   done in 3 s; saved importance_scores.pt
+1712.7s 701 [ 1666.6s]     gradient     vs gradient_net: Spearman +0.209, top-20% overlap 35.3%
+1712.7s 702 [ 1666.7s]     gradient     vs rank        : Spearman +0.300, top-20% overlap 43.5%
+1712.7s 703 [ 1666.7s]     gradient_net vs rank        : Spearman +0.169, top-20% overlap 34.0%
+1712.7s 704 [ 1666.7s] [4/5] digital reference
+1715.6s 705 [ 1669.6s]   digital SVD model acc 0.9014
+1715.6s 706 [ 1669.6s] [5/5] 5 experiments
+1715.6s 707 [ 1669.6s]   ---- experiment A_hyflexpim_slc_rate (x = slc_frac, noise_model = multiplicative, noisy tiers = ['MLC'])
+1715.6s 708 [ 1669.6s]     17 policy/SLC-rate pairs x 1 sigmas x 1 fault rates x 1 SA1 shares x 5 chips = 85 evaluations
+1716.2s 709 [ 1670.2s]     pair 1/17: all_slc, 100.0% of components in SLC (built in 1 s, GPU mem 0.43 GB)
+1735.5s 710 [ 1689.5s]     [   5/85] all_slc      slc 100.0% sigma 0.025 fault 0.0000 sa1 0.5  acc 0.8991 +- 0.0000 (min 0.8991; chips 0.899 0.899 0.899 0.899 0.899)  ETA 5.3 min
+1736.2s 711 [ 1690.2s]     pair 2/17: all_mlc, 0.0% of components in SLC (built in 1 s, GPU mem 0.43 GB)
+1755.6s 712 [ 1709.6s]     [  10/85] all_mlc      slc  0.0% sigma 0.025 fault 0.0000 sa1 0.5  acc 0.8943 +- 0.0039 (min 0.8888; chips 0.900 0.892 0.889 0.897 0.893)  ETA 5.0 min
+1756.3s 713 [ 1710.3s]     pair 3/17: gradient, 5.1% of components in SLC (built in 1 s, GPU mem 0.43 GB)
+1780.3s 714 [ 1734.3s]     [  15/85] gradient     slc  5.1% sigma 0.025 fault 0.0000 sa1 0.5  acc 0.8982 +- 0.0036 (min 0.8933; chips 0.898 0.900 0.893 0.904 0.896)  ETA 5.0 min
+1781.0s 715 [ 1735.0s]     pair 4/17: gradient, 10.1% of components in SLC (built in 1 s, GPU mem 0.44 GB)
+1805.5s 716 [ 1759.5s]     [  20/85] gradient     slc 10.1% sigma 0.025 fault 0.0000 sa1 0.5  acc 0.8986 +- 0.0006 (min 0.8979; chips 0.898 0.898 0.899 0.899 0.899)  ETA 4.9 min
+1806.1s 717 [ 1760.1s]     pair 5/17: gradient, 20.0% of components in SLC (built in 1 s, GPU mem 0.43 GB)
+1830.5s 718 [ 1784.5s]     [  25/85] gradient     slc 20.0% sigma 0.025 fault 0.0000 sa1 0.5  acc 0.8984 +- 0.0017 (min 0.8968; chips 0.897 0.898 0.901 0.897 0.899)  ETA 4.6 min
+1831.1s 719 [ 1785.1s]     pair 6/17: gradient, 30.2% of components in SLC (built in 1 s, GPU mem 0.43 GB)
+1855.9s 720 [ 1809.9s]     [  30/85] gradient     slc 30.2% sigma 0.025 fault 0.0000 sa1 0.5  acc 0.9016 +- 0.0029 (min 0.8979; chips 0.901 0.906 0.904 0.898 0.899)  ETA 4.3 min
+1856.5s 721 [ 1810.5s]     pair 7/17: gradient, 50.0% of components in SLC (built in 1 s, GPU mem 0.43 GB)
+1880.8s 722 [ 1834.8s]     [  35/85] gradient     slc 50.0% sigma 0.025 fault 0.0000 sa1 0.5  acc 0.9016 +- 0.0037 (min 0.8968; chips 0.905 0.903 0.906 0.898 0.897)  ETA 3.9 min
+1881.4s 723 [ 1835.4s]     pair 8/17: rank, 5.1% of components in SLC (built in 1 s, GPU mem 0.43 GB)
+1905.7s 724 [ 1859.7s]     [  40/85] rank         slc  5.1% sigma 0.025 fault 0.0000 sa1 0.5  acc 0.9000 +- 0.0043 (min 0.8956; chips 0.896 0.898 0.903 0.897 0.907)  ETA 3.6 min
+1906.2s 725 [ 1860.2s]     pair 9/17: rank, 10.1% of components in SLC (built in 0 s, GPU mem 0.44 GB)
+1930.9s 726 [ 1884.9s]     [  45/85] rank         slc 10.1% sigma 0.025 fault 0.0000 sa1 0.5  acc 0.8989 +- 0.0031 (min 0.8956; chips 0.896 0.897 0.901 0.897 0.904)  ETA 3.2 min
+1931.6s 727 [ 1885.6s]     pair 10/17: rank, 20.0% of components in SLC (built in 1 s, GPU mem 0.43 GB)
+1955.7s 728 [ 1909.7s]     [  50/85] rank         slc 20.0% sigma 0.025 fault 0.0000 sa1 0.5  acc 0.9030 +- 0.0030 (min 0.8991; chips 0.905 0.900 0.899 0.904 0.907)  ETA 2.8 min
+1956.3s 729 [ 1910.3s]     pair 11/17: rank, 30.2% of components in SLC (built in 0 s, GPU mem 0.43 GB)
+1981.0s 730 [ 1934.9s]     [  55/85] rank         slc 30.2% sigma 0.025 fault 0.0000 sa1 0.5  acc 0.9030 +- 0.0030 (min 0.8979; chips 0.898 0.905 0.905 0.901 0.906)  ETA 2.4 min
+1981.8s 731 [ 1935.8s]     pair 12/17: rank, 50.0% of components in SLC (built in 1 s, GPU mem 0.43 GB)
+2006.1s 732 [ 1960.1s]     [  60/85] rank         slc 50.0% sigma 0.025 fault 0.0000 sa1 0.5  acc 0.9016 +- 0.0032 (min 0.8956; chips 0.896 0.905 0.901 0.904 0.903)  ETA 2.0 min
+2006.7s 733 [ 1960.7s]     pair 13/17: random, 5.1% of components in SLC (built in 1 s, GPU mem 0.43 GB)
+2030.9s 734 [ 1984.9s]     [  65/85] random       slc  5.1% sigma 0.025 fault 0.0000 sa1 0.5  acc 0.9028 +- 0.0059 (min 0.8945; chips 0.899 0.909 0.909 0.894 0.901)  ETA 1.6 min
+2031.6s 735 [ 1985.5s]     pair 14/17: random, 10.1% of components in SLC (built in 1 s, GPU mem 0.44 GB)
+2056.1s 736 [ 2010.1s]     [  70/85] random       slc 10.1% sigma 0.025 fault 0.0000 sa1 0.5  acc 0.8989 +- 0.0050 (min 0.8922; chips 0.892 0.896 0.907 0.900 0.899)  ETA 1.2 min
+2056.7s 737 [ 2010.7s]     pair 15/17: random, 20.0% of components in SLC (built in 1 s, GPU mem 0.43 GB)
+2080.8s 738 [ 2034.8s]     [  75/85] random       slc 20.0% sigma 0.025 fault 0.0000 sa1 0.5  acc 0.9039 +- 0.0060 (min 0.8979; chips 0.898 0.899 0.909 0.900 0.913)  ETA 49 s
+2081.4s 739 [ 2035.4s]     pair 16/17: random, 30.2% of components in SLC (built in 1 s, GPU mem 0.43 GB)
+2106.2s 740 [ 2060.2s]     [  80/85] random       slc 30.2% sigma 0.025 fault 0.0000 sa1 0.5  acc 0.9018 +- 0.0022 (min 0.8979; chips 0.898 0.905 0.903 0.901 0.903)  ETA 24 s
+2106.8s 741 [ 2060.8s]     pair 17/17: random, 50.0% of components in SLC (built in 1 s, GPU mem 0.43 GB)
+2131.2s 742 [ 2085.2s]     [  85/85] random       slc 50.0% sigma 0.025 fault 0.0000 sa1 0.5  acc 0.8995 +- 0.0028 (min 0.8956; chips 0.901 0.898 0.896 0.904 0.899)  ETA 0 s
+2131.3s 743 [ 2085.3s]     summary (slc_frac; mean acc over 5 chips; digital 0.9014):
+2131.3s 744 [ 2085.3s]       policy                 0.0514   0.1013   0.2004   0.3017   0.5000
+2131.3s 745 [ 2085.3s]       all_slc                0.8991  (all x)
+2131.3s 746 [ 2085.3s]       all_mlc                0.8943  (all x)
+2131.3s 747 [ 2085.3s]       gradient               0.8982   0.8986   0.8984   0.9016   0.9016
+2131.3s 748 [ 2085.3s]       rank                   0.9000   0.8989   0.9030   0.9030   0.9016
+2131.3s 749 [ 2085.3s]       random                 0.9028   0.8989   0.9039   0.9018   0.8995
+2131.3s 750 [ 2085.3s]     experiment A_hyflexpim_slc_rate done in 6.9 min
+2131.5s 751 [ 2085.5s]     plot -> /kaggle/working/reram_results/bert-base-sst2/A_hyflexpim_slc_rate.png
+2131.5s 752 [ 2085.5s]   ---- experiment B_cell_slc_rate (x = slc_frac, noise_model = cell, noisy tiers = ['SLC', 'MLC'])
+2131.5s 753 [ 2085.5s]     22 policy/SLC-rate pairs x 1 sigmas x 1 fault rates x 1 SA1 shares x 5 chips = 110 evaluations
+2132.1s 754 [ 2086.1s]     pair 1/22: all_slc, 100.0% of components in SLC (built in 1 s, GPU mem 0.43 GB)
+2151.8s 755 [ 2105.8s]     [   5/110] all_slc      slc 100.0% sigma 0.095 fault 0.0000 sa1 0.5  acc 0.8165 +- 0.0371 (min 0.7603; chips 0.854 0.834 0.760 0.849 0.786)  ETA 7.1 min
+2152.5s 756 [ 2106.5s]     pair 2/22: all_mlc, 0.0% of components in SLC (built in 1 s, GPU mem 0.43 GB)
+2171.4s 757 [ 2125.3s]     [  10/110] all_mlc      slc  0.0% sigma 0.095 fault 0.0000 sa1 0.5  acc 0.5089 +- 0.0156 (min 0.4839; chips 0.509 0.509 0.533 0.484 0.509)  ETA 6.6 min
+2172.0s 758 [ 2126.0s]     pair 3/22: gradient, 5.1% of components in SLC (built in 1 s, GPU mem 0.43 GB)
+2197.1s 759 [ 2151.1s]     [  15/110] gradient     slc  5.1% sigma 0.095 fault 0.0000 sa1 0.5  acc 0.5959 +- 0.0385 (min 0.5436; chips 0.625 0.569 0.651 0.591 0.544)  ETA 6.9 min
+2197.8s 760 [ 2151.8s]     pair 4/22: gradient, 10.1% of components in SLC (built in 1 s, GPU mem 0.44 GB)
+2223.1s 761 [ 2177.1s]     [  20/110] gradient     slc 10.1% sigma 0.095 fault 0.0000 sa1 0.5  acc 0.5970 +- 0.0472 (min 0.5092; chips 0.596 0.641 0.509 0.603 0.635)  ETA 6.9 min
+2223.7s 762 [ 2177.7s]     pair 5/22: gradient, 20.0% of components in SLC (built in 1 s, GPU mem 0.43 GB)
+2248.6s 763 [ 2202.6s]     [  25/110] gradient     slc 20.0% sigma 0.095 fault 0.0000 sa1 0.5  acc 0.6498 +- 0.0762 (min 0.5310; chips 0.750 0.712 0.623 0.633 0.531)  ETA 6.6 min
+2249.2s 764 [ 2203.2s]     pair 6/22: gradient, 30.2% of components in SLC (built in 0 s, GPU mem 0.43 GB)
+2274.9s 765 [ 2228.9s]     [  30/110] gradient     slc 30.2% sigma 0.095 fault 0.0000 sa1 0.5  acc 0.6470 +- 0.0363 (min 0.5998; chips 0.600 0.631 0.682 0.696 0.626)  ETA 6.4 min
+2275.4s 766 [ 2229.4s]     pair 7/22: gradient, 50.0% of components in SLC (built in 0 s, GPU mem 0.43 GB)
+2300.8s 767 [ 2254.8s]     [  35/110] gradient     slc 50.0% sigma 0.095 fault 0.0000 sa1 0.5  acc 0.7005 +- 0.0646 (min 0.6032; chips 0.603 0.767 0.736 0.751 0.644)  ETA 6.0 min
+2301.4s 768 [ 2255.3s]     pair 8/22: gradient_net, 5.1% of components in SLC (built in 1 s, GPU mem 0.43 GB)
+2326.5s 769 [ 2280.4s]     [  40/110] gradient_net slc  5.1% sigma 0.095 fault 0.0000 sa1 0.5  acc 0.5498 +- 0.0092 (min 0.5333; chips 0.549 0.561 0.533 0.550 0.555)  ETA 5.7 min
+2327.1s 770 [ 2281.1s]     pair 9/22: gradient_net, 10.1% of components in SLC (built in 1 s, GPU mem 0.44 GB)
+2352.5s 771 [ 2306.5s]     [  45/110] gradient_net slc 10.1% sigma 0.095 fault 0.0000 sa1 0.5  acc 0.5573 +- 0.0625 (min 0.5092; chips 0.511 0.509 0.666 0.510 0.589)  ETA 5.3 min
+2353.1s 772 [ 2307.1s]     pair 10/22: gradient_net, 20.0% of components in SLC (built in 1 s, GPU mem 0.43 GB)
+2378.0s 773 [ 2332.0s]     [  50/110] gradient_net slc 20.0% sigma 0.095 fault 0.0000 sa1 0.5  acc 0.6482 +- 0.0682 (min 0.5550; chips 0.685 0.732 0.689 0.580 0.555)  ETA 4.9 min
+2378.5s 774 [ 2332.5s]     pair 11/22: gradient_net, 30.2% of components in SLC (built in 0 s, GPU mem 0.43 GB)
+2404.1s 775 [ 2358.1s]     [  55/110] gradient_net slc 30.2% sigma 0.095 fault 0.0000 sa1 0.5  acc 0.6156 +- 0.0493 (min 0.5700; chips 0.600 0.585 0.570 0.710 0.614)  ETA 4.5 min
+2404.7s 776 [ 2358.7s]     pair 12/22: gradient_net, 50.0% of components in SLC (built in 1 s, GPU mem 0.43 GB)
+2430.0s 777 [ 2384.0s]     [  60/110] gradient_net slc 50.0% sigma 0.095 fault 0.0000 sa1 0.5  acc 0.6995 +- 0.0659 (min 0.6135; chips 0.704 0.787 0.614 0.755 0.639)  ETA 4.1 min
+2430.5s 778 [ 2384.5s]     pair 13/22: rank, 5.1% of components in SLC (built in 0 s, GPU mem 0.43 GB)
+2455.7s 779 [ 2409.7s]     [  65/110] rank         slc  5.1% sigma 0.095 fault 0.0000 sa1 0.5  acc 0.6787 +- 0.0572 (min 0.5917; chips 0.592 0.696 0.736 0.634 0.735)  ETA 3.7 min
+2456.2s 780 [ 2410.2s]     pair 14/22: rank, 10.1% of components in SLC (built in 0 s, GPU mem 0.44 GB)
+2481.6s 781 [ 2435.6s]     [  70/110] rank         slc 10.1% sigma 0.095 fault 0.0000 sa1 0.5  acc 0.7271 +- 0.0512 (min 0.6411; chips 0.763 0.641 0.741 0.788 0.703)  ETA 3.3 min
+2482.3s 782 [ 2436.3s]     pair 15/22: rank, 20.0% of components in SLC (built in 1 s, GPU mem 0.43 GB)
+2507.2s 783 [ 2461.2s]     [  75/110] rank         slc 20.0% sigma 0.095 fault 0.0000 sa1 0.5  acc 0.7571 +- 0.0340 (min 0.7030; chips 0.747 0.791 0.703 0.796 0.749)  ETA 2.9 min
+2507.8s 784 [ 2461.8s]     pair 16/22: rank, 30.2% of components in SLC (built in 1 s, GPU mem 0.43 GB)
+2533.4s 785 [ 2487.4s]     [  80/110] rank         slc 30.2% sigma 0.095 fault 0.0000 sa1 0.5  acc 0.7807 +- 0.0361 (min 0.7282; chips 0.753 0.812 0.728 0.784 0.826)  ETA 2.5 min
+2534.1s 786 [ 2488.0s]     pair 17/22: rank, 50.0% of components in SLC (built in 1 s, GPU mem 0.43 GB)
+2559.3s 787 [ 2513.3s]     [  85/110] rank         slc 50.0% sigma 0.095 fault 0.0000 sa1 0.5  acc 0.8234 +- 0.0153 (min 0.8028; chips 0.825 0.842 0.838 0.810 0.803)  ETA 2.1 min
+2559.9s 788 [ 2513.9s]     pair 18/22: random, 5.1% of components in SLC (built in 1 s, GPU mem 0.43 GB)
+2585.0s 789 [ 2539.0s]     [  90/110] random       slc  5.1% sigma 0.095 fault 0.0000 sa1 0.5  acc 0.5057 +- 0.0064 (min 0.4943; chips 0.509 0.494 0.513 0.503 0.509)  ETA 1.7 min
+2585.6s 790 [ 2539.6s]     pair 19/22: random, 10.1% of components in SLC (built in 0 s, GPU mem 0.44 GB)
+2611.1s 791 [ 2565.1s]     [  95/110] random       slc 10.1% sigma 0.095 fault 0.0000 sa1 0.5  acc 0.5080 +- 0.0062 (min 0.4977; chips 0.517 0.507 0.509 0.509 0.498)  ETA 1.3 min
+2611.6s 792 [ 2565.6s]     pair 20/22: random, 20.0% of components in SLC (built in 1 s, GPU mem 0.43 GB)
+2636.7s 793 [ 2590.7s]     [ 100/110] random       slc 20.0% sigma 0.095 fault 0.0000 sa1 0.5  acc 0.5135 +- 0.0140 (min 0.4908; chips 0.534 0.516 0.516 0.510 0.491)  ETA 51 s
+2637.2s 794 [ 2591.2s]     pair 21/22: random, 30.2% of components in SLC (built in 0 s, GPU mem 0.43 GB)
+2662.9s 795 [ 2616.9s]     [ 105/110] random       slc 30.2% sigma 0.095 fault 0.0000 sa1 0.5  acc 0.5108 +- 0.0104 (min 0.4920; chips 0.513 0.522 0.509 0.518 0.492)  ETA 25 s
+2663.6s 796 [ 2617.5s]     pair 22/22: random, 50.0% of components in SLC (built in 1 s, GPU mem 0.43 GB)
+2688.9s 797 [ 2642.9s]     [ 110/110] random       slc 50.0% sigma 0.095 fault 0.0000 sa1 0.5  acc 0.5663 +- 0.0456 (min 0.4908; chips 0.615 0.561 0.612 0.553 0.491)  ETA 0 s
+2689.0s 798 [ 2643.0s]     summary (slc_frac; mean acc over 5 chips; digital 0.9014):
+2689.0s 799 [ 2643.0s]       policy                 0.0514   0.1013   0.2004   0.3017   0.5000
+2689.0s 800 [ 2643.0s]       all_slc                0.8165  (all x)
+2689.0s 801 [ 2643.0s]       all_mlc                0.5089  (all x)
+2689.0s 802 [ 2643.0s]       gradient               0.5959   0.5970   0.6498   0.6470   0.7005
+2689.0s 803 [ 2643.0s]       gradient_net           0.5498   0.5573   0.6482   0.6156   0.6995
+2689.0s 804 [ 2643.0s]       rank                   0.6787   0.7271   0.7571   0.7807   0.8234
+2689.0s 805 [ 2643.0s]       random                 0.5057   0.5080   0.5135   0.5108   0.5663
+2689.0s 806 [ 2643.0s]     experiment B_cell_slc_rate done in 9.3 min
+2689.2s 807 [ 2643.2s]     plot -> /kaggle/working/reram_results/bert-base-sst2/B_cell_slc_rate.png
+2689.2s 808 [ 2643.2s]   ---- experiment C_cell_noise_sweep (x = sigma, noise_model = cell, noisy tiers = ['SLC', 'MLC'])
+2689.2s 809 [ 2643.2s]     6 policy/SLC-rate pairs x 7 sigmas x 1 fault rates x 1 SA1 shares x 5 chips = 210 evaluations
+2689.8s 810 [ 2643.8s]     pair 1/6: all_slc, 100.0% of components in SLC (built in 1 s, GPU mem 0.43 GB)
+2708.7s 811 [ 2662.7s]     [   5/210] all_slc      slc 100.0% sigma 0.000 fault 0.0000 sa1 0.5  acc 0.8991 +- 0.0000 (min 0.8991; chips 0.899 0.899 0.899 0.899 0.899)  ETA 13.3 min
+2728.3s 812 [ 2682.3s]     [  10/210] all_slc      slc 100.0% sigma 0.020 fault 0.0000 sa1 0.5  acc 0.8931 +- 0.0058 (min 0.8819; chips 0.894 0.894 0.897 0.898 0.882)  ETA 13.0 min
+2747.9s 813 [ 2701.9s]     [  15/210] all_slc      slc 100.0% sigma 0.040 fault 0.0000 sa1 0.5  acc 0.8904 +- 0.0053 (min 0.8807; chips 0.897 0.892 0.881 0.890 0.892)  ETA 12.7 min
+2767.5s 814 [ 2721.5s]     [  20/210] all_slc      slc 100.0% sigma 0.060 fault 0.0000 sa1 0.5  acc 0.8743 +- 0.0162 (min 0.8463; chips 0.885 0.872 0.846 0.894 0.874)  ETA 12.4 min
+2787.1s 815 [ 2741.1s]     [  25/210] all_slc      slc 100.0% sigma 0.080 fault 0.0000 sa1 0.5  acc 0.8461 +- 0.0237 (min 0.8154; chips 0.877 0.846 0.815 0.867 0.825)  ETA 12.1 min
+2806.6s 816 [ 2760.6s]     [  30/210] all_slc      slc 100.0% sigma 0.095 fault 0.0000 sa1 0.5  acc 0.8165 +- 0.0371 (min 0.7603; chips 0.854 0.834 0.760 0.849 0.786)  ETA 11.7 min
+2826.2s 817 [ 2780.2s]     [  35/210] all_slc      slc 100.0% sigma 0.120 fault 0.0000 sa1 0.5  acc 0.7298 +- 0.0653 (min 0.6284; chips 0.803 0.721 0.698 0.798 0.628)  ETA 11.4 min
+2826.8s 818 [ 2780.8s]     pair 2/6: all_mlc, 0.0% of components in SLC (built in 1 s, GPU mem 0.43 GB)
+2845.1s 819 [ 2799.1s]     [  40/210] all_mlc      slc  0.0% sigma 0.000 fault 0.0000 sa1 0.5  acc 0.9002 +- 0.0000 (min 0.9002; chips 0.900 0.900 0.900 0.900 0.900)  ETA 11.0 min
+2863.9s 820 [ 2817.9s]     [  45/210] all_mlc      slc  0.0% sigma 0.020 fault 0.0000 sa1 0.5  acc 0.8780 +- 0.0084 (min 0.8635; chips 0.886 0.864 0.883 0.874 0.883)  ETA 10.7 min
+2882.7s 821 [ 2836.6s]     [  50/210] all_mlc      slc  0.0% sigma 0.040 fault 0.0000 sa1 0.5  acc 0.7929 +- 0.0283 (min 0.7569; chips 0.830 0.757 0.815 0.765 0.797)  ETA 10.3 min
+2901.4s 822 [ 2855.4s]     [  55/210] all_mlc      slc  0.0% sigma 0.060 fault 0.0000 sa1 0.5  acc 0.5858 +- 0.0532 (min 0.5252; chips 0.525 0.630 0.576 0.663 0.536)  ETA 10.0 min
+2920.2s 823 [ 2874.2s]     [  60/210] all_mlc      slc  0.0% sigma 0.080 fault 0.0000 sa1 0.5  acc 0.5106 +- 0.0125 (min 0.4977; chips 0.509 0.534 0.498 0.506 0.506)  ETA 9.6 min
+2938.9s 824 [ 2892.9s]     [  65/210] all_mlc      slc  0.0% sigma 0.095 fault 0.0000 sa1 0.5  acc 0.5089 +- 0.0156 (min 0.4839; chips 0.509 0.509 0.533 0.484 0.509)  ETA 9.3 min
+2957.5s 825 [ 2911.5s]     [  70/210] all_mlc      slc  0.0% sigma 0.120 fault 0.0000 sa1 0.5  acc 0.5030 +- 0.0126 (min 0.4782; chips 0.509 0.513 0.478 0.506 0.509)  ETA 8.9 min
+2958.1s 826 [ 2912.1s]     pair 3/6: gradient, 20.0% of components in SLC (built in 0 s, GPU mem 0.43 GB)
+2982.0s 827 [ 2936.0s]     [  75/210] gradient     slc 20.0% sigma 0.000 fault 0.0000 sa1 0.5  acc 0.9117 +- 0.0000 (min 0.9117; chips 0.912 0.912 0.912 0.912 0.912)  ETA 8.8 min
+3007.0s 828 [ 2961.0s]     [  80/210] gradient     slc 20.0% sigma 0.020 fault 0.0000 sa1 0.5  acc 0.9009 +- 0.0040 (min 0.8968; chips 0.901 0.900 0.908 0.897 0.898)  ETA 8.6 min
+3032.0s 829 [ 2986.0s]     [  85/210] gradient     slc 20.0% sigma 0.040 fault 0.0000 sa1 0.5  acc 0.8810 +- 0.0090 (min 0.8658; chips 0.877 0.890 0.890 0.882 0.866)  ETA 8.4 min
+3056.9s 830 [ 3010.9s]     [  90/210] gradient     slc 20.0% sigma 0.060 fault 0.0000 sa1 0.5  acc 0.8117 +- 0.0392 (min 0.7626; chips 0.825 0.857 0.846 0.768 0.763)  ETA 8.2 min
+3081.8s 831 [ 3035.8s]     [  95/210] gradient     slc 20.0% sigma 0.080 fault 0.0000 sa1 0.5  acc 0.7174 +- 0.0742 (min 0.5906; chips 0.791 0.776 0.750 0.679 0.591)  ETA 7.9 min
+3106.8s 832 [ 3060.8s]     [ 100/210] gradient     slc 20.0% sigma 0.095 fault 0.0000 sa1 0.5  acc 0.6498 +- 0.0762 (min 0.5310; chips 0.750 0.712 0.623 0.633 0.531)  ETA 7.7 min
+3131.7s 833 [ 3085.7s]     [ 105/210] gradient     slc 20.0% sigma 0.120 fault 0.0000 sa1 0.5  acc 0.5658 +- 0.0275 (min 0.5344; chips 0.564 0.584 0.539 0.608 0.534)  ETA 7.4 min
+3132.3s 834 [ 3086.3s]     pair 4/6: gradient_net, 20.0% of components in SLC (built in 1 s, GPU mem 0.43 GB)
+3156.2s 835 [ 3110.2s]     [ 110/210] gradient_net slc 20.0% sigma 0.000 fault 0.0000 sa1 0.5  acc 0.9025 +- 0.0000 (min 0.9025; chips 0.903 0.903 0.903 0.903 0.903)  ETA 7.1 min
+3181.2s 836 [ 3135.2s]     [ 115/210] gradient_net slc 20.0% sigma 0.020 fault 0.0000 sa1 0.5  acc 0.9041 +- 0.0037 (min 0.8991; chips 0.901 0.904 0.899 0.909 0.907)  ETA 6.8 min
+3206.3s 837 [ 3160.3s]     [ 120/210] gradient_net slc 20.0% sigma 0.040 fault 0.0000 sa1 0.5  acc 0.8856 +- 0.0033 (min 0.8807; chips 0.890 0.886 0.883 0.888 0.881)  ETA 6.5 min
+3231.2s 838 [ 3185.2s]     [ 125/210] gradient_net slc 20.0% sigma 0.060 fault 0.0000 sa1 0.5  acc 0.8181 +- 0.0376 (min 0.7557; chips 0.850 0.864 0.813 0.756 0.808)  ETA 6.1 min
+3256.1s 839 [ 3210.1s]     [ 130/210] gradient_net slc 20.0% sigma 0.080 fault 0.0000 sa1 0.5  acc 0.7122 +- 0.0599 (min 0.6089; chips 0.769 0.773 0.714 0.609 0.695)  ETA 5.8 min
+3281.0s 840 [ 3235.0s]     [ 135/210] gradient_net slc 20.0% sigma 0.095 fault 0.0000 sa1 0.5  acc 0.6482 +- 0.0682 (min 0.5550; chips 0.685 0.732 0.689 0.580 0.555)  ETA 5.5 min
+3306.0s 841 [ 3260.0s]     [ 140/210] gradient_net slc 20.0% sigma 0.120 fault 0.0000 sa1 0.5  acc 0.5126 +- 0.0167 (min 0.4908; chips 0.491 0.531 0.532 0.499 0.510)  ETA 5.1 min
+3306.6s 842 [ 3260.6s]     pair 5/6: rank, 20.0% of components in SLC (built in 1 s, GPU mem 0.43 GB)
+3330.7s 843 [ 3284.7s]     [ 145/210] rank         slc 20.0% sigma 0.000 fault 0.0000 sa1 0.5  acc 0.8968 +- 0.0000 (min 0.8968; chips 0.897 0.897 0.897 0.897 0.897)  ETA 4.8 min
+3355.9s 844 [ 3309.9s]     [ 150/210] rank         slc 20.0% sigma 0.020 fault 0.0000 sa1 0.5  acc 0.8979 +- 0.0053 (min 0.8899; chips 0.900 0.896 0.906 0.898 0.890)  ETA 4.4 min
+3381.0s 845 [ 3335.0s]     [ 155/210] rank         slc 20.0% sigma 0.040 fault 0.0000 sa1 0.5  acc 0.8945 +- 0.0045 (min 0.8899; chips 0.893 0.896 0.903 0.891 0.890)  ETA 4.1 min
+3406.1s 846 [ 3360.0s]     [ 160/210] rank         slc 20.0% sigma 0.060 fault 0.0000 sa1 0.5  acc 0.8695 +- 0.0046 (min 0.8612; chips 0.874 0.873 0.872 0.868 0.861)  ETA 3.7 min
+3431.0s 847 [ 3385.0s]     [ 165/210] rank         slc 20.0% sigma 0.080 fault 0.0000 sa1 0.5  acc 0.8342 +- 0.0162 (min 0.8073; chips 0.841 0.841 0.807 0.856 0.827)  ETA 3.4 min
+3456.1s 848 [ 3410.0s]     [ 170/210] rank         slc 20.0% sigma 0.095 fault 0.0000 sa1 0.5  acc 0.7571 +- 0.0340 (min 0.7030; chips 0.747 0.791 0.703 0.796 0.749)  ETA 3.0 min
+3481.0s 849 [ 3435.0s]     [ 175/210] rank         slc 20.0% sigma 0.120 fault 0.0000 sa1 0.5  acc 0.6243 +- 0.0333 (min 0.5872; chips 0.610 0.667 0.587 0.661 0.596)  ETA 2.6 min
+3481.6s 850 [ 3435.6s]     pair 6/6: random, 20.0% of components in SLC (built in 1 s, GPU mem 0.43 GB)
+3505.7s 851 [ 3459.6s]     [ 180/210] random       slc 20.0% sigma 0.000 fault 0.0000 sa1 0.5  acc 0.9002 +- 0.0000 (min 0.9002; chips 0.900 0.900 0.900 0.900 0.900)  ETA 2.3 min
+3530.8s 852 [ 3484.8s]     [ 185/210] random       slc 20.0% sigma 0.020 fault 0.0000 sa1 0.5  acc 0.8959 +- 0.0047 (min 0.8899; chips 0.893 0.893 0.901 0.901 0.890)  ETA 1.9 min
+3556.1s 853 [ 3510.1s]     [ 190/210] random       slc 20.0% sigma 0.040 fault 0.0000 sa1 0.5  acc 0.8521 +- 0.0190 (min 0.8165; chips 0.817 0.849 0.869 0.864 0.862)  ETA 1.5 min
+3581.1s 854 [ 3535.1s]     [ 195/210] random       slc 20.0% sigma 0.060 fault 0.0000 sa1 0.5  acc 0.7502 +- 0.0712 (min 0.6112; chips 0.611 0.779 0.812 0.784 0.765)  ETA 1.1 min
+3606.2s 855 [ 3560.2s]     [ 200/210] random       slc 20.0% sigma 0.080 fault 0.0000 sa1 0.5  acc 0.5722 +- 0.0484 (min 0.5080; chips 0.539 0.563 0.644 0.607 0.508)  ETA 46 s
+3631.4s 856 [ 3585.3s]     [ 205/210] random       slc 20.0% sigma 0.095 fault 0.0000 sa1 0.5  acc 0.5135 +- 0.0140 (min 0.4908; chips 0.534 0.516 0.516 0.510 0.491)  ETA 23 s
+3656.3s 857 [ 3610.2s]     [ 210/210] random       slc 20.0% sigma 0.120 fault 0.0000 sa1 0.5  acc 0.5011 +- 0.0149 (min 0.4771; chips 0.477 0.516 0.513 0.509 0.491)  ETA 0 s
+3656.3s 858 [ 3610.3s]     summary (sigma; mean acc over 5 chips; digital 0.9014):
+3656.3s 859 [ 3610.3s]       policy                 0.0000   0.0200   0.0400   0.0600   0.0800   0.0950   0.1200
+3656.3s 860 [ 3610.3s]       all_slc                0.8991   0.8931   0.8904   0.8743   0.8461   0.8165   0.7298
+3656.3s 861 [ 3610.3s]       all_mlc                0.9002   0.8780   0.7929   0.5858   0.5106   0.5089   0.5030
+3656.3s 862 [ 3610.3s]       gradient               0.9117   0.9009   0.8810   0.8117   0.7174   0.6498   0.5658
+3656.3s 863 [ 3610.3s]       gradient_net           0.9025   0.9041   0.8856   0.8181   0.7122   0.6482   0.5126
+3656.3s 864 [ 3610.3s]       rank                   0.8968   0.8979   0.8945   0.8695   0.8342   0.7571   0.6243
+3656.3s 865 [ 3610.3s]       random                 0.9002   0.8959   0.8521   0.7502   0.5722   0.5135   0.5011
+3656.3s 866 [ 3610.3s]     experiment C_cell_noise_sweep done in 16.1 min
+3656.6s 867 [ 3610.6s]     plot -> /kaggle/working/reram_results/bert-base-sst2/C_cell_noise_sweep.png
+3656.6s 868 [ 3610.6s]   ---- experiment D_fault_sweep (x = fault_rate, noise_model = cell, noisy tiers = ['SLC', 'MLC'])
+3656.6s 869 [ 3610.6s]     5 policy/SLC-rate pairs x 1 sigmas x 8 fault rates x 1 SA1 shares x 5 chips = 200 evaluations
+3657.1s 870 [ 3611.1s]     pair 1/5: all_slc, 100.0% of components in SLC (built in 1 s, GPU mem 0.43 GB)
+3676.0s 871 [ 3630.0s]     [   5/200] all_slc      slc 100.0% sigma 0.000 fault 0.0000 sa1 0.5  acc 0.8991 +- 0.0000 (min 0.8991; chips 0.899 0.899 0.899 0.899 0.899)  ETA 12.6 min
+3696.1s 872 [ 3650.1s]     [  10/200] all_slc      slc 100.0% sigma 0.000 fault 0.0005 sa1 0.5  acc 0.8947 +- 0.0069 (min 0.8865; chips 0.903 0.903 0.888 0.894 0.886)  ETA 12.5 min
+3716.3s 873 [ 3670.3s]     [  15/200] all_slc      slc 100.0% sigma 0.000 fault 0.0010 sa1 0.5  acc 0.8885 +- 0.0051 (min 0.8796; chips 0.896 0.890 0.889 0.889 0.880)  ETA 12.3 min
+3736.4s 874 [ 3690.4s]     [  20/200] all_slc      slc 100.0% sigma 0.000 fault 0.0020 sa1 0.5  acc 0.8743 +- 0.0203 (min 0.8360; chips 0.880 0.875 0.894 0.886 0.836)  ETA 12.0 min
+3756.6s 875 [ 3710.5s]     [  25/200] all_slc      slc 100.0% sigma 0.000 fault 0.0050 sa1 0.5  acc 0.8381 +- 0.0162 (min 0.8131; chips 0.839 0.828 0.852 0.813 0.858)  ETA 11.7 min
+3776.7s 876 [ 3730.7s]     [  30/200] all_slc      slc 100.0% sigma 0.000 fault 0.0100 sa1 0.5  acc 0.6420 +- 0.0502 (min 0.5677; chips 0.693 0.599 0.689 0.662 0.568)  ETA 11.3 min
+3796.8s 877 [ 3750.8s]     [  35/200] all_slc      slc 100.0% sigma 0.000 fault 0.0200 sa1 0.5  acc 0.5172 +- 0.0100 (min 0.5092; chips 0.509 0.509 0.510 0.523 0.534)  ETA 11.0 min
+3816.8s 878 [ 3770.8s]     [  40/200] all_slc      slc 100.0% sigma 0.000 fault 0.0500 sa1 0.5  acc 0.5041 +- 0.0090 (min 0.4862; chips 0.486 0.509 0.509 0.509 0.507)  ETA 10.7 min
+3817.4s 879 [ 3771.4s]     pair 2/5: all_mlc, 0.0% of components in SLC (built in 1 s, GPU mem 0.43 GB)
+3835.7s 880 [ 3789.7s]     [  45/200] all_mlc      slc  0.0% sigma 0.000 fault 0.0000 sa1 0.5  acc 0.9002 +- 0.0000 (min 0.9002; chips 0.900 0.900 0.900 0.900 0.900)  ETA 10.3 min
+3854.8s 881 [ 3808.8s]     [  50/200] all_mlc      slc  0.0% sigma 0.000 fault 0.0005 sa1 0.5  acc 0.7083 +- 0.1634 (min 0.4920; chips 0.768 0.876 0.492 0.537 0.868)  ETA 9.9 min
+3873.8s 882 [ 3827.8s]     [  55/200] all_mlc      slc  0.0% sigma 0.000 fault 0.0010 sa1 0.5  acc 0.4998 +- 0.0101 (min 0.4851; chips 0.503 0.510 0.491 0.509 0.485)  ETA 9.5 min
+3892.8s 883 [ 3846.8s]     [  60/200] all_mlc      slc  0.0% sigma 0.000 fault 0.0020 sa1 0.5  acc 0.5096 +- 0.0173 (min 0.4908; chips 0.491 0.523 0.491 0.509 0.534)  ETA 9.2 min
+3911.6s 884 [ 3865.6s]     [  65/200] all_mlc      slc  0.0% sigma 0.000 fault 0.0050 sa1 0.5  acc 0.5018 +- 0.0105 (min 0.4874; chips 0.491 0.487 0.511 0.509 0.510)  ETA 8.8 min
+3930.5s 885 [ 3884.4s]     [  70/200] all_mlc      slc  0.0% sigma 0.000 fault 0.0100 sa1 0.5  acc 0.5055 +- 0.0073 (min 0.4908; chips 0.509 0.509 0.509 0.491 0.509)  ETA 8.5 min
+3949.3s 886 [ 3903.3s]     [  75/200] all_mlc      slc  0.0% sigma 0.000 fault 0.0200 sa1 0.5  acc 0.4917 +- 0.0105 (min 0.4759; chips 0.476 0.491 0.491 0.492 0.509)  ETA 8.1 min
+3968.2s 887 [ 3922.1s]     [  80/200] all_mlc      slc  0.0% sigma 0.000 fault 0.0500 sa1 0.5  acc 0.4917 +- 0.0115 (min 0.4805; chips 0.514 0.491 0.481 0.487 0.486)  ETA 7.8 min
+3968.7s 888 [ 3922.7s]     pair 3/5: gradient, 20.0% of components in SLC (built in 1 s, GPU mem 0.43 GB)
+3992.6s 889 [ 3946.6s]     [  85/200] gradient     slc 20.0% sigma 0.000 fault 0.0000 sa1 0.5  acc 0.9117 +- 0.0000 (min 0.9117; chips 0.912 0.912 0.912 0.912 0.912)  ETA 7.6 min
+4018.5s 890 [ 3972.5s]     [  90/200] gradient     slc 20.0% sigma 0.000 fault 0.0005 sa1 0.5  acc 0.8963 +- 0.0022 (min 0.8933; chips 0.900 0.896 0.896 0.897 0.893)  ETA 7.4 min
+4044.5s 891 [ 3998.5s]     [  95/200] gradient     slc 20.0% sigma 0.000 fault 0.0010 sa1 0.5  acc 0.8892 +- 0.0072 (min 0.8807; chips 0.881 0.898 0.881 0.892 0.894)  ETA 7.1 min
+4070.4s 892 [ 4024.4s]     [ 100/200] gradient     slc 20.0% sigma 0.000 fault 0.0020 sa1 0.5  acc 0.8626 +- 0.0345 (min 0.7947; chips 0.874 0.888 0.795 0.872 0.885)  ETA 6.9 min
+4096.5s 893 [ 4050.5s]     [ 105/200] gradient     slc 20.0% sigma 0.000 fault 0.0050 sa1 0.5  acc 0.6190 +- 0.0693 (min 0.5631; chips 0.589 0.751 0.563 0.569 0.623)  ETA 6.6 min
+4122.5s 894 [ 4076.5s]     [ 110/200] gradient     slc 20.0% sigma 0.000 fault 0.0100 sa1 0.5  acc 0.5220 +- 0.0152 (min 0.5023; chips 0.502 0.511 0.519 0.531 0.546)  ETA 6.4 min
+4148.5s 895 [ 4102.4s]     [ 115/200] gradient     slc 20.0% sigma 0.000 fault 0.0200 sa1 0.5  acc 0.4989 +- 0.0178 (min 0.4748; chips 0.475 0.507 0.503 0.484 0.525)  ETA 6.1 min
+4174.4s 896 [ 4128.4s]     [ 120/200] gradient     slc 20.0% sigma 0.000 fault 0.0500 sa1 0.5  acc 0.4963 +- 0.0194 (min 0.4633; chips 0.463 0.503 0.522 0.503 0.490)  ETA 5.8 min
+4174.8s 897 [ 4128.8s]     pair 4/5: rank, 20.0% of components in SLC (built in 0 s, GPU mem 0.43 GB)
+4198.8s 898 [ 4152.8s]     [ 125/200] rank         slc 20.0% sigma 0.000 fault 0.0000 sa1 0.5  acc 0.8968 +- 0.0000 (min 0.8968; chips 0.897 0.897 0.897 0.897 0.897)  ETA 5.4 min
+4224.9s 899 [ 4178.9s]     [ 130/200] rank         slc 20.0% sigma 0.000 fault 0.0005 sa1 0.5  acc 0.8986 +- 0.0033 (min 0.8933; chips 0.893 0.901 0.903 0.899 0.897)  ETA 5.1 min
+4251.1s 900 [ 4205.1s]     [ 135/200] rank         slc 20.0% sigma 0.000 fault 0.0010 sa1 0.5  acc 0.8920 +- 0.0056 (min 0.8830; chips 0.888 0.883 0.897 0.896 0.897)  ETA 4.8 min
+4277.3s 901 [ 4231.3s]     [ 140/200] rank         slc 20.0% sigma 0.000 fault 0.0020 sa1 0.5  acc 0.8897 +- 0.0064 (min 0.8819; chips 0.890 0.883 0.897 0.897 0.882)  ETA 4.4 min
+4303.5s 902 [ 4257.5s]     [ 145/200] rank         slc 20.0% sigma 0.000 fault 0.0050 sa1 0.5  acc 0.7628 +- 0.0715 (min 0.6525; chips 0.833 0.787 0.709 0.834 0.653)  ETA 4.1 min
+4329.8s 903 [ 4283.8s]     [ 150/200] rank         slc 20.0% sigma 0.000 fault 0.0100 sa1 0.5  acc 0.5530 +- 0.0428 (min 0.5115; chips 0.556 0.516 0.511 0.631 0.550)  ETA 3.7 min
+4356.0s 904 [ 4310.0s]     [ 155/200] rank         slc 20.0% sigma 0.000 fault 0.0200 sa1 0.5  acc 0.5023 +- 0.0139 (min 0.4771; chips 0.506 0.519 0.477 0.502 0.507)  ETA 3.4 min
+4381.9s 905 [ 4335.9s]     [ 160/200] rank         slc 20.0% sigma 0.000 fault 0.0500 sa1 0.5  acc 0.4963 +- 0.0212 (min 0.4679; chips 0.476 0.468 0.510 0.524 0.503)  ETA 3.0 min
+4382.7s 906 [ 4336.7s]     pair 5/5: random, 20.0% of components in SLC (built in 1 s, GPU mem 0.43 GB)
+4406.7s 907 [ 4360.7s]     [ 165/200] random       slc 20.0% sigma 0.000 fault 0.0000 sa1 0.5  acc 0.9002 +- 0.0000 (min 0.9002; chips 0.900 0.900 0.900 0.900 0.900)  ETA 2.7 min
+4432.8s 908 [ 4386.7s]     [ 170/200] random       slc 20.0% sigma 0.000 fault 0.0005 sa1 0.5  acc 0.8266 +- 0.0856 (min 0.6583; chips 0.853 0.889 0.850 0.883 0.658)  ETA 2.3 min
+4458.8s 909 [ 4412.8s]     [ 175/200] random       slc 20.0% sigma 0.000 fault 0.0010 sa1 0.5  acc 0.5929 +- 0.0797 (min 0.5138; chips 0.630 0.727 0.514 0.578 0.516)  ETA 1.9 min
+4484.8s 910 [ 4438.8s]     [ 180/200] random       slc 20.0% sigma 0.000 fault 0.0020 sa1 0.5  acc 0.5381 +- 0.0429 (min 0.4908; chips 0.517 0.609 0.491 0.564 0.509)  ETA 1.5 min
+4510.8s 911 [ 4464.8s]     [ 185/200] random       slc 20.0% sigma 0.000 fault 0.0050 sa1 0.5  acc 0.5149 +- 0.0209 (min 0.4908; chips 0.554 0.509 0.511 0.509 0.491)  ETA 1.2 min
+4536.8s 912 [ 4490.7s]     [ 190/200] random       slc 20.0% sigma 0.000 fault 0.0100 sa1 0.5  acc 0.5135 +- 0.0067 (min 0.5092; chips 0.509 0.509 0.526 0.509 0.514)  ETA 46 s
+4562.6s 913 [ 4516.6s]     [ 195/200] random       slc 20.0% sigma 0.000 fault 0.0200 sa1 0.5  acc 0.5044 +- 0.0108 (min 0.4908; chips 0.509 0.509 0.493 0.491 0.519)  ETA 23 s
+4588.6s 914 [ 4542.5s]     [ 200/200] random       slc 20.0% sigma 0.000 fault 0.0500 sa1 0.5  acc 0.5050 +- 0.0137 (min 0.4782; chips 0.509 0.478 0.509 0.511 0.517)  ETA 0 s
+4588.6s 915 [ 4542.6s]     summary (fault_rate; mean acc over 5 chips; digital 0.9014):
+4588.6s 916 [ 4542.6s]       policy                 0.0000   0.0005   0.0010   0.0020   0.0050   0.0100   0.0200   0.0500
+4588.6s 917 [ 4542.6s]       all_slc                0.8991   0.8947   0.8885   0.8743   0.8381   0.6420   0.5172   0.5041
+4588.6s 918 [ 4542.6s]       all_mlc                0.9002   0.7083   0.4998   0.5096   0.5018   0.5055   0.4917   0.4917
+4588.6s 919 [ 4542.6s]       gradient               0.9117   0.8963   0.8892   0.8626   0.6190   0.5220   0.4989   0.4963
+4588.6s 920 [ 4542.6s]       rank                   0.8968   0.8986   0.8920   0.8897   0.7628   0.5530   0.5023   0.4963
+4588.6s 921 [ 4542.6s]       random                 0.9002   0.8266   0.5929   0.5381   0.5149   0.5135   0.5044   0.5050
+4588.6s 922 [ 4542.6s]     experiment D_fault_sweep done in 15.5 min
+4588.8s 923 [ 4542.8s]     plot -> /kaggle/working/reram_results/bert-base-sst2/D_fault_sweep.png
+4588.8s 924 [ 4542.8s]   ---- experiment E_sa1_share (x = sa1_frac, noise_model = cell, noisy tiers = ['SLC', 'MLC'])
+4588.8s 925 [ 4542.8s]     3 policy/SLC-rate pairs x 1 sigmas x 2 fault rates x 3 SA1 shares x 5 chips = 90 evaluations
+4589.3s 926 [ 4543.2s]     pair 1/3: all_slc, 100.0% of components in SLC (built in 0 s, GPU mem 0.43 GB)
+4609.4s 927 [ 4563.4s]     [   5/90] all_slc      slc 100.0% sigma 0.000 fault 0.0020 sa1 0.0  acc 0.8959 +- 0.0026 (min 0.8933; chips 0.900 0.897 0.893 0.896 0.893)  ETA 5.8 min
+4629.8s 928 [ 4583.7s]     [  10/90] all_slc      slc 100.0% sigma 0.000 fault 0.0100 sa1 0.0  acc 0.8888 +- 0.0066 (min 0.8830; chips 0.892 0.900 0.883 0.884 0.884)  ETA 5.4 min
+4649.9s 929 [ 4603.9s]     [  15/90] all_slc      slc 100.0% sigma 0.000 fault 0.0020 sa1 0.5  acc 0.8743 +- 0.0203 (min 0.8360; chips 0.880 0.875 0.894 0.886 0.836)  ETA 5.1 min
+4670.1s 930 [ 4624.0s]     [  20/90] all_slc      slc 100.0% sigma 0.000 fault 0.0100 sa1 0.5  acc 0.6420 +- 0.0502 (min 0.5677; chips 0.693 0.599 0.689 0.662 0.568)  ETA 4.7 min
+4690.1s 931 [ 4644.1s]     [  25/90] all_slc      slc 100.0% sigma 0.000 fault 0.0020 sa1 1.0  acc 0.8413 +- 0.0409 (min 0.7649; chips 0.836 0.882 0.861 0.862 0.765)  ETA 4.4 min
+4710.2s 932 [ 4664.2s]     [  30/90] all_slc      slc 100.0% sigma 0.000 fault 0.0100 sa1 1.0  acc 0.5323 +- 0.0546 (min 0.4725; chips 0.513 0.509 0.533 0.472 0.634)  ETA 4.0 min
+4710.7s 933 [ 4664.6s]     pair 2/3: all_mlc, 0.0% of components in SLC (built in 0 s, GPU mem 0.43 GB)
+4729.6s 934 [ 4683.6s]     [  35/90] all_mlc      slc  0.0% sigma 0.000 fault 0.0020 sa1 0.0  acc 0.8966 +- 0.0060 (min 0.8888; chips 0.897 0.894 0.896 0.889 0.907)  ETA 3.7 min
+4748.7s 935 [ 4702.6s]     [  40/90] all_mlc      slc  0.0% sigma 0.000 fault 0.0100 sa1 0.0  acc 0.8913 +- 0.0065 (min 0.8830; chips 0.888 0.883 0.893 0.890 0.903)  ETA 3.3 min
+4767.6s 936 [ 4721.6s]     [  45/90] all_mlc      slc  0.0% sigma 0.000 fault 0.0020 sa1 0.5  acc 0.5096 +- 0.0173 (min 0.4908; chips 0.491 0.523 0.491 0.509 0.534)  ETA 3.0 min
+4786.4s 937 [ 4740.4s]     [  50/90] all_mlc      slc  0.0% sigma 0.000 fault 0.0100 sa1 0.5  acc 0.5055 +- 0.0073 (min 0.4908; chips 0.509 0.509 0.509 0.491 0.509)  ETA 2.6 min
+4805.2s 938 [ 4759.2s]     [  55/90] all_mlc      slc  0.0% sigma 0.000 fault 0.0020 sa1 1.0  acc 0.4890 +- 0.0245 (min 0.4438; chips 0.513 0.509 0.444 0.491 0.489)  ETA 2.3 min
+4824.1s 939 [ 4778.0s]     [  60/90] all_mlc      slc  0.0% sigma 0.000 fault 0.0100 sa1 1.0  acc 0.4931 +- 0.0150 (min 0.4759; chips 0.509 0.511 0.491 0.478 0.476)  ETA 2.0 min
+4824.5s 940 [ 4778.5s]     pair 3/3: gradient, 20.0% of components in SLC (built in 0 s, GPU mem 0.43 GB)
+4850.7s 941 [ 4804.7s]     [  65/90] gradient     slc 20.0% sigma 0.000 fault 0.0020 sa1 0.0  acc 0.9044 +- 0.0037 (min 0.8979; chips 0.905 0.909 0.898 0.904 0.906)  ETA 1.7 min
+4876.9s 942 [ 4830.8s]     [  70/90] gradient     slc 20.0% sigma 0.000 fault 0.0100 sa1 0.0  acc 0.9011 +- 0.0048 (min 0.8968; chips 0.899 0.911 0.899 0.900 0.897)  ETA 1.4 min
+4902.9s 943 [ 4856.9s]     [  75/90] gradient     slc 20.0% sigma 0.000 fault 0.0020 sa1 0.5  acc 0.8626 +- 0.0345 (min 0.7947; chips 0.874 0.888 0.795 0.872 0.885)  ETA 1.0 min
+4928.9s 944 [ 4882.9s]     [  80/90] gradient     slc 20.0% sigma 0.000 fault 0.0100 sa1 0.5  acc 0.5220 +- 0.0152 (min 0.5023; chips 0.502 0.511 0.519 0.531 0.546)  ETA 43 s
+4955.0s 945 [ 4909.0s]     [  85/90] gradient     slc 20.0% sigma 0.000 fault 0.0020 sa1 1.0  acc 0.7156 +- 0.0824 (min 0.5826; chips 0.583 0.763 0.659 0.767 0.806)  ETA 22 s
+4981.1s 946 [ 4935.1s]     [  90/90] gradient     slc 20.0% sigma 0.000 fault 0.0100 sa1 1.0  acc 0.5204 +- 0.0134 (min 0.4977; chips 0.536 0.531 0.515 0.498 0.523)  ETA 0 s
+4981.2s 947 [ 4935.2s]     summary (sa1_frac; mean acc over 5 chips; digital 0.9014):
+4981.2s 948 [ 4935.2s]       policy                 0.0000   0.5000   1.0000
+4981.2s 949 [ 4935.2s]       all_slc @ 0.2%         0.8959   0.8743   0.8413
+4981.2s 950 [ 4935.2s]       all_slc @ 1.0%         0.8888   0.6420   0.5323
+4981.2s 951 [ 4935.2s]       all_mlc @ 0.2%         0.8966   0.5096   0.4890
+4981.2s 952 [ 4935.2s]       all_mlc @ 1.0%         0.8913   0.5055   0.4931
+4981.2s 953 [ 4935.2s]       gradient @ 0.2%        0.9044   0.8626   0.7156
+4981.2s 954 [ 4935.2s]       gradient @ 1.0%        0.9011   0.5220   0.5204
+4981.2s 955 [ 4935.2s]     experiment E_sa1_share done in 6.5 min
+4981.4s 956 [ 4935.4s]     plot -> /kaggle/working/reram_results/bert-base-sst2/E_sa1_share.png
+4981.4s 957 [ 4935.4s] output files:
+4981.4s 958 [ 4935.4s]   bert-base-sst2/A_hyflexpim_slc_rate.csv  (3.4 KB)
+4981.4s 959 [ 4935.4s]   bert-base-sst2/A_hyflexpim_slc_rate.png  (74.1 KB)
+4981.4s 960 [ 4935.4s]   bert-base-sst2/A_hyflexpim_slc_rate_summary.csv  (1.7 KB)
+4981.4s 961 [ 4935.4s]   bert-base-sst2/B_cell_slc_rate.csv  (4.5 KB)
+4981.4s 962 [ 4935.4s]   bert-base-sst2/B_cell_slc_rate.png  (73.5 KB)
+4981.4s 963 [ 4935.4s]   bert-base-sst2/B_cell_slc_rate_summary.csv  (2.2 KB)
+4981.4s 964 [ 4935.4s]   bert-base-sst2/C_cell_noise_sweep.csv  (8.3 KB)
+4981.4s 965 [ 4935.4s]   bert-base-sst2/C_cell_noise_sweep.png  (99.7 KB)
+4981.4s 966 [ 4935.4s]   bert-base-sst2/C_cell_noise_sweep_summary.csv  (4.0 KB)
+4981.4s 967 [ 4935.4s]   bert-base-sst2/D_fault_sweep.csv  (7.8 KB)
+4981.4s 968 [ 4935.4s]   bert-base-sst2/D_fault_sweep.png  (72.7 KB)
+4981.4s 969 [ 4935.4s]   bert-base-sst2/D_fault_sweep_summary.csv  (3.7 KB)
+4981.4s 970 [ 4935.4s]   bert-base-sst2/E_sa1_share.csv  (3.6 KB)
+4981.4s 971 [ 4935.4s]   bert-base-sst2/E_sa1_share.png  (95.3 KB)
+4981.4s 972 [ 4935.4s]   bert-base-sst2/E_sa1_share_summary.csv  (1.7 KB)
+4981.4s 973 [ 4935.4s]   bert-base-sst2/config.json  (1.9 KB)
+4981.4s 974 [ 4935.4s]   bert-base-sst2/importance_scores.pt  (452.6 KB)
+4981.4s 975 [ 4935.4s]   distilbert-sst2/A_hyflexpim_slc_rate.csv  (3.4 KB)
+4981.4s 976 [ 4935.4s]   distilbert-sst2/A_hyflexpim_slc_rate.png  (67.1 KB)
+4981.4s 977 [ 4935.4s]   distilbert-sst2/A_hyflexpim_slc_rate_summary.csv  (1.7 KB)
+4981.4s 978 [ 4935.4s]   distilbert-sst2/B_cell_slc_rate.csv  (4.5 KB)
+4981.4s 979 [ 4935.4s]   distilbert-sst2/B_cell_slc_rate.png  (77.0 KB)
+4981.4s 980 [ 4935.4s]   distilbert-sst2/B_cell_slc_rate_summary.csv  (2.2 KB)
+4981.4s 981 [ 4935.4s]   distilbert-sst2/C_cell_noise_sweep.csv  (8.3 KB)
+4981.4s 982 [ 4935.4s]   distilbert-sst2/C_cell_noise_sweep.png  (100.9 KB)
+4981.4s 983 [ 4935.4s]   distilbert-sst2/C_cell_noise_sweep_summary.csv  (3.9 KB)
+4981.4s 984 [ 4935.4s]   distilbert-sst2/D_fault_sweep.csv  (7.8 KB)
+4981.4s 985 [ 4935.4s]   distilbert-sst2/D_fault_sweep.png  (79.1 KB)
+4981.4s 986 [ 4935.4s]   distilbert-sst2/D_fault_sweep_summary.csv  (3.7 KB)
+4981.4s 987 [ 4935.4s]   distilbert-sst2/E_sa1_share.csv  (3.6 KB)
+4981.4s 988 [ 4935.4s]   distilbert-sst2/E_sa1_share.png  (99.6 KB)
+4981.4s 989 [ 4935.4s]   distilbert-sst2/E_sa1_share_summary.csv  (1.7 KB)
+4981.4s 990 [ 4935.4s]   distilbert-sst2/config.json  (1.9 KB)
+4981.5s 991 [ 4935.4s]   distilbert-sst2/importance_scores.pt  (226.9 KB)
+4981.5s 992 [ 4935.4s]   run.log  (71.1 KB)
+4981.5s 993 [ 4935.4s] zipping results
+4981.5s 994 [ 4935.5s] done in 82.3 min. download /kaggle/working/reram_results.zip from the Output panel
+4988.4s 995 /usr/local/lib/python3.13/dist-packages/mistune.py:435: SyntaxWarning: invalid escape sequence '\|'
+4988.4s 996 cells[i][c] = re.sub('\\\\\|', '|', cell)
+4988.6s 997 /usr/local/lib/python3.13/dist-packages/nbconvert/filters/filter_links.py:36: SyntaxWarning: invalid escape sequence '\_'
+4988.6s 998 text = re.sub(r'_', '\_', text) # Escape underscores in display text
+4989.4s 999 [NbConvertApp] Converting notebook __notebook__.ipynb to notebook
+4989.6s 1000 [NbConvertApp] Writing 408163 bytes to __notebook__.ipynb
+4992.2s 1001 [NbConvertApp] Converting notebook __notebook__.ipynb to html
+4992.9s 1002 [NbConvertApp] Writing 746652 bytes to __results__.html
