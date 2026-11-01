@@ -1,0 +1,185 @@
+\documentclass[conference]{IEEEtran}
+\IEEEoverridecommandlockouts
+
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage{amsmath,amssymb}
+\usepackage{graphicx}
+\usepackage{booktabs}
+\usepackage{cite}
+\usepackage{xcolor}
+\usepackage[hidelinks]{hyperref}
+
+\begin{document}
+
+\title{Protecting the Right Weights on a Noisy Hybrid SLC/MLC ReRAM Chip}
+
+\author{
+\IEEEauthorblockN{Author One}
+\IEEEauthorblockA{\textit{Department} \\
+\textit{Institution}\\
+City, Country \\
+email@example.com}
+\and
+\IEEEauthorblockN{Author Two}
+\IEEEauthorblockA{\textit{Department} \\
+\textit{Institution}\\
+City, Country \\
+email@example.com}
+}
+
+\maketitle
+
+\begin{abstract}
+Analog resistive-RAM (ReRAM) processing-in-memory computes matrix--vector products inside the memory
+array and removes most of the data movement that dominates transformer inference. Its weakness is that
+a cell cannot be programmed exactly. A single-level cell (SLC) stores one bit and tolerates this error,
+while a multi-level cell (MLC) stores two bits and is denser but far less robust. A hybrid chip keeps
+the important weights in SLC and the rest in MLC, so the central question is which weights to protect.
+We study this question for DistilBERT and BERT-Base on SST-2 with a cell-level crossbar simulator that
+models 8-bit weights, differential pairs, bit-slicing, programming noise, stuck-at faults, read noise,
+a fixed ADC and IR drop. After a singular value decomposition (SVD) of every weight matrix, we compare
+six placements of the SVD components: all-SLC, all-MLC, random, largest singular value (magnitude),
+a HyFlexPIM-style loss gradient, and a Fisher-information estimate of the damage each component would
+suffer in MLC. Storing everything in MLC fails at realistic noise, and BERT-Base falls from about 90\% to
+near chance. Protecting a small share of components recovers almost all of the loss, but only if the right
+components are chosen. Ranking by singular value matches the best placement we could construct,
+whereas the gradient placement loses 3--12 accuracy points at high noise. Stuck-at cells are the one
+failure that placement does not fix: all-MLC fails at 0.1\% stuck cells and all-SLC at 1\%.
+\end{abstract}
+
+\begin{IEEEkeywords}
+processing-in-memory, ReRAM, multi-level cell, transformer, singular value decomposition, fault tolerance
+\end{IEEEkeywords}
+
+\section{Introduction}
+Transformer models \cite{devlin2019bert} are expensive to run, mainly because billions of weights must be
+moved between memory and the processor. Processing-in-memory (PIM) removes this movement by computing where
+the weights are stored. Analog ReRAM crossbars are an efficient form of PIM, but a cell cannot be
+programmed exactly, so every stored weight carries error. Dense multi-level cells (MLC) suffer most from
+this error, and reliable single-level cells (SLC) are costly. A hybrid chip therefore keeps only the most
+important weights in SLC, and the open question is which weights these are.
+
+This paper studies that question for SVD-factorised transformers on a simulated hybrid SLC/MLC ReRAM chip.
+Section~II gives the background, including the HyFlexPIM method \cite{song2025hyflexpim} and our
+contributions. The remaining sections will describe the simulator, the experiments and the results.
+
+\section{Background}
+\subsection{Analog ReRAM Crossbars}
+A ReRAM crossbar computes a matrix--vector product inside memory. Each weight is stored as the
+conductance of resistive cells. A voltage proportional to each input is applied to a row, and the currents
+on each column add up to the output. This avoids most of the data movement of conventional hardware, and it
+computes a whole column in one step.
+
+The cost is accuracy. A cell cannot be programmed to an exact conductance, and cells can also be stuck at
+a fixed conductance. A single-level cell (SLC) stores one bit in two well-separated levels and tolerates
+considerable error. A multi-level cell (MLC) stores two bits in four closely spaced levels. It needs fewer
+cells per weight, which gives higher density, throughput and energy efficiency, but the same absolute
+conductance error is a larger error in the stored value. Transformers are sensitive to such error, and
+running BERT entirely on two-bit cells can cost tens of accuracy points \cite{song2025hyflexpim}.
+
+\subsection{HyFlexPIM}
+HyFlexPIM \cite{song2025hyflexpim} is a hybrid SLC/MLC mixed-signal PIM accelerator. A single analog PIM
+module can switch between SLC and MLC operation with under 1\% area and energy overhead, so critical
+weights can be stored in SLC and the remaining weights in the denser MLC. Brute-force mapping on such a chip
+gives little benefit, because too few weights are error-tolerant enough for MLC. HyFlexPIM therefore adds an
+algorithmic step called \emph{gradient redistribution}:
+\begin{enumerate}
+\item Factorise each weight matrix with singular value decomposition (SVD) into components ordered by
+singular value.
+\item Truncate the smallest components to remove redundancy.
+\item Fine-tune the truncated model, which concentrates the loss gradient in a small subset of components.
+\item Rank the components by the absolute gradient of the loss with respect to their singular value.
+\item Store the top $k\%$ in SLC and the remaining components in MLC.
+\end{enumerate}
+All of these steps run in software before deployment, and the hardware only receives the final truncated
+matrices. HyFlexPIM models MLC error by multiplying each weight by $(1+\eta)$ with Gaussian $\eta$, with the
+variance chosen to match a bit error rate of about 4.04\% measured on fabricated MLC RRAM. It reports that
+protecting 5--30\% of components in SLC keeps most GLUE tasks within 1\% of the noise-free baseline, and that
+gradient-based selection outperforms magnitude- and rank-based selection on MRPC and CoLA with BERT-Base.
+
+\subsection{Open Questions and Our Contributions}
+The evidence for gradient-based selection covers a small number of tasks and a single noise model, and the
+model has no stuck-at cells. It is unclear whether the rule holds under other error models, whether a
+cheaper rule performs as well, and how stuck-at cells affect each placement. Our contributions address
+these points:
+\begin{itemize}
+\item \textbf{A crossbar simulator.} A cell-level PyTorch model of SVD-factorised transformers on SLC and
+MLC crossbars, covering weight quantisation, differential pairs, bit-slicing, programming noise, stuck-at
+faults, read noise, a fixed ADC and IR drop. All placements are evaluated on the same simulated chips.
+\item \textbf{Criticality-aware component placement.} A comparison of six policies for choosing which SVD
+components are stored in SLC: all-SLC, all-MLC, random, singular-value magnitude, the HyFlexPIM gradient,
+and a Fisher-information estimate of the damage each component would suffer in MLC.
+\item \textbf{Variation with SLC share.} How the accuracy of each placement policy changes as the share of
+components stored in SLC increases.
+\item \textbf{Fault analysis.} An evaluation of how programming noise and stuck-at cells, which HyFlexPIM
+does not model, affect each placement policy. We study DistilBERT and BERT-Base on the SST-2 task of GLUE.
+\end{itemize}
+
+\section{Methodology}
+Our pipeline has three stages: SVD factorisation of the transformer, a cell-level crossbar simulation, and
+the placement of the SVD components on SLC and MLC cells. This section describes the first stage.
+
+\subsection{SVD of the Transformer}
+\subsubsection{Models and dataset}
+We use two encoder transformers, DistilBERT \cite{sanh2019distilbert} and BERT-Base \cite{devlin2019bert},
+and the SST-2 sentiment task of GLUE \cite{wang2019glue}. SST-2 is a binary classification task. It has
+67,349 training sentences and 872 validation sentences, and all accuracies in this paper are measured on the
+validation set. Both models start from public checkpoints that are already fine-tuned on SST-2
+(\texttt{distilbert-base-uncased-}\allowbreak\texttt{finetuned-sst-2-english} and
+\texttt{textattack/}\allowbreak\texttt{bert-base-uncased-SST-2}). Sentences are truncated to 128 tokens.
+
+\subsubsection{Factorisation}
+Following HyFlexPIM, we factorise every linear layer of the encoder blocks (the query, key, value and
+output projections and the two feed-forward layers) as
+\begin{equation}
+W \approx U\,\mathrm{diag}(\sigma)\,V^{\top}, \qquad W\in\mathbb{R}^{m\times n},
+\end{equation}
+which gives 36 factorised layers for DistilBERT and 72 for BERT-Base. We keep the $k=\lfloor mn/(m+n)\rfloor$
+largest singular values (for example $k=384$ for a $768\times768$ layer), the largest rank for which the two
+factors $U$ and $\sigma V^{\top}$ together hold no more parameters than $W$. On the chip each layer then
+becomes two crossbars, $x\rightarrow[\sigma V^{\top}]\rightarrow[U]\rightarrow y$, and component $r$ consists
+of row $r$ of $\sigma V^{\top}$ together with column $r$ of $U$. This gives 16,584 components for DistilBERT
+and 33,168 for BERT-Base.
+
+\subsubsection{Recovery fine-tuning}
+Truncating to rank $k$ removes information, so we fine-tune the factorised model on the SST-2 training set
+to recover the lost accuracy. We use AdamW with a learning rate of $2\times10^{-5}$ decayed linearly to
+zero, batch size 32, 8 epochs, mixed-precision (fp16) autocast and seed 0. Table~\ref{tab:svd} shows the
+validation accuracy of the SVD-factorised models after fine-tuning.
+
+\begin{table}[t]
+\caption{SST-2 validation accuracy (\%) of the SVD-factorised models after fine-tuning.}
+\label{tab:svd}
+\centering
+\begin{tabular}{lc}
+\toprule
+Model & SVD + fine-tune \\
+\midrule
+DistilBERT & 89.11 \\
+BERT-Base  & 90.14 \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+All later experiments use these fine-tuned factorised models as their noise-free reference, so the
+accuracies in the tables that follow should be read against 89.11\% (DistilBERT) and 90.14\% (BERT-Base).
+
+% ---------------------------------------------------------------
+% Remaining methodology subsections, results and conclusion to be written.
+% ---------------------------------------------------------------
+
+\begin{thebibliography}{00}
+\bibitem{song2025hyflexpim} C.~E. Song, P.~Bhatnagar, Z.~Xia, N.~S. Kim, T.~S. Rosing, and M.~Kang,
+``Hybrid SLC-MLC RRAM mixed-signal processing-in-memory architecture for transformer acceleration via
+gradient redistribution,'' in \emph{Proc. 52nd Annu. Int. Symp. Computer Architecture (ISCA)}, Tokyo,
+Japan, Jun. 2025, pp. 1155--1170.
+\bibitem{devlin2019bert} J.~Devlin, M.-W. Chang, K.~Lee, and K.~Toutanova, ``BERT: Pre-training of deep
+bidirectional transformers for language understanding,'' in \emph{Proc. NAACL-HLT}, 2019.
+\bibitem{sanh2019distilbert} V.~Sanh, L.~Debut, J.~Chaumond, and T.~Wolf, ``DistilBERT, a distilled version of
+BERT: smaller, faster, cheaper and lighter,'' \emph{arXiv preprint arXiv:1910.01108}, 2019.
+\bibitem{wang2019glue} A.~Wang, A.~Singh, J.~Michael, F.~Hill, O.~Levy, and S.~R. Bowman, ``GLUE: A
+multi-task benchmark and analysis platform for natural language understanding,'' in \emph{Proc. ICLR}, 2019.
+\end{thebibliography}
+
+\end{document}
