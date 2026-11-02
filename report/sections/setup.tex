@@ -1,0 +1,64 @@
+\section{Experimental Setup}\label{sec:setup}
+
+\textbf{Models and data.} We use two publicly available SST-2 classifiers from the Hugging Face hub,
+BERT-Base with 12 encoder layers\footnote{\nolinkurl{textattack/bert-base-uncased-SST-2}} and DistilBERT
+with 6 encoder layers\footnote{\nolinkurl{distilbert-base-uncased-finetuned-sst-2-english}}. All encoder
+linear layers are factorised and mapped to crossbars; embeddings, layer normalisation, attention
+score computation and the classification head (including BERT's pooler) stay digital. Accuracy is measured on all 872 sentences of the
+SST-2 validation set, with inputs truncated to 128 tokens. Placement scores and Fisher information use
+2{,}048 sentences from the SST-2 training set, the same sentences for every score.
+
+\Cref{sec:mnli} repeats part of the study on MNLI with its own setup.
+
+\textbf{Experiments.} \Cref{tab:experiments} lists the experiments. Hybrid placements keep 20\% of
+the components in SLC unless the SLC share is the swept quantity. Each error source is varied on its own,
+with all others disabled, so that its effect can be attributed. Where a configuration contains no random
+error, such as IR drop or ADC resolution without noise, a single evaluation is exact and only one chip is
+used.
+
+\begin{table}[t]
+\centering\footnotesize
+\caption{Experiments. Chips: number of simulated chips per point.}\label{tab:experiments}
+\setlength{\tabcolsep}{2.5pt}
+\begin{tabular}{@{}lll c@{}}
+\toprule
+Experiment & Swept & Fixed & Chips \\
+\midrule
+Programming noise & $\sigma=0$--10\% & & 5 \\
+SLC share & share 5--50\% & $\sigma=3,5,7.5\%$ & 20 \\
+Stuck cells & $p=0.1$--5\% & & 20 \\
+Read noise & $\sigma_r=0.5$--5\% & & 5 \\
+Level noise & mid levels $\times1.5$, $\times2$ & $\sigma=5\%$ & 10 \\
+Fault pattern & scattered, clusters, lines & $p=1\%$ & 10 \\
+IR drop & $r=10^{-4}$--$3\times10^{-3}$ & & 1 \\
+ADC resolution & 3--8 bits & & 1 \\
+ADC + noise$^{*}$ & 4--8 bits & $\sigma=5\%$ & 3 \\
+\midrule
+Fault-aware mapping & $p=0.2$--2\% & & 10 \\
+ & $p=0.2$--1\% & $\sigma=5\%$ & 10 \\
+ & clusters, lines & $p=1\%$ & 10 \\
+\midrule
+Training & as mapping; $\sigma=0$--7.5\% & & 10 \\
+\bottomrule
+\end{tabular}
+
+\smallskip
+\raggedright$^{*}$DistilBERT only. ADC experiments use bit-serial inputs.
+\end{table}
+
+\textbf{Evaluation batches.} Inputs to every crossbar are quantised to 8 bits with one scale per tensor,
+and a tensor holds a whole evaluation batch, so accuracy depends slightly on how sentences are grouped:
+without noise it shifts by up to about one point between batch sizes. Within an experiment every
+placement uses the same batches, so comparisons are unaffected. The basic sweeps (programming noise, SLC
+share, stuck cells) and the mapping and training experiments use batches of 128; the experiments on
+the other non-idealities (read noise to ADC) use batches of 64.
+
+\textbf{Statistics.} We report the mean accuracy over chips and, where useful, the worst chip. Because
+placements share chips (\cref{sec:model}), we compare two placements by their paired difference: the
+number of correctly classified sentences, out of 872, by which one placement beats the other on the same
+chip, or the same difference in accuracy points, averaged over chips and given with its standard error.
+
+\textbf{Compute.} All runs use Kaggle notebooks with one NVIDIA T4 GPU, PyTorch and Hugging Face
+Transformers. Each stage is a single self-contained script: factorisation and fine-tuning, the
+placement experiments, fault-aware mapping, and training. Every script runs its self-tests before any
+experiment and stops if one fails.

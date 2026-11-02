@@ -1,0 +1,11 @@
+model,stage,seconds
+distilbert-mnli,[1/5] SVD + recovery fine-tune,684.5
+distilbert-mnli,[2/5] ranking scores,55.4
+distilbert-mnli,"[3/5] slc_share, sigma = 5%",1934.4
+distilbert-mnli,[4/5] fault rate,3039.8
+distilbert-mnli,[5/5] fault-aware mapping,1227.5
+bert-base-mnli,[1/5] SVD + recovery fine-tune,1285.1
+bert-base-mnli,[2/5] ranking scores,105.1
+bert-base-mnli,"[3/5] slc_share, sigma = 5%",3850.8
+bert-base-mnli,[4/5] fault rate,6061.8
+bert-base-mnli,[5/5] fault-aware mapping,2468.7

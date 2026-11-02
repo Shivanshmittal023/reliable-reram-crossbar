@@ -1,0 +1,21 @@
+{
+  "model": "distilbert-mnli",
+  "hf_id": "typeform/distilbert-base-uncased-mnli",
+  "label_perm": [
+    0,
+    1,
+    2
+  ],
+  "accuracy": {
+    "baseline": 0.821,
+    "baseline_full": 0.8221090168110036,
+    "svd_truncated": 0.7905,
+    "svd_finetuned": 0.809,
+    "svd_finetuned_full": 0.8076413652572593
+  },
+  "num_layers": 36,
+  "components": 16584,
+  "train_n": 100000,
+  "epochs": 2,
+  "eval_n": 2000
+}

@@ -1,0 +1,21 @@
+{
+  "model": "bert-base-mnli",
+  "hf_id": "textattack/bert-base-uncased-MNLI",
+  "label_perm": [
+    1,
+    2,
+    0
+  ],
+  "accuracy": {
+    "baseline": 0.837,
+    "baseline_full": 0.845746306673459,
+    "svd_truncated": 0.7765,
+    "svd_finetuned": 0.832,
+    "svd_finetuned_full": 0.828731533367295
+  },
+  "num_layers": 72,
+  "components": 33168,
+  "train_n": 100000,
+  "epochs": 2,
+  "eval_n": 2000
+}

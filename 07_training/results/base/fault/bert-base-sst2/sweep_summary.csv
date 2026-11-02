@@ -1,0 +1,3 @@
+policy,slc_frac,param,value,acc_mean,acc_std,acc_min,n
+magnitude,0.2,fault_rate,0.005,0.766284,0.066583,0.661697,10
+magnitude_remap,0.2,fault_rate,0.005,0.855619,0.011632,0.838303,10

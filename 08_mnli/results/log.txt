@@ -1,0 +1,478 @@
+[    0.1s] device: cuda Tesla T4  torch 2.11.0+cu128  mode full
+[    0.1s] output /kaggle/working/mnli_results | RAM: python 0.9 GB, free 29.6 of 31.3 GB | GPU: 0.0 GB in use, peak 0.0 of 14.6 GB
+[    0.1s] config {'eval_split': 'validation_matched', 'eval_n': 2000, 'eval_seed': 0, 'eval_full': True, 'max_len': 128, 'train_n': 100000, 'epochs': 2, 'lr': 2e-05, 'ft_batch': 32, 'amp': True, 'log_every': 250, 'fisher_n': 2048, 'grad_batch': 32, 'sim_batch': 128, 'slc_bits': 1, 'mlc_bits': 2, 'slc_frac': 0.2, 'design_sigma': 0.02}
+[    0.1s] models ['distilbert-mnli', 'bert-base-mnli']; sweeps [('slc_share', [0.05], 20), ('fault', [0.0, 0.001, 0.002, 0.005, 0.01, 0.02, 0.05], 20)]; mapping [0.002, 0.005, 0.01, 0.02] x 10 chips
+[    0.1s] [self-test] simulator and mapping cost on random matrices
+[    1.1s]   PASS  ideal crossbar = INT8 matmul (1 b/cell): rel err 1.7e-07
+[    1.1s]   PASS  ideal crossbar = INT8 matmul (2 b/cell): rel err 0.0e+00
+[    1.2s]   PASS  uniform faults hit ~2% of cells: 2.02%
+[    1.6s]   PASS  mapping cost 1 b/cell: predicted 76.33, actual 77.29, after assignment 16.44
+[    1.6s]   PASS  mapping cost 2 b/cell: predicted 534, actual 533.5, after assignment 116.9
+[    1.6s] ==================== distilbert-mnli (typeform/distilbert-base-uncased-mnli)
+[    1.6s] ---- distilbert-mnli | [1/5] SVD + recovery fine-tune | RAM: python 1.5 GB, free 29.0 of 31.3 GB | GPU: 0.0 GB in use, peak 0.0 of 14.6 GB
+[    1.6s]     loading typeform/distilbert-base-uncased-mnli
+[    7.7s]     67.0M parameters | RAM 1.6G GPU 0.3G
+[   15.0s]     label order
+[   15.7s]     2000 pairs, 16 batches of 128, mean length 39 tokens
+[   16.8s]     config id2label {0: 'ENTAILMENT', 1: 'NEUTRAL', 2: 'CONTRADICTION'}
+[   16.8s]     accuracy with labels as-is 0.8210, with measured permutation 0.8210; GLUE label -> model index [0, 1, 2]
+[   16.8s]     evaluation subset (validation_matched)
+[   17.1s]     2000 pairs, 16 batches of 128, mean length 39 tokens
+[   17.1s]     full validation_matched (digital accuracies only)
+[   20.7s]     9815 pairs, 77 batches of 128, mean length 39 tokens
+[   23.6s]     baseline acc {'baseline': 0.821, 'baseline_full': 0.8221090168110036}
+[   23.6s]     SVD factorisation, k = floor(mn/(m+n))
+[   26.6s]     W 768x768 -> U 768x384 + S Vh 384x768  (rank 384 of 768)
+[   26.6s]     W 768x3072 -> U 768x614 + S Vh 614x3072  (rank 614 of 768)
+[   26.6s]     W 3072x768 -> U 3072x614 + S Vh 614x768  (rank 614 of 768)
+[   27.3s]     36 layers factorised; acc 0.7905 | RAM 1.8G GPU 0.3G
+[   27.4s]     training data: 100000 MNLI train pairs (shuffle seed 0)
+[   44.0s]     recovery fine-tune: 2 epochs x 3125 steps, lr 2e-05, amp True
+[   69.3s]     epoch 1/2 step 250/6250  loss 0.3432  lr 1.92e-05  0.101 s/step  eta 10 min  | RAM 2.0G GPU 1.1G
+[   94.7s]     epoch 1/2 step 500/6250  loss 0.3113  lr 1.84e-05  0.101 s/step  eta 10 min  | RAM 2.0G GPU 1.1G
+[  120.2s]     epoch 1/2 step 750/6250  loss 0.3096  lr 1.76e-05  0.102 s/step  eta 9 min  | RAM 2.0G GPU 1.1G
+[  145.8s]     epoch 1/2 step 1000/6250  loss 0.3302  lr 1.68e-05  0.102 s/step  eta 9 min  | RAM 2.0G GPU 1.1G
+[  171.4s]     epoch 1/2 step 1250/6250  loss 0.3154  lr 1.60e-05  0.102 s/step  eta 8 min  | RAM 2.0G GPU 1.1G
+[  196.3s]     epoch 1/2 step 1500/6250  loss 0.3161  lr 1.52e-05  0.102 s/step  eta 8 min  | RAM 2.0G GPU 1.1G
+[  221.8s]     epoch 1/2 step 1750/6250  loss 0.3052  lr 1.44e-05  0.102 s/step  eta 8 min  | RAM 2.0G GPU 1.1G
+[  247.2s]     epoch 1/2 step 2000/6250  loss 0.3171  lr 1.36e-05  0.102 s/step  eta 7 min  | RAM 2.0G GPU 1.1G
+[  272.9s]     epoch 1/2 step 2250/6250  loss 0.3064  lr 1.28e-05  0.102 s/step  eta 7 min  | RAM 2.0G GPU 1.1G
+[  298.3s]     epoch 1/2 step 2500/6250  loss 0.2996  lr 1.20e-05  0.102 s/step  eta 6 min  | RAM 2.0G GPU 1.1G
+[  323.8s]     epoch 1/2 step 2750/6250  loss 0.2958  lr 1.12e-05  0.102 s/step  eta 6 min  | RAM 2.0G GPU 1.1G
+[  349.2s]     epoch 1/2 step 3000/6250  loss 0.3096  lr 1.04e-05  0.102 s/step  eta 6 min  | RAM 2.0G GPU 1.1G
+[  375.2s]     epoch 2/2 step 3250/6250  loss 0.2263  lr 9.60e-06  0.102 s/step  eta 5 min  | RAM 2.0G GPU 1.1G
+[  400.6s]     epoch 2/2 step 3500/6250  loss 0.1711  lr 8.80e-06  0.102 s/step  eta 5 min  | RAM 2.0G GPU 1.1G
+[  426.3s]     epoch 2/2 step 3750/6250  loss 0.1586  lr 8.00e-06  0.102 s/step  eta 4 min  | RAM 2.0G GPU 1.1G
+[  451.7s]     epoch 2/2 step 4000/6250  loss 0.1710  lr 7.20e-06  0.102 s/step  eta 4 min  | RAM 2.0G GPU 1.1G
+[  476.9s]     epoch 2/2 step 4250/6250  loss 0.1548  lr 6.40e-06  0.102 s/step  eta 3 min  | RAM 2.0G GPU 1.1G
+[  502.7s]     epoch 2/2 step 4500/6250  loss 0.1584  lr 5.60e-06  0.102 s/step  eta 3 min  | RAM 2.0G GPU 1.1G
+[  528.1s]     epoch 2/2 step 4750/6250  loss 0.1447  lr 4.80e-06  0.102 s/step  eta 3 min  | RAM 2.0G GPU 1.1G
+[  553.6s]     epoch 2/2 step 5000/6250  loss 0.1510  lr 4.00e-06  0.102 s/step  eta 2 min  | RAM 2.0G GPU 1.1G
+[  579.2s]     epoch 2/2 step 5250/6250  loss 0.1476  lr 3.20e-06  0.102 s/step  eta 2 min  | RAM 2.0G GPU 1.1G
+[  604.7s]     epoch 2/2 step 5500/6250  loss 0.1539  lr 2.40e-06  0.102 s/step  eta 1 min  | RAM 2.0G GPU 1.1G
+[  630.7s]     epoch 2/2 step 5750/6250  loss 0.1378  lr 1.60e-06  0.102 s/step  eta 1 min  | RAM 2.0G GPU 1.1G
+[  655.8s]     epoch 2/2 step 6000/6250  loss 0.1432  lr 8.00e-07  0.102 s/step  eta 0 min  | RAM 2.0G GPU 1.1G
+[  681.4s]     epoch 2/2 step 6250/6250  loss 0.1311  lr 0.00e+00  0.102 s/step  eta 0 min  | RAM 2.0G GPU 1.1G
+[  685.6s]     after fine-tune {'baseline': 0.821, 'baseline_full': 0.8221090168110036, 'svd_truncated': 0.7905, 'svd_finetuned': 0.809, 'svd_finetuned_full': 0.8076413652572593}
+[  686.1s]     wrote svd_model.pt, tier_map.json, summary.json to /kaggle/working/mnli_results/svd/distilbert-mnli
+[  686.5s] ---- distilbert-mnli | [1/5] SVD + recovery fine-tune finished in 11.4 min | RAM: python 2.0 GB, free 28.4 of 31.3 GB | GPU: 0.0 GB in use, peak 2.3 of 14.6 GB
+[  687.5s]   loaded SVD model: 36 layers, 16584 components, label permutation [0, 1, 2], digital accuracies {'baseline': 0.821, 'baseline_full': 0.8221090168110036, 'svd_truncated': 0.7905, 'svd_finetuned': 0.809, 'svd_finetuned_full': 0.8076413652572593}
+[  687.5s] ---- distilbert-mnli | [2/5] ranking scores | RAM: python 2.2 GB, free 28.2 of 31.3 GB | GPU: 0.0 GB in use, peak 2.3 of 14.6 GB
+[  687.5s]     Fisher pass over 2048 single pairs
+[  693.8s]     fisher pair 256/2048  eta 0.6 min | RAM 2.2G GPU 0.4G
+[  698.8s]     fisher pair 512/2048  eta 0.5 min | RAM 2.2G GPU 0.4G
+[  703.9s]     fisher pair 768/2048  eta 0.4 min | RAM 2.2G GPU 0.4G
+[  708.9s]     fisher pair 1024/2048  eta 0.3 min | RAM 2.2G GPU 0.4G
+[  713.9s]     fisher pair 1280/2048  eta 0.3 min | RAM 2.2G GPU 0.4G
+[  718.9s]     fisher pair 1536/2048  eta 0.2 min | RAM 2.2G GPU 0.4G
+[  724.1s]     fisher pair 1792/2048  eta 0.1 min | RAM 2.2G GPU 0.4G
+[  729.2s]     fisher pair 2048/2048  eta 0.0 min | RAM 2.2G GPU 0.4G
+[  729.8s]     fisher: 61% of the score from the sigma*v rows, 39% from the u columns
+[  729.8s]     gradient pass
+[  742.8s]     gradient over 64 batches of 32
+[  742.9s]     saved /kaggle/working/mnli_results/scores/distilbert-mnli_scores.pt
+[  742.9s]     gradient  vs magnitude: rank correlation 0.57, top-20% overlap 67%
+[  742.9s]     fisher    vs magnitude: rank correlation 0.97, top-20% overlap 89%
+[  743.3s] ---- distilbert-mnli | [2/5] ranking scores finished in 0.9 min | RAM: python 2.4 GB, free 28.3 of 31.3 GB | GPU: 0.2 GB in use, peak 2.3 of 14.6 GB
+[  743.3s]   simulator evaluation batches (2000 validation_matched pairs, batch 128)
+[  744.4s]     2000 pairs, 16 batches of 128, mean length 39 tokens
+[  746.9s]   digital SVD model, fp32: acc 0.8090
+[  747.4s] ---- distilbert-mnli | [3/5] slc_share, sigma = 5% | RAM: python 2.4 GB, free 28.2 of 31.3 GB | GPU: 0.2 GB in use, peak 2.3 of 14.6 GB
+[  747.4s]     22 placements x 1 values of sigma = 440 chips (0 already measured), fixed nothing else
+[  747.8s]     placement all_slc 100% SLC (16584/16584 components) | RAM 2.4G GPU 0.4G
+[  816.2s]     [  20/440] all_slc    100% SLC  sigma=0.05    acc 0.7199 +- 0.0196 (min 0.6655)  3.4 s/chip  eta 24 min | RAM 2.4G GPU 0.6G
+[  816.9s]     placement all_mlc 0% SLC (0/16584 components) | RAM 2.4G GPU 0.4G
+[  883.8s]     [  40/440] all_mlc      0% SLC  sigma=0.05    acc 0.3680 +- 0.0248 (min 0.3325)  3.4 s/chip  eta 23 min | RAM 2.4G GPU 0.6G
+[  884.5s]     placement random 5% SLC (852/16584 components) | RAM 2.4G GPU 0.4G
+[  972.8s]     [  60/440] random       5% SLC  sigma=0.05    acc 0.3832 +- 0.0241 (min 0.3335)  3.8 s/chip  eta 24 min | RAM 2.4G GPU 0.6G
+[  973.5s]     placement random 10% SLC (1680/16584 components) | RAM 2.4G GPU 0.4G
+[ 1063.5s]     [  80/440] random      10% SLC  sigma=0.05    acc 0.3926 +- 0.0326 (min 0.3325)  4.0 s/chip  eta 24 min | RAM 2.4G GPU 0.6G
+[ 1064.2s]     placement random 20% SLC (3324/16584 components) | RAM 2.5G GPU 0.4G
+[ 1152.1s]     [ 100/440] random      20% SLC  sigma=0.05    acc 0.4411 +- 0.0452 (min 0.3750)  4.0 s/chip  eta 23 min | RAM 2.5G GPU 0.6G
+[ 1152.8s]     placement random 30% SLC (5004/16584 components) | RAM 2.6G GPU 0.4G
+[ 1242.7s]     [ 120/440] random      30% SLC  sigma=0.05    acc 0.4805 +- 0.0542 (min 0.3700)  4.1 s/chip  eta 22 min | RAM 2.6G GPU 0.6G
+[ 1243.4s]     placement random 50% SLC (8292/16584 components) | RAM 2.6G GPU 0.4G
+[ 1332.7s]     [ 140/440] random      50% SLC  sigma=0.05    acc 0.5532 +- 0.0698 (min 0.3690)  4.2 s/chip  eta 21 min | RAM 2.6G GPU 0.6G
+[ 1333.4s]     placement magnitude 5% SLC (852/16584 components) | RAM 2.4G GPU 0.4G
+[ 1421.9s]     [ 160/440] magnitude    5% SLC  sigma=0.05    acc 0.6841 +- 0.0156 (min 0.6555)  4.2 s/chip  eta 20 min | RAM 2.4G GPU 0.6G
+[ 1422.6s]     placement magnitude 10% SLC (1680/16584 components) | RAM 2.4G GPU 0.4G
+[ 1512.9s]     [ 180/440] magnitude   10% SLC  sigma=0.05    acc 0.7003 +- 0.0163 (min 0.6640)  4.3 s/chip  eta 18 min | RAM 2.4G GPU 0.6G
+[ 1513.5s]     placement magnitude 20% SLC (3324/16584 components) | RAM 2.4G GPU 0.4G
+[ 1601.7s]     [ 200/440] magnitude   20% SLC  sigma=0.05    acc 0.7150 +- 0.0137 (min 0.6950)  4.3 s/chip  eta 17 min | RAM 2.4G GPU 0.6G
+[ 1602.4s]     placement magnitude 30% SLC (5004/16584 components) | RAM 2.4G GPU 0.4G
+[ 1692.4s]     [ 220/440] magnitude   30% SLC  sigma=0.05    acc 0.7261 +- 0.0133 (min 0.6940)  4.3 s/chip  eta 16 min | RAM 2.4G GPU 0.6G
+[ 1693.1s]     placement magnitude 50% SLC (8292/16584 components) | RAM 2.5G GPU 0.4G
+[ 1782.4s]     [ 240/440] magnitude   50% SLC  sigma=0.05    acc 0.7245 +- 0.0109 (min 0.6955)  4.3 s/chip  eta 14 min | RAM 2.5G GPU 0.6G
+[ 1783.1s]     placement gradient 5% SLC (852/16584 components) | RAM 2.4G GPU 0.4G
+[ 1871.6s]     [ 260/440] gradient     5% SLC  sigma=0.05    acc 0.6657 +- 0.0340 (min 0.5545)  4.3 s/chip  eta 13 min | RAM 2.4G GPU 0.6G
+[ 1872.2s]     placement gradient 10% SLC (1680/16584 components) | RAM 2.4G GPU 0.4G
+[ 1962.2s]     [ 280/440] gradient    10% SLC  sigma=0.05    acc 0.6904 +- 0.0247 (min 0.6075)  4.3 s/chip  eta 12 min | RAM 2.4G GPU 0.6G
+[ 1962.9s]     placement gradient 20% SLC (3324/16584 components) | RAM 2.4G GPU 0.4G
+[ 2050.9s]     [ 300/440] gradient    20% SLC  sigma=0.05    acc 0.7127 +- 0.0162 (min 0.6765)  4.3 s/chip  eta 10 min | RAM 2.4G GPU 0.6G
+[ 2051.6s]     placement gradient 30% SLC (5004/16584 components) | RAM 2.4G GPU 0.4G
+[ 2141.6s]     [ 320/440] gradient    30% SLC  sigma=0.05    acc 0.7207 +- 0.0096 (min 0.7000)  4.4 s/chip  eta 9 min | RAM 2.4G GPU 0.6G
+[ 2142.3s]     placement gradient 50% SLC (8292/16584 components) | RAM 2.5G GPU 0.4G
+[ 2231.7s]     [ 340/440] gradient    50% SLC  sigma=0.05    acc 0.7356 +- 0.0139 (min 0.7060)  4.4 s/chip  eta 7 min | RAM 2.5G GPU 0.6G
+[ 2232.4s]     placement fisher 5% SLC (852/16584 components) | RAM 2.4G GPU 0.4G
+[ 2321.0s]     [ 360/440] fisher       5% SLC  sigma=0.05    acc 0.6854 +- 0.0166 (min 0.6570)  4.4 s/chip  eta 6 min | RAM 2.4G GPU 0.6G
+[ 2321.7s]     placement fisher 10% SLC (1680/16584 components) | RAM 2.4G GPU 0.4G
+[ 2411.9s]     [ 380/440] fisher      10% SLC  sigma=0.05    acc 0.6997 +- 0.0164 (min 0.6700)  4.4 s/chip  eta 4 min | RAM 2.4G GPU 0.6G
+[ 2412.6s]     placement fisher 20% SLC (3324/16584 components) | RAM 2.5G GPU 0.4G
+[ 2500.7s]     [ 400/440] fisher      20% SLC  sigma=0.05    acc 0.7106 +- 0.0158 (min 0.6840)  4.4 s/chip  eta 3 min | RAM 2.5G GPU 0.6G
+[ 2501.4s]     placement fisher 30% SLC (5004/16584 components) | RAM 2.4G GPU 0.4G
+[ 2591.4s]     [ 420/440] fisher      30% SLC  sigma=0.05    acc 0.7214 +- 0.0160 (min 0.6695)  4.4 s/chip  eta 1 min | RAM 2.4G GPU 0.6G
+[ 2592.1s]     placement fisher 50% SLC (8292/16584 components) | RAM 2.4G GPU 0.4G
+[ 2681.4s]     [ 440/440] fisher      50% SLC  sigma=0.05    acc 0.7229 +- 0.0130 (min 0.6955)  4.4 s/chip  eta 0 min | RAM 2.4G GPU 0.6G
+[ 2681.8s]     summary slc_share (distilbert-mnli): mean accuracy % (sigma)
+[ 2681.8s]       placement                  0.05
+[ 2681.8s]       all_slc 100%              72.00
+[ 2681.8s]       all_mlc 0%                36.80
+[ 2681.8s]       random 5%                 38.32
+[ 2681.8s]       random 10%                39.27
+[ 2681.8s]       random 20%                44.11
+[ 2681.8s]       random 30%                48.05
+[ 2681.9s]       random 50%                55.32
+[ 2681.9s]       magnitude 5%              68.41
+[ 2681.9s]       magnitude 10%             70.03
+[ 2681.9s]       magnitude 20%             71.50
+[ 2681.9s]       magnitude 30%             72.61
+[ 2681.9s]       magnitude 50%             72.45
+[ 2681.9s]       gradient 5%               66.57
+[ 2681.9s]       gradient 10%              69.04
+[ 2681.9s]       gradient 20%              71.27
+[ 2681.9s]       gradient 30%              72.07
+[ 2681.9s]       gradient 50%              73.56
+[ 2681.9s]       fisher 5%                 68.54
+[ 2681.9s]       fisher 10%                69.97
+[ 2681.9s]       fisher 20%                71.06
+[ 2681.9s]       fisher 30%                72.14
+[ 2681.9s]       fisher 50%                72.30
+[ 2682.1s] ---- distilbert-mnli | [3/5] slc_share, sigma = 5% finished in 32.2 min | RAM: python 2.4 GB, free 28.3 of 31.3 GB | GPU: 0.2 GB in use, peak 2.3 of 14.6 GB
+[ 2682.1s]   results zipped to /kaggle/working/mnli_results.zip (svd_model.pt weights stay in /kaggle/working/mnli_results/svd)
+[ 2682.1s] ---- distilbert-mnli | [4/5] fault rate | RAM: python 2.4 GB, free 28.3 of 31.3 GB | GPU: 0.2 GB in use, peak 2.3 of 14.6 GB
+[ 2682.1s]     6 placements x 7 values of fault_rate = 726 chips (0 already measured), fixed nothing else
+[ 2682.5s]     placement all_slc 100% SLC (16584/16584 components) | RAM 2.4G GPU 0.4G
+[ 2685.8s]     [   1/726] all_slc    100% SLC  fault_rate=0       acc 0.7690 +- 0.0000 (min 0.7690)  3.7 s/chip  eta 44 min | RAM 2.4G GPU 0.6G
+[ 2756.3s]     [  21/726] all_slc    100% SLC  fault_rate=0.001   acc 0.7436 +- 0.0151 (min 0.6975)  3.5 s/chip  eta 41 min | RAM 2.4G GPU 0.6G
+[ 2826.7s]     [  41/726] all_slc    100% SLC  fault_rate=0.002   acc 0.7127 +- 0.0333 (min 0.5940)  3.5 s/chip  eta 40 min | RAM 2.4G GPU 0.6G
+[ 2897.1s]     [  61/726] all_slc    100% SLC  fault_rate=0.005   acc 0.6040 +- 0.0501 (min 0.4930)  3.5 s/chip  eta 39 min | RAM 2.4G GPU 0.6G
+[ 2967.3s]     [  81/726] all_slc    100% SLC  fault_rate=0.01    acc 0.4211 +- 0.0622 (min 0.3295)  3.5 s/chip  eta 38 min | RAM 2.4G GPU 0.6G
+[ 3037.5s]     [ 101/726] all_slc    100% SLC  fault_rate=0.02    acc 0.3405 +- 0.0181 (min 0.3145)  3.5 s/chip  eta 37 min | RAM 2.4G GPU 0.6G
+[ 3107.7s]     [ 121/726] all_slc    100% SLC  fault_rate=0.05    acc 0.3425 +- 0.0200 (min 0.3165)  3.5 s/chip  eta 35 min | RAM 2.4G GPU 0.6G
+[ 3108.4s]     placement all_mlc 0% SLC (0/16584 components) | RAM 2.4G GPU 0.4G
+[ 3111.7s]     [ 122/726] all_mlc      0% SLC  fault_rate=0       acc 0.7680 +- 0.0000 (min 0.7680)  3.5 s/chip  eta 35 min | RAM 2.4G GPU 0.6G
+[ 3179.4s]     [ 142/726] all_mlc      0% SLC  fault_rate=0.001   acc 0.4455 +- 0.0891 (min 0.3155)  3.5 s/chip  eta 34 min | RAM 2.4G GPU 0.6G
+[ 3247.0s]     [ 162/726] all_mlc      0% SLC  fault_rate=0.002   acc 0.3402 +- 0.0222 (min 0.3145)  3.5 s/chip  eta 33 min | RAM 2.4G GPU 0.6G
+[ 3314.3s]     [ 182/726] all_mlc      0% SLC  fault_rate=0.005   acc 0.3363 +- 0.0217 (min 0.3075)  3.5 s/chip  eta 31 min | RAM 2.4G GPU 0.6G
+[ 3381.6s]     [ 202/726] all_mlc      0% SLC  fault_rate=0.01    acc 0.3367 +- 0.0194 (min 0.3040)  3.5 s/chip  eta 30 min | RAM 2.4G GPU 0.6G
+[ 3449.0s]     [ 222/726] all_mlc      0% SLC  fault_rate=0.02    acc 0.3405 +- 0.0197 (min 0.3150)  3.5 s/chip  eta 29 min | RAM 2.4G GPU 0.6G
+[ 3516.3s]     [ 242/726] all_mlc      0% SLC  fault_rate=0.05    acc 0.3301 +- 0.0181 (min 0.3085)  3.4 s/chip  eta 28 min | RAM 2.4G GPU 0.6G
+[ 3517.0s]     placement random 20% SLC (3324/16584 components) | RAM 2.4G GPU 0.4G
+[ 3521.3s]     [ 243/726] random      20% SLC  fault_rate=0       acc 0.7770 +- 0.0000 (min 0.7770)  3.5 s/chip  eta 28 min | RAM 2.4G GPU 0.6G
+[ 3612.4s]     [ 263/726] random      20% SLC  fault_rate=0.001   acc 0.5157 +- 0.0984 (min 0.3245)  3.5 s/chip  eta 27 min | RAM 2.4G GPU 0.6G
+[ 3703.6s]     [ 283/726] random      20% SLC  fault_rate=0.002   acc 0.3526 +- 0.0456 (min 0.3115)  3.6 s/chip  eta 27 min | RAM 2.4G GPU 0.6G
+[ 3794.4s]     [ 303/726] random      20% SLC  fault_rate=0.005   acc 0.3291 +- 0.0207 (min 0.3040)  3.7 s/chip  eta 26 min | RAM 2.4G GPU 0.6G
+[ 3885.3s]     [ 323/726] random      20% SLC  fault_rate=0.01    acc 0.3320 +- 0.0209 (min 0.3065)  3.7 s/chip  eta 25 min | RAM 2.4G GPU 0.6G
+[ 3975.9s]     [ 343/726] random      20% SLC  fault_rate=0.02    acc 0.3365 +- 0.0191 (min 0.3135)  3.8 s/chip  eta 24 min | RAM 2.4G GPU 0.6G
+[ 4066.8s]     [ 363/726] random      20% SLC  fault_rate=0.05    acc 0.3336 +- 0.0204 (min 0.3090)  3.8 s/chip  eta 23 min | RAM 2.4G GPU 0.6G
+[ 4067.5s]     placement magnitude 20% SLC (3324/16584 components) | RAM 2.4G GPU 0.4G
+[ 4071.9s]     [ 364/726] magnitude   20% SLC  fault_rate=0       acc 0.7735 +- 0.0000 (min 0.7735)  3.8 s/chip  eta 23 min | RAM 2.4G GPU 0.6G
+[ 4163.2s]     [ 384/726] magnitude   20% SLC  fault_rate=0.001   acc 0.7475 +- 0.0243 (min 0.6535)  3.9 s/chip  eta 22 min | RAM 2.4G GPU 0.6G
+[ 4254.4s]     [ 404/726] magnitude   20% SLC  fault_rate=0.002   acc 0.7129 +- 0.0355 (min 0.5720)  3.9 s/chip  eta 21 min | RAM 2.4G GPU 0.6G
+[ 4345.5s]     [ 424/726] magnitude   20% SLC  fault_rate=0.005   acc 0.4974 +- 0.0752 (min 0.3155)  3.9 s/chip  eta 20 min | RAM 2.4G GPU 0.6G
+[ 4436.5s]     [ 444/726] magnitude   20% SLC  fault_rate=0.01    acc 0.3397 +- 0.0201 (min 0.3150)  4.0 s/chip  eta 19 min | RAM 2.4G GPU 0.6G
+[ 4527.4s]     [ 464/726] magnitude   20% SLC  fault_rate=0.02    acc 0.3331 +- 0.0142 (min 0.3085)  4.0 s/chip  eta 17 min | RAM 2.4G GPU 0.6G
+[ 4618.3s]     [ 484/726] magnitude   20% SLC  fault_rate=0.05    acc 0.3378 +- 0.0154 (min 0.3105)  4.0 s/chip  eta 16 min | RAM 2.4G GPU 0.6G
+[ 4618.9s]     placement gradient 20% SLC (3324/16584 components) | RAM 2.4G GPU 0.4G
+[ 4623.3s]     [ 485/726] gradient    20% SLC  fault_rate=0       acc 0.7960 +- 0.0000 (min 0.7960)  4.0 s/chip  eta 16 min | RAM 2.4G GPU 0.6G
+[ 4714.3s]     [ 505/726] gradient    20% SLC  fault_rate=0.001   acc 0.7604 +- 0.0237 (min 0.6705)  4.0 s/chip  eta 15 min | RAM 2.4G GPU 0.6G
+[ 4805.6s]     [ 525/726] gradient    20% SLC  fault_rate=0.002   acc 0.7138 +- 0.0289 (min 0.5980)  4.0 s/chip  eta 14 min | RAM 2.4G GPU 0.6G
+[ 4896.7s]     [ 545/726] gradient    20% SLC  fault_rate=0.005   acc 0.4455 +- 0.0605 (min 0.3160)  4.1 s/chip  eta 12 min | RAM 2.4G GPU 0.6G
+[ 4987.8s]     [ 565/726] gradient    20% SLC  fault_rate=0.01    acc 0.3385 +- 0.0146 (min 0.3145)  4.1 s/chip  eta 11 min | RAM 2.4G GPU 0.6G
+[ 5078.8s]     [ 585/726] gradient    20% SLC  fault_rate=0.02    acc 0.3295 +- 0.0123 (min 0.3055)  4.1 s/chip  eta 10 min | RAM 2.4G GPU 0.6G
+[ 5169.9s]     [ 605/726] gradient    20% SLC  fault_rate=0.05    acc 0.3386 +- 0.0144 (min 0.3145)  4.1 s/chip  eta 8 min | RAM 2.4G GPU 0.6G
+[ 5170.6s]     placement fisher 20% SLC (3324/16584 components) | RAM 2.4G GPU 0.4G
+[ 5174.9s]     [ 606/726] fisher      20% SLC  fault_rate=0       acc 0.7830 +- 0.0000 (min 0.7830)  4.1 s/chip  eta 8 min | RAM 2.4G GPU 0.6G
+[ 5266.0s]     [ 626/726] fisher      20% SLC  fault_rate=0.001   acc 0.7490 +- 0.0225 (min 0.6680)  4.1 s/chip  eta 7 min | RAM 2.4G GPU 0.6G
+[ 5357.1s]     [ 646/726] fisher      20% SLC  fault_rate=0.002   acc 0.7073 +- 0.0398 (min 0.5505)  4.1 s/chip  eta 6 min | RAM 2.4G GPU 0.6G
+[ 5448.3s]     [ 666/726] fisher      20% SLC  fault_rate=0.005   acc 0.5025 +- 0.0669 (min 0.3260)  4.2 s/chip  eta 4 min | RAM 2.4G GPU 0.6G
+[ 5539.5s]     [ 686/726] fisher      20% SLC  fault_rate=0.01    acc 0.3395 +- 0.0187 (min 0.3145)  4.2 s/chip  eta 3 min | RAM 2.4G GPU 0.6G
+[ 5630.4s]     [ 706/726] fisher      20% SLC  fault_rate=0.02    acc 0.3356 +- 0.0128 (min 0.3145)  4.2 s/chip  eta 1 min | RAM 2.4G GPU 0.6G
+[ 5721.5s]     [ 726/726] fisher      20% SLC  fault_rate=0.05    acc 0.3309 +- 0.0119 (min 0.3140)  4.2 s/chip  eta 0 min | RAM 2.4G GPU 0.6G
+[ 5721.9s]     summary fault (distilbert-mnli): mean accuracy % (fault_rate)
+[ 5721.9s]       placement                     0    0.001    0.002    0.005     0.01     0.02     0.05
+[ 5721.9s]       all_slc 100%              76.90    74.36    71.27    60.40    42.11    34.05    34.25
+[ 5721.9s]       all_mlc 0%                76.80    44.55    34.02    33.63    33.67    34.05    33.01
+[ 5721.9s]       random 20%                77.70    51.57    35.26    32.91    33.20    33.65    33.36
+[ 5721.9s]       magnitude 20%             77.35    74.75    71.29    49.74    33.97    33.31    33.78
+[ 5721.9s]       gradient 20%              79.60    76.05    71.38    44.55    33.85    32.95    33.86
+[ 5721.9s]       fisher 20%                78.30    74.89    70.73    50.25    33.95    33.56    33.09
+[ 5722.2s] ---- distilbert-mnli | [4/5] fault rate finished in 50.7 min | RAM: python 2.4 GB, free 28.2 of 31.3 GB | GPU: 0.2 GB in use, peak 2.3 of 14.6 GB
+[ 5722.2s]   results zipped to /kaggle/working/mnli_results.zip (svd_model.pt weights stay in /kaggle/working/mnli_results/svd)
+[ 5722.2s] ---- distilbert-mnli | [5/5] fault-aware mapping | RAM: python 2.4 GB, free 28.2 of 31.3 GB | GPU: 0.2 GB in use, peak 2.3 of 14.6 GB
+[ 5722.2s]     5 placements x 4 values of fault_rate x 10 chips = 200 chips (0 already measured)
+[ 5722.4s]     contexts on GPU | RAM 2.4G GPU 0.6G
+[ 5758.2s]     [  10/200] fault_rate=0.002  all_slc          acc 0.7138 +- 0.0229 (min 0.6660)  3.6 s/chip  eta 11 min | RAM 2.4G GPU 0.8G
+[ 5815.4s]     [  20/200] fault_rate=0.002  all_slc_remap    acc 0.7618 +- 0.0076 (min 0.7525)  stuck-cell damage cut by 84%  4.6 s/chip  eta 14 min | RAM 2.4G GPU 0.8G
+[ 5861.1s]     [  30/200] fault_rate=0.002  magnitude        acc 0.6987 +- 0.0450 (min 0.5720)  4.6 s/chip  eta 13 min | RAM 2.4G GPU 0.7G
+[ 5927.8s]     [  40/200] fault_rate=0.002  magnitude_remap  acc 0.7662 +- 0.0036 (min 0.7620)  stuck-cell damage cut by 67%  5.1 s/chip  eta 14 min | RAM 2.4G GPU 0.7G
+[ 6008.0s]     [  50/200] fault_rate=0.002  c1               acc 0.7662 +- 0.0050 (min 0.7620)  12.0% of SLC slots changed vs magnitude  5.7 s/chip  eta 14 min | RAM 2.4G GPU 0.7G
+[ 6043.8s]     [  60/200] fault_rate=0.005  all_slc          acc 0.5844 +- 0.0549 (min 0.4930)  5.4 s/chip  eta 13 min | RAM 2.4G GPU 0.8G
+[ 6105.4s]     [  70/200] fault_rate=0.005  all_slc_remap    acc 0.7220 +- 0.0091 (min 0.7045)  stuck-cell damage cut by 69%  5.5 s/chip  eta 12 min | RAM 2.4G GPU 0.8G
+[ 6151.0s]     [  80/200] fault_rate=0.005  magnitude        acc 0.4913 +- 0.0921 (min 0.3155)  5.4 s/chip  eta 11 min | RAM 2.4G GPU 0.7G
+[ 6218.4s]     [  90/200] fault_rate=0.005  magnitude_remap  acc 0.6789 +- 0.0160 (min 0.6535)  stuck-cell damage cut by 52%  5.5 s/chip  eta 10 min | RAM 2.4G GPU 0.7G
+[ 6299.6s]     [ 100/200] fault_rate=0.005  c1               acc 0.6699 +- 0.0126 (min 0.6490)  12.1% of SLC slots changed vs magnitude  5.8 s/chip  eta 10 min | RAM 2.4G GPU 0.7G
+[ 6335.5s]     [ 110/200] fault_rate=0.01   all_slc          acc 0.4136 +- 0.0490 (min 0.3295)  5.6 s/chip  eta 8 min | RAM 2.4G GPU 0.8G
+[ 6406.5s]     [ 120/200] fault_rate=0.01   all_slc_remap    acc 0.5849 +- 0.0345 (min 0.5000)  stuck-cell damage cut by 56%  5.7 s/chip  eta 8 min | RAM 2.4G GPU 0.8G
+[ 6452.0s]     [ 130/200] fault_rate=0.01   magnitude        acc 0.3344 +- 0.0149 (min 0.3225)  5.6 s/chip  eta 7 min | RAM 2.4G GPU 0.8G
+[ 6521.7s]     [ 140/200] fault_rate=0.01   magnitude_remap  acc 0.3877 +- 0.0306 (min 0.3285)  stuck-cell damage cut by 43%  5.7 s/chip  eta 6 min | RAM 2.4G GPU 0.7G
+[ 6607.2s]     [ 150/200] fault_rate=0.01   c1               acc 0.3942 +- 0.0313 (min 0.3545)  11.8% of SLC slots changed vs magnitude  5.9 s/chip  eta 5 min | RAM 2.4G GPU 0.7G
+[ 6642.9s]     [ 160/200] fault_rate=0.02   all_slc          acc 0.3463 +- 0.0177 (min 0.3145)  5.8 s/chip  eta 4 min | RAM 2.4G GPU 0.8G
+[ 6731.6s]     [ 170/200] fault_rate=0.02   all_slc_remap    acc 0.3735 +- 0.0258 (min 0.3335)  stuck-cell damage cut by 46%  5.9 s/chip  eta 3 min | RAM 2.4G GPU 0.8G
+[ 6777.5s]     [ 180/200] fault_rate=0.02   magnitude        acc 0.3339 +- 0.0169 (min 0.3085)  5.9 s/chip  eta 2 min | RAM 2.4G GPU 0.8G
+[ 6853.7s]     [ 190/200] fault_rate=0.02   magnitude_remap  acc 0.3427 +- 0.0148 (min 0.3150)  stuck-cell damage cut by 35%  6.0 s/chip  eta 1 min | RAM 2.4G GPU 0.8G
+[ 6949.3s]     [ 200/200] fault_rate=0.02   c1               acc 0.3331 +- 0.0107 (min 0.3130)  11.8% of SLC slots changed vs magnitude  6.1 s/chip  eta 0 min | RAM 2.4G GPU 0.8G
+[ 6949.3s]     summary mapping (distilbert-mnli): mean accuracy % (fault_rate)
+[ 6949.3s]       placement                 0.002    0.005     0.01     0.02
+[ 6949.3s]       all_slc 100%              71.38    58.44    41.36    34.63
+[ 6949.3s]       all_slc_remap 100%        76.17    72.20    58.49    37.35
+[ 6949.3s]       magnitude 20%             69.88    49.12    33.44    33.39
+[ 6949.3s]       magnitude_remap 20%       76.62    67.89    38.77    34.27
+[ 6949.3s]       c1 20%                    76.62    66.98    39.42    33.31
+[ 6950.0s] ---- distilbert-mnli | [5/5] fault-aware mapping finished in 20.5 min | RAM: python 2.4 GB, free 28.3 of 31.3 GB | GPU: 0.2 GB in use, peak 2.3 of 14.6 GB
+[ 6950.5s]   results zipped to /kaggle/working/mnli_results.zip (svd_model.pt weights stay in /kaggle/working/mnli_results/svd)
+[ 6950.5s] ==================== bert-base-mnli (textattack/bert-base-uncased-MNLI)
+[ 6950.5s] ---- bert-base-mnli | [1/5] SVD + recovery fine-tune | RAM: python 2.3 GB, free 28.3 of 31.3 GB | GPU: 0.0 GB in use, peak 2.3 of 14.6 GB
+[ 6950.5s]     loading textattack/bert-base-uncased-MNLI
+[ 6957.8s]     109.5M parameters | RAM 2.6G GPU 0.4G
+[ 6958.6s]     label order
+[ 6960.8s]     2000 pairs, 16 batches of 128, mean length 39 tokens
+[ 6961.9s]     config id2label {0: 'LABEL_0', 1: 'LABEL_1', 2: 'LABEL_2'}
+[ 6961.9s]     accuracy with labels as-is 0.0690, with measured permutation 0.8370; GLUE label -> model index [1, 2, 0]
+[ 6961.9s]     evaluation subset (validation_matched)
+[ 6963.4s]     2000 pairs, 16 batches of 128, mean length 39 tokens
+[ 6963.4s]     full validation_matched (digital accuracies only)
+[ 6967.0s]     9815 pairs, 77 batches of 128, mean length 39 tokens
+[ 6973.2s]     baseline acc {'baseline': 0.837, 'baseline_full': 0.845746306673459}
+[ 6973.2s]     SVD factorisation, k = floor(mn/(m+n))
+[ 6979.2s]     W 768x768 -> U 768x384 + S Vh 384x768  (rank 384 of 768)
+[ 6979.2s]     W 768x3072 -> U 768x614 + S Vh 614x3072  (rank 614 of 768)
+[ 6979.2s]     W 3072x768 -> U 3072x614 + S Vh 614x768  (rank 614 of 768)
+[ 6980.7s]     72 layers factorised; acc 0.7765 | RAM 2.4G GPU 0.5G
+[ 6980.7s]     training data: 100000 MNLI train pairs (shuffle seed 0)
+[ 6997.3s]     recovery fine-tune: 2 epochs x 3125 steps, lr 2e-05, amp True
+[ 7046.6s]     epoch 1/2 step 250/6250  loss 0.4154  lr 1.92e-05  0.197 s/step  eta 20 min  | RAM 2.4G GPU 1.8G
+[ 7095.6s]     epoch 1/2 step 500/6250  loss 0.3985  lr 1.84e-05  0.196 s/step  eta 19 min  | RAM 2.4G GPU 1.8G
+[ 7144.4s]     epoch 1/2 step 750/6250  loss 0.4111  lr 1.76e-05  0.196 s/step  eta 18 min  | RAM 2.4G GPU 1.8G
+[ 7194.0s]     epoch 1/2 step 1000/6250  loss 0.4171  lr 1.68e-05  0.197 s/step  eta 17 min  | RAM 2.4G GPU 1.8G
+[ 7243.6s]     epoch 1/2 step 1250/6250  loss 0.4009  lr 1.60e-05  0.197 s/step  eta 16 min  | RAM 2.4G GPU 1.8G
+[ 7291.7s]     epoch 1/2 step 1500/6250  loss 0.4108  lr 1.52e-05  0.196 s/step  eta 16 min  | RAM 2.4G GPU 1.8G
+[ 7340.7s]     epoch 1/2 step 1750/6250  loss 0.4027  lr 1.44e-05  0.196 s/step  eta 15 min  | RAM 2.4G GPU 1.8G
+[ 7389.7s]     epoch 1/2 step 2000/6250  loss 0.3984  lr 1.36e-05  0.196 s/step  eta 14 min  | RAM 2.4G GPU 1.8G
+[ 7439.3s]     epoch 1/2 step 2250/6250  loss 0.3932  lr 1.28e-05  0.196 s/step  eta 13 min  | RAM 2.4G GPU 1.8G
+[ 7488.2s]     epoch 1/2 step 2500/6250  loss 0.3837  lr 1.20e-05  0.196 s/step  eta 12 min  | RAM 2.4G GPU 1.8G
+[ 7537.4s]     epoch 1/2 step 2750/6250  loss 0.3780  lr 1.12e-05  0.196 s/step  eta 11 min  | RAM 2.4G GPU 1.8G
+[ 7586.3s]     epoch 1/2 step 3000/6250  loss 0.3878  lr 1.04e-05  0.196 s/step  eta 11 min  | RAM 2.4G GPU 1.8G
+[ 7636.4s]     epoch 2/2 step 3250/6250  loss 0.2917  lr 9.60e-06  0.197 s/step  eta 10 min  | RAM 2.4G GPU 1.8G
+[ 7685.3s]     epoch 2/2 step 3500/6250  loss 0.2124  lr 8.80e-06  0.197 s/step  eta 9 min  | RAM 2.4G GPU 1.8G
+[ 7735.1s]     epoch 2/2 step 3750/6250  loss 0.2116  lr 8.00e-06  0.197 s/step  eta 8 min  | RAM 2.4G GPU 1.8G
+[ 7784.2s]     epoch 2/2 step 4000/6250  loss 0.2095  lr 7.20e-06  0.197 s/step  eta 7 min  | RAM 2.4G GPU 1.8G
+[ 7832.8s]     epoch 2/2 step 4250/6250  loss 0.1948  lr 6.40e-06  0.197 s/step  eta 7 min  | RAM 2.4G GPU 1.8G
+[ 7882.6s]     epoch 2/2 step 4500/6250  loss 0.1978  lr 5.60e-06  0.197 s/step  eta 6 min  | RAM 2.4G GPU 1.8G
+[ 7931.5s]     epoch 2/2 step 4750/6250  loss 0.1825  lr 4.80e-06  0.197 s/step  eta 5 min  | RAM 2.4G GPU 1.8G
+[ 7980.8s]     epoch 2/2 step 5000/6250  loss 0.1923  lr 4.00e-06  0.197 s/step  eta 4 min  | RAM 2.4G GPU 1.8G
+[ 8030.0s]     epoch 2/2 step 5250/6250  loss 0.1969  lr 3.20e-06  0.197 s/step  eta 3 min  | RAM 2.4G GPU 1.8G
+[ 8078.9s]     epoch 2/2 step 5500/6250  loss 0.1871  lr 2.40e-06  0.197 s/step  eta 2 min  | RAM 2.4G GPU 1.8G
+[ 8129.0s]     epoch 2/2 step 5750/6250  loss 0.1886  lr 1.60e-06  0.197 s/step  eta 2 min  | RAM 2.4G GPU 1.8G
+[ 8177.4s]     epoch 2/2 step 6000/6250  loss 0.1776  lr 8.00e-07  0.197 s/step  eta 1 min  | RAM 2.4G GPU 1.8G
+[ 8226.6s]     epoch 2/2 step 6250/6250  loss 0.1635  lr 0.00e+00  0.197 s/step  eta 0 min  | RAM 2.4G GPU 1.8G
+[ 8234.9s]     after fine-tune {'baseline': 0.837, 'baseline_full': 0.845746306673459, 'svd_truncated': 0.7765, 'svd_finetuned': 0.832, 'svd_finetuned_full': 0.828731533367295}
+[ 8235.6s]     wrote svd_model.pt, tier_map.json, summary.json to /kaggle/working/mnli_results/svd/bert-base-mnli
+[ 8236.1s] ---- bert-base-mnli | [1/5] SVD + recovery fine-tune finished in 21.4 min | RAM: python 2.4 GB, free 27.9 of 31.3 GB | GPU: 0.0 GB in use, peak 4.1 of 14.6 GB
+[ 8237.6s]   loaded SVD model: 72 layers, 33168 components, label permutation [1, 2, 0], digital accuracies {'baseline': 0.837, 'baseline_full': 0.845746306673459, 'svd_truncated': 0.7765, 'svd_finetuned': 0.832, 'svd_finetuned_full': 0.828731533367295}
+[ 8237.6s] ---- bert-base-mnli | [2/5] ranking scores | RAM: python 3.0 GB, free 27.2 of 31.3 GB | GPU: 0.0 GB in use, peak 4.1 of 14.6 GB
+[ 8237.6s]     Fisher pass over 2048 single pairs
+[ 8248.4s]     fisher pair 256/2048  eta 1.1 min | RAM 3.0G GPU 0.8G
+[ 8258.2s]     fisher pair 512/2048  eta 1.0 min | RAM 3.0G GPU 0.8G
+[ 8268.0s]     fisher pair 768/2048  eta 0.8 min | RAM 3.0G GPU 0.8G
+[ 8277.7s]     fisher pair 1024/2048  eta 0.7 min | RAM 3.0G GPU 0.8G
+[ 8287.6s]     fisher pair 1280/2048  eta 0.5 min | RAM 3.0G GPU 0.8G
+[ 8297.4s]     fisher pair 1536/2048  eta 0.3 min | RAM 3.0G GPU 0.8G
+[ 8307.1s]     fisher pair 1792/2048  eta 0.2 min | RAM 3.0G GPU 0.8G
+[ 8316.8s]     fisher pair 2048/2048  eta 0.0 min | RAM 3.0G GPU 0.8G
+[ 8317.5s]     fisher: 61% of the score from the sigma*v rows, 39% from the u columns
+[ 8317.5s]     gradient pass
+[ 8342.7s]     gradient over 64 batches of 32
+[ 8342.7s]     saved /kaggle/working/mnli_results/scores/bert-base-mnli_scores.pt
+[ 8342.8s]     gradient  vs magnitude: rank correlation 0.56, top-20% overlap 63%
+[ 8342.8s]     fisher    vs magnitude: rank correlation 0.96, top-20% overlap 88%
+[ 8343.1s] ---- bert-base-mnli | [2/5] ranking scores finished in 1.8 min | RAM: python 3.0 GB, free 27.6 of 31.3 GB | GPU: 0.3 GB in use, peak 4.1 of 14.6 GB
+[ 8343.1s]   simulator evaluation batches (2000 validation_matched pairs, batch 128)
+[ 8344.2s]     2000 pairs, 16 batches of 128, mean length 39 tokens
+[ 8349.3s]   digital SVD model, fp32: acc 0.8320
+[ 8349.8s] ---- bert-base-mnli | [3/5] slc_share, sigma = 5% | RAM: python 3.0 GB, free 27.6 of 31.3 GB | GPU: 0.3 GB in use, peak 4.1 of 14.6 GB
+[ 8349.8s]     22 placements x 1 values of sigma = 440 chips (0 already measured), fixed nothing else
+[ 8350.4s]     placement all_slc 100% SLC (33168/33168 components) | RAM 3.1G GPU 0.8G
+[ 8486.5s]     [  20/440] all_slc    100% SLC  sigma=0.05    acc 0.6160 +- 0.0587 (min 0.4890)  6.8 s/chip  eta 48 min | RAM 3.1G GPU 1.1G
+[ 8487.4s]     placement all_mlc 0% SLC (0/33168 components) | RAM 3.0G GPU 0.8G
+[ 8620.9s]     [  40/440] all_mlc      0% SLC  sigma=0.05    acc 0.3355 +- 0.0208 (min 0.3145)  6.8 s/chip  eta 45 min | RAM 3.0G GPU 1.1G
+[ 8621.8s]     placement random 5% SLC (1704/33168 components) | RAM 3.0G GPU 0.8G
+[ 8798.1s]     [  60/440] random       5% SLC  sigma=0.05    acc 0.3406 +- 0.0248 (min 0.3145)  7.5 s/chip  eta 47 min | RAM 3.0G GPU 1.1G
+[ 8799.1s]     placement random 10% SLC (3360/33168 components) | RAM 3.0G GPU 0.8G
+[ 8978.8s]     [  80/440] random      10% SLC  sigma=0.05    acc 0.3393 +- 0.0255 (min 0.3145)  7.9 s/chip  eta 47 min | RAM 3.0G GPU 1.1G
+[ 8979.8s]     placement random 20% SLC (6648/33168 components) | RAM 3.3G GPU 0.8G
+[ 9155.4s]     [ 100/440] random      20% SLC  sigma=0.05    acc 0.3593 +- 0.0400 (min 0.3145)  8.1 s/chip  eta 46 min | RAM 3.3G GPU 1.1G
+[ 9156.4s]     placement random 30% SLC (10008/33168 components) | RAM 3.2G GPU 0.8G
+[ 9335.9s]     [ 120/440] random      30% SLC  sigma=0.05    acc 0.3894 +- 0.0439 (min 0.3150)  8.2 s/chip  eta 44 min | RAM 3.2G GPU 1.1G
+[ 9336.8s]     placement random 50% SLC (16584/33168 components) | RAM 3.3G GPU 0.8G
+[ 9515.0s]     [ 140/440] random      50% SLC  sigma=0.05    acc 0.4485 +- 0.0621 (min 0.3520)  8.3 s/chip  eta 42 min | RAM 3.3G GPU 1.1G
+[ 9515.9s]     placement magnitude 5% SLC (1704/33168 components) | RAM 3.2G GPU 0.8G
+[ 9692.6s]     [ 160/440] magnitude    5% SLC  sigma=0.05    acc 0.6398 +- 0.0395 (min 0.5125)  8.4 s/chip  eta 39 min | RAM 3.2G GPU 1.1G
+[ 9693.6s]     placement magnitude 10% SLC (3360/33168 components) | RAM 3.0G GPU 0.8G
+[ 9873.5s]     [ 180/440] magnitude   10% SLC  sigma=0.05    acc 0.6601 +- 0.0255 (min 0.5925)  8.5 s/chip  eta 37 min | RAM 3.0G GPU 1.1G
+[ 9874.4s]     placement magnitude 20% SLC (6648/33168 components) | RAM 3.3G GPU 0.8G
+[10050.3s]     [ 200/440] magnitude   20% SLC  sigma=0.05    acc 0.6796 +- 0.0200 (min 0.6415)  8.5 s/chip  eta 34 min | RAM 3.3G GPU 1.1G
+[10051.2s]     placement magnitude 30% SLC (10008/33168 components) | RAM 3.3G GPU 0.8G
+[10231.0s]     [ 220/440] magnitude   30% SLC  sigma=0.05    acc 0.6923 +- 0.0183 (min 0.6510)  8.6 s/chip  eta 31 min | RAM 3.3G GPU 1.1G
+[10232.0s]     placement magnitude 50% SLC (16584/33168 components) | RAM 3.2G GPU 0.8G
+[10410.5s]     [ 240/440] magnitude   50% SLC  sigma=0.05    acc 0.6668 +- 0.0245 (min 0.6085)  8.6 s/chip  eta 29 min | RAM 3.2G GPU 1.1G
+[10411.4s]     placement gradient 5% SLC (1704/33168 components) | RAM 3.3G GPU 0.8G
+[10588.2s]     [ 260/440] gradient     5% SLC  sigma=0.05    acc 0.5955 +- 0.0583 (min 0.4370)  8.6 s/chip  eta 26 min | RAM 3.3G GPU 1.1G
+[10589.2s]     placement gradient 10% SLC (3360/33168 components) | RAM 3.0G GPU 0.8G
+[10769.1s]     [ 280/440] gradient    10% SLC  sigma=0.05    acc 0.6354 +- 0.0310 (min 0.5330)  8.6 s/chip  eta 23 min | RAM 3.0G GPU 1.1G
+[10770.1s]     placement gradient 20% SLC (6648/33168 components) | RAM 3.3G GPU 0.8G
+[10945.7s]     [ 300/440] gradient    20% SLC  sigma=0.05    acc 0.6333 +- 0.0292 (min 0.5750)  8.7 s/chip  eta 20 min | RAM 3.3G GPU 1.1G
+[10946.6s]     placement gradient 30% SLC (10008/33168 components) | RAM 3.3G GPU 0.8G
+[11126.2s]     [ 320/440] gradient    30% SLC  sigma=0.05    acc 0.6652 +- 0.0361 (min 0.5270)  8.7 s/chip  eta 17 min | RAM 3.3G GPU 1.1G
+[11127.1s]     placement gradient 50% SLC (16584/33168 components) | RAM 3.3G GPU 0.8G
+[11305.4s]     [ 340/440] gradient    50% SLC  sigma=0.05    acc 0.6416 +- 0.0315 (min 0.5425)  8.7 s/chip  eta 14 min | RAM 3.3G GPU 1.1G
+[11306.3s]     placement fisher 5% SLC (1704/33168 components) | RAM 3.0G GPU 0.8G
+[11483.0s]     [ 360/440] fisher       5% SLC  sigma=0.05    acc 0.6420 +- 0.0351 (min 0.5260)  8.7 s/chip  eta 12 min | RAM 3.0G GPU 1.1G
+[11484.0s]     placement fisher 10% SLC (3360/33168 components) | RAM 3.0G GPU 0.8G
+[11663.8s]     [ 380/440] fisher      10% SLC  sigma=0.05    acc 0.6578 +- 0.0220 (min 0.6150)  8.7 s/chip  eta 9 min | RAM 3.0G GPU 1.1G
+[11664.7s]     placement fisher 20% SLC (6648/33168 components) | RAM 3.3G GPU 0.8G
+[11840.4s]     [ 400/440] fisher      20% SLC  sigma=0.05    acc 0.6775 +- 0.0254 (min 0.6265)  8.7 s/chip  eta 6 min | RAM 3.3G GPU 1.1G
+[11841.4s]     placement fisher 30% SLC (10008/33168 components) | RAM 3.3G GPU 0.8G
+[12021.0s]     [ 420/440] fisher      30% SLC  sigma=0.05    acc 0.6875 +- 0.0234 (min 0.6390)  8.7 s/chip  eta 3 min | RAM 3.3G GPU 1.1G
+[12022.0s]     placement fisher 50% SLC (16584/33168 components) | RAM 3.3G GPU 0.8G
+[12200.2s]     [ 440/440] fisher      50% SLC  sigma=0.05    acc 0.6656 +- 0.0247 (min 0.6280)  8.8 s/chip  eta 0 min | RAM 3.3G GPU 1.1G
+[12200.6s]     summary slc_share (bert-base-mnli): mean accuracy % (sigma)
+[12200.6s]       placement                  0.05
+[12200.6s]       all_slc 100%              61.60
+[12200.6s]       all_mlc 0%                33.55
+[12200.6s]       random 5%                 34.05
+[12200.6s]       random 10%                33.93
+[12200.6s]       random 20%                35.93
+[12200.6s]       random 30%                38.94
+[12200.6s]       random 50%                44.85
+[12200.6s]       magnitude 5%              63.98
+[12200.6s]       magnitude 10%             66.01
+[12200.6s]       magnitude 20%             67.96
+[12200.6s]       magnitude 30%             69.23
+[12200.6s]       magnitude 50%             66.68
+[12200.6s]       gradient 5%               59.55
+[12200.6s]       gradient 10%              63.54
+[12200.6s]       gradient 20%              63.33
+[12200.6s]       gradient 30%              66.52
+[12200.6s]       gradient 50%              64.16
+[12200.6s]       fisher 5%                 64.20
+[12200.6s]       fisher 10%                65.78
+[12200.6s]       fisher 20%                67.75
+[12200.6s]       fisher 30%                68.75
+[12200.6s]       fisher 50%                66.56
+[12200.9s] ---- bert-base-mnli | [3/5] slc_share, sigma = 5% finished in 64.2 min | RAM: python 3.0 GB, free 27.7 of 31.3 GB | GPU: 0.3 GB in use, peak 4.1 of 14.6 GB
+[12200.9s]   results zipped to /kaggle/working/mnli_results.zip (svd_model.pt weights stay in /kaggle/working/mnli_results/svd)
+[12200.9s] ---- bert-base-mnli | [4/5] fault rate | RAM: python 3.0 GB, free 27.7 of 31.3 GB | GPU: 0.3 GB in use, peak 4.1 of 14.6 GB
+[12200.9s]     6 placements x 7 values of fault_rate = 726 chips (0 already measured), fixed nothing else
+[12201.5s]     placement all_slc 100% SLC (33168/33168 components) | RAM 3.0G GPU 0.8G
+[12208.2s]     [   1/726] all_slc    100% SLC  fault_rate=0       acc 0.7225 +- 0.0000 (min 0.7225)  7.3 s/chip  eta 88 min | RAM 3.0G GPU 1.1G
+[12348.4s]     [  21/726] all_slc    100% SLC  fault_rate=0.001   acc 0.6717 +- 0.0276 (min 0.6100)  7.0 s/chip  eta 83 min | RAM 3.0G GPU 1.1G
+[12488.4s]     [  41/726] all_slc    100% SLC  fault_rate=0.002   acc 0.6193 +- 0.0486 (min 0.4685)  7.0 s/chip  eta 80 min | RAM 3.0G GPU 1.1G
+[12628.5s]     [  61/726] all_slc    100% SLC  fault_rate=0.005   acc 0.4437 +- 0.0634 (min 0.3160)  7.0 s/chip  eta 78 min | RAM 3.0G GPU 1.1G
+[12768.1s]     [  81/726] all_slc    100% SLC  fault_rate=0.01    acc 0.3453 +- 0.0336 (min 0.3135)  7.0 s/chip  eta 75 min | RAM 3.0G GPU 1.1G
+[12907.9s]     [ 101/726] all_slc    100% SLC  fault_rate=0.02    acc 0.3242 +- 0.0160 (min 0.3085)  7.0 s/chip  eta 73 min | RAM 3.0G GPU 1.1G
+[13047.5s]     [ 121/726] all_slc    100% SLC  fault_rate=0.05    acc 0.3236 +- 0.0151 (min 0.3115)  7.0 s/chip  eta 71 min | RAM 3.0G GPU 1.1G
+[13048.5s]     placement all_mlc 0% SLC (0/33168 components) | RAM 3.0G GPU 0.8G
+[13055.0s]     [ 122/726] all_mlc      0% SLC  fault_rate=0       acc 0.7240 +- 0.0000 (min 0.7240)  7.0 s/chip  eta 70 min | RAM 3.0G GPU 1.1G
+[13189.8s]     [ 142/726] all_mlc      0% SLC  fault_rate=0.001   acc 0.3718 +- 0.0299 (min 0.3220)  7.0 s/chip  eta 68 min | RAM 3.0G GPU 1.1G
+[13324.4s]     [ 162/726] all_mlc      0% SLC  fault_rate=0.002   acc 0.3317 +- 0.0215 (min 0.3145)  6.9 s/chip  eta 65 min | RAM 3.0G GPU 1.1G
+[13458.4s]     [ 182/726] all_mlc      0% SLC  fault_rate=0.005   acc 0.3279 +- 0.0183 (min 0.3100)  6.9 s/chip  eta 63 min | RAM 3.0G GPU 1.1G
+[13592.4s]     [ 202/726] all_mlc      0% SLC  fault_rate=0.01    acc 0.3180 +- 0.0045 (min 0.3130)  6.9 s/chip  eta 60 min | RAM 3.0G GPU 1.1G
+[13726.6s]     [ 222/726] all_mlc      0% SLC  fault_rate=0.02    acc 0.3190 +- 0.0057 (min 0.3105)  6.9 s/chip  eta 58 min | RAM 3.0G GPU 1.1G
+[13860.9s]     [ 242/726] all_mlc      0% SLC  fault_rate=0.05    acc 0.3226 +- 0.0166 (min 0.2905)  6.9 s/chip  eta 55 min | RAM 3.0G GPU 1.1G
+[13861.9s]     placement random 20% SLC (6648/33168 components) | RAM 3.0G GPU 0.8G
+[13870.4s]     [ 243/726] random      20% SLC  fault_rate=0       acc 0.7295 +- 0.0000 (min 0.7295)  6.9 s/chip  eta 55 min | RAM 3.0G GPU 1.1G
+[14052.1s]     [ 263/726] random      20% SLC  fault_rate=0.001   acc 0.4282 +- 0.0778 (min 0.3205)  7.0 s/chip  eta 54 min | RAM 3.0G GPU 1.1G
+[14233.5s]     [ 283/726] random      20% SLC  fault_rate=0.002   acc 0.3428 +- 0.0225 (min 0.3145)  7.2 s/chip  eta 53 min | RAM 3.0G GPU 1.1G
+[14414.7s]     [ 303/726] random      20% SLC  fault_rate=0.005   acc 0.3326 +- 0.0190 (min 0.3140)  7.3 s/chip  eta 52 min | RAM 3.0G GPU 1.1G
+[14595.7s]     [ 323/726] random      20% SLC  fault_rate=0.01    acc 0.3261 +- 0.0175 (min 0.3080)  7.4 s/chip  eta 50 min | RAM 3.0G GPU 1.1G
+[14776.6s]     [ 343/726] random      20% SLC  fault_rate=0.02    acc 0.3241 +- 0.0138 (min 0.3135)  7.5 s/chip  eta 48 min | RAM 3.0G GPU 1.1G
+[14957.7s]     [ 363/726] random      20% SLC  fault_rate=0.05    acc 0.3346 +- 0.0182 (min 0.3145)  7.6 s/chip  eta 46 min | RAM 3.0G GPU 1.1G
+[14958.6s]     placement magnitude 20% SLC (6648/33168 components) | RAM 3.3G GPU 0.8G
+[14967.2s]     [ 364/726] magnitude   20% SLC  fault_rate=0       acc 0.7910 +- 0.0000 (min 0.7910)  7.6 s/chip  eta 46 min | RAM 3.3G GPU 1.1G
+[15149.4s]     [ 384/726] magnitude   20% SLC  fault_rate=0.001   acc 0.7455 +- 0.0152 (min 0.7215)  7.7 s/chip  eta 44 min | RAM 3.3G GPU 1.1G
+[15331.6s]     [ 404/726] magnitude   20% SLC  fault_rate=0.002   acc 0.6780 +- 0.0384 (min 0.6080)  7.7 s/chip  eta 42 min | RAM 3.3G GPU 1.1G
+[15513.7s]     [ 424/726] magnitude   20% SLC  fault_rate=0.005   acc 0.4041 +- 0.0648 (min 0.3145)  7.8 s/chip  eta 39 min | RAM 3.3G GPU 1.1G
+[15695.8s]     [ 444/726] magnitude   20% SLC  fault_rate=0.01    acc 0.3278 +- 0.0164 (min 0.3120)  7.9 s/chip  eta 37 min | RAM 3.3G GPU 1.1G
+[15877.6s]     [ 464/726] magnitude   20% SLC  fault_rate=0.02    acc 0.3219 +- 0.0108 (min 0.3090)  7.9 s/chip  eta 35 min | RAM 3.3G GPU 1.1G
+[16059.1s]     [ 484/726] magnitude   20% SLC  fault_rate=0.05    acc 0.3226 +- 0.0097 (min 0.3070)  8.0 s/chip  eta 32 min | RAM 3.3G GPU 1.1G
+[16060.0s]     placement gradient 20% SLC (6648/33168 components) | RAM 3.0G GPU 0.8G
+[16068.6s]     [ 485/726] gradient    20% SLC  fault_rate=0       acc 0.7820 +- 0.0000 (min 0.7820)  8.0 s/chip  eta 32 min | RAM 3.0G GPU 1.1G
+[16250.8s]     [ 505/726] gradient    20% SLC  fault_rate=0.001   acc 0.7305 +- 0.0206 (min 0.7015)  8.0 s/chip  eta 30 min | RAM 3.0G GPU 1.1G
+[16433.0s]     [ 525/726] gradient    20% SLC  fault_rate=0.002   acc 0.6521 +- 0.0591 (min 0.4625)  8.1 s/chip  eta 27 min | RAM 3.0G GPU 1.1G
+[16615.1s]     [ 545/726] gradient    20% SLC  fault_rate=0.005   acc 0.3689 +- 0.0429 (min 0.3150)  8.1 s/chip  eta 24 min | RAM 3.0G GPU 1.1G
+[16797.1s]     [ 565/726] gradient    20% SLC  fault_rate=0.01    acc 0.3196 +- 0.0126 (min 0.3035)  8.1 s/chip  eta 22 min | RAM 3.0G GPU 1.1G
+[16978.7s]     [ 585/726] gradient    20% SLC  fault_rate=0.02    acc 0.3149 +- 0.0089 (min 0.2940)  8.2 s/chip  eta 19 min | RAM 3.0G GPU 1.1G
+[17160.2s]     [ 605/726] gradient    20% SLC  fault_rate=0.05    acc 0.3243 +- 0.0095 (min 0.3135)  8.2 s/chip  eta 17 min | RAM 3.0G GPU 1.1G
+[17161.1s]     placement fisher 20% SLC (6648/33168 components) | RAM 3.3G GPU 0.8G
+[17169.7s]     [ 606/726] fisher      20% SLC  fault_rate=0       acc 0.7930 +- 0.0000 (min 0.7930)  8.2 s/chip  eta 16 min | RAM 3.3G GPU 1.1G
+[17351.9s]     [ 626/726] fisher      20% SLC  fault_rate=0.001   acc 0.7394 +- 0.0158 (min 0.7175)  8.2 s/chip  eta 14 min | RAM 3.3G GPU 1.1G
+[17534.3s]     [ 646/726] fisher      20% SLC  fault_rate=0.002   acc 0.6716 +- 0.0352 (min 0.6000)  8.3 s/chip  eta 11 min | RAM 3.3G GPU 1.1G
+[17716.6s]     [ 666/726] fisher      20% SLC  fault_rate=0.005   acc 0.3977 +- 0.0610 (min 0.3145)  8.3 s/chip  eta 8 min | RAM 3.3G GPU 1.1G
+[17898.9s]     [ 686/726] fisher      20% SLC  fault_rate=0.01    acc 0.3278 +- 0.0149 (min 0.3125)  8.3 s/chip  eta 6 min | RAM 3.3G GPU 1.1G
+[18080.8s]     [ 706/726] fisher      20% SLC  fault_rate=0.02    acc 0.3227 +- 0.0119 (min 0.2950)  8.3 s/chip  eta 3 min | RAM 3.3G GPU 1.1G
+[18262.3s]     [ 726/726] fisher      20% SLC  fault_rate=0.05    acc 0.3257 +- 0.0091 (min 0.3110)  8.3 s/chip  eta 0 min | RAM 3.3G GPU 1.1G
+[18262.7s]     summary fault (bert-base-mnli): mean accuracy % (fault_rate)
+[18262.7s]       placement                     0    0.001    0.002    0.005     0.01     0.02     0.05
+[18262.7s]       all_slc 100%              72.25    67.17    61.93    44.38    34.53    32.42    32.37
+[18262.7s]       all_mlc 0%                72.40    37.18    33.17    32.79    31.80    31.90    32.27
+[18262.7s]       random 20%                72.95    42.82    34.28    33.26    32.62    32.41    33.46
+[18262.8s]       magnitude 20%             79.10    74.55    67.80    40.41    32.78    32.19    32.26
+[18262.8s]       gradient 20%              78.20    73.05    65.21    36.88    31.96    31.49    32.43
+[18262.8s]       fisher 20%                79.30    73.94    67.16    39.77    32.78    32.27    32.57
+[18263.1s] ---- bert-base-mnli | [4/5] fault rate finished in 101.0 min | RAM: python 3.0 GB, free 27.7 of 31.3 GB | GPU: 0.3 GB in use, peak 4.1 of 14.6 GB
+[18263.1s]   results zipped to /kaggle/working/mnli_results.zip (svd_model.pt weights stay in /kaggle/working/mnli_results/svd)
+[18263.1s] ---- bert-base-mnli | [5/5] fault-aware mapping | RAM: python 3.0 GB, free 27.7 of 31.3 GB | GPU: 0.3 GB in use, peak 4.1 of 14.6 GB
+[18263.1s]     5 placements x 4 values of fault_rate x 10 chips = 200 chips (0 already measured)
+[18263.5s]     contexts on GPU | RAM 3.0G GPU 1.1G
+[18334.8s]     [  10/200] fault_rate=0.002  all_slc          acc 0.6151 +- 0.0651 (min 0.4685)  7.1 s/chip  eta 23 min | RAM 3.0G GPU 1.4G
+[18450.3s]     [  20/200] fault_rate=0.002  all_slc_remap    acc 0.6986 +- 0.0093 (min 0.6850)  stuck-cell damage cut by 82%  9.3 s/chip  eta 28 min | RAM 3.0G GPU 1.4G
+[18541.6s]     [  30/200] fault_rate=0.002  magnitude        acc 0.6805 +- 0.0339 (min 0.6315)  9.3 s/chip  eta 26 min | RAM 3.0G GPU 1.4G
+[18676.7s]     [  40/200] fault_rate=0.002  magnitude_remap  acc 0.7530 +- 0.0086 (min 0.7390)  stuck-cell damage cut by 64%  10.3 s/chip  eta 28 min | RAM 3.0G GPU 1.4G
+[18838.7s]     [  50/200] fault_rate=0.002  c1               acc 0.7551 +- 0.0097 (min 0.7365)  12.9% of SLC slots changed vs magnitude  11.5 s/chip  eta 29 min | RAM 3.0G GPU 1.4G
+[18910.1s]     [  60/200] fault_rate=0.005  all_slc          acc 0.4668 +- 0.0567 (min 0.3595)  10.8 s/chip  eta 25 min | RAM 3.0G GPU 1.4G
+[19033.9s]     [  70/200] fault_rate=0.005  all_slc_remap    acc 0.6188 +- 0.0562 (min 0.5250)  stuck-cell damage cut by 64%  11.0 s/chip  eta 24 min | RAM 3.0G GPU 1.4G
+[19125.1s]     [  80/200] fault_rate=0.005  magnitude        acc 0.3997 +- 0.0648 (min 0.3145)  10.8 s/chip  eta 22 min | RAM 3.0G GPU 1.4G
+[19261.2s]     [  90/200] fault_rate=0.005  magnitude_remap  acc 0.6003 +- 0.0769 (min 0.3855)  stuck-cell damage cut by 51%  11.1 s/chip  eta 20 min | RAM 3.0G GPU 1.4G
+[19426.2s]     [ 100/200] fault_rate=0.005  c1               acc 0.6041 +- 0.0738 (min 0.3970)  13.4% of SLC slots changed vs magnitude  11.6 s/chip  eta 19 min | RAM 3.0G GPU 1.4G
+[19497.5s]     [ 110/200] fault_rate=0.01   all_slc          acc 0.3567 +- 0.0364 (min 0.3145)  11.2 s/chip  eta 17 min | RAM 3.0G GPU 1.4G
+[19639.9s]     [ 120/200] fault_rate=0.01   all_slc_remap    acc 0.4621 +- 0.0513 (min 0.3790)  stuck-cell damage cut by 52%  11.5 s/chip  eta 15 min | RAM 3.0G GPU 1.4G
+[19731.3s]     [ 130/200] fault_rate=0.01   magnitude        acc 0.3312 +- 0.0195 (min 0.3120)  11.3 s/chip  eta 13 min | RAM 3.0G GPU 1.4G
+[19871.3s]     [ 140/200] fault_rate=0.01   magnitude_remap  acc 0.3646 +- 0.0329 (min 0.3160)  stuck-cell damage cut by 40%  11.5 s/chip  eta 11 min | RAM 3.0G GPU 1.4G
+[20044.6s]     [ 150/200] fault_rate=0.01   c1               acc 0.3547 +- 0.0247 (min 0.3195)  13.5% of SLC slots changed vs magnitude  11.9 s/chip  eta 10 min | RAM 3.0G GPU 1.4G
+[20116.1s]     [ 160/200] fault_rate=0.02   all_slc          acc 0.3317 +- 0.0193 (min 0.3145)  11.6 s/chip  eta 8 min | RAM 3.0G GPU 1.4G
+[20293.9s]     [ 170/200] fault_rate=0.02   all_slc_remap    acc 0.3311 +- 0.0251 (min 0.3145)  stuck-cell damage cut by 41%  11.9 s/chip  eta 6 min | RAM 3.0G GPU 1.4G
+[20385.0s]     [ 180/200] fault_rate=0.02   magnitude        acc 0.3218 +- 0.0112 (min 0.3090)  11.8 s/chip  eta 4 min | RAM 3.0G GPU 1.4G
+[20538.2s]     [ 190/200] fault_rate=0.02   magnitude_remap  acc 0.3233 +- 0.0085 (min 0.3120)  stuck-cell damage cut by 31%  12.0 s/chip  eta 2 min | RAM 3.0G GPU 1.4G
+[20731.3s]     [ 200/200] fault_rate=0.02   c1               acc 0.3232 +- 0.0092 (min 0.3110)  13.3% of SLC slots changed vs magnitude  12.3 s/chip  eta 0 min | RAM 3.0G GPU 1.4G
+[20731.3s]     summary mapping (bert-base-mnli): mean accuracy % (fault_rate)
+[20731.3s]       placement                 0.002    0.005     0.01     0.02
+[20731.3s]       all_slc 100%              61.51    46.69    35.67    33.16
+[20731.3s]       all_slc_remap 100%        69.86    61.88    46.21    33.11
+[20731.3s]       magnitude 20%             68.05    39.97    33.12    32.18
+[20731.3s]       magnitude_remap 20%       75.30    60.03    36.46    32.33
+[20731.3s]       c1 20%                    75.52    60.41    35.47    32.32
+[20732.0s] ---- bert-base-mnli | [5/5] fault-aware mapping finished in 41.1 min | RAM: python 3.0 GB, free 27.7 of 31.3 GB | GPU: 0.3 GB in use, peak 4.1 of 14.6 GB
+[20732.7s]   results zipped to /kaggle/working/mnli_results.zip (svd_model.pt weights stay in /kaggle/working/mnli_results/svd)
+[20732.7s] stage times (min): distilbert-mnli [1/5] 11.4, distilbert-mnli [2/5] 0.9, distilbert-mnli [3/5] 32.2, distilbert-mnli [4/5] 50.7, distilbert-mnli [5/5] 20.5, bert-base-mnli [1/5] 21.4, bert-base-mnli [2/5] 1.8, bert-base-mnli [3/5] 64.2, bert-base-mnli [4/5] 101.0, bert-base-mnli [5/5] 41.1
+[20732.7s] finished in 5.76 h; failed or stopped: none. Download /kaggle/working/mnli_results.zip from the Output panel

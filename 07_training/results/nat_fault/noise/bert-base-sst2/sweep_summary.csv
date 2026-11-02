@@ -1,0 +1,4 @@
+policy,slc_frac,param,value,acc_mean,acc_std,acc_min,n
+magnitude,0.2,sigma,0,0.909404,0.000000,0.909404,10
+magnitude,0.2,sigma,0.05,0.899427,0.003205,0.893349,10
+magnitude,0.2,sigma,0.075,0.888417,0.005078,0.881881,10

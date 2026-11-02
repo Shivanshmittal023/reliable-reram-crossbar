@@ -12,9 +12,11 @@ results_smoke/
 # LaTeX build files
 *.aux
 *.log
-!svd_tiering/logs/*.log
+!01_svd_tiering/results/logs/*.log
 *.out
 *.toc
+*.bbl
+*.blg
 
 # editors and notebooks
 .vscode/

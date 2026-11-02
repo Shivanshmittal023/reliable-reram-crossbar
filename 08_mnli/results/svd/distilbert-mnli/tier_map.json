@@ -1,0 +1,182 @@
+{
+ "distilbert.transformer.layer.0.attention.q_lin": {
+  "out_features": 768,
+  "in_features": 768,
+  "rank": 384
+ },
+ "distilbert.transformer.layer.0.attention.k_lin": {
+  "out_features": 768,
+  "in_features": 768,
+  "rank": 384
+ },
+ "distilbert.transformer.layer.0.attention.v_lin": {
+  "out_features": 768,
+  "in_features": 768,
+  "rank": 384
+ },
+ "distilbert.transformer.layer.0.attention.out_lin": {
+  "out_features": 768,
+  "in_features": 768,
+  "rank": 384
+ },
+ "distilbert.transformer.layer.0.ffn.lin1": {
+  "out_features": 3072,
+  "in_features": 768,
+  "rank": 614
+ },
+ "distilbert.transformer.layer.0.ffn.lin2": {
+  "out_features": 768,
+  "in_features": 3072,
+  "rank": 614
+ },
+ "distilbert.transformer.layer.1.attention.q_lin": {
+  "out_features": 768,
+  "in_features": 768,
+  "rank": 384
+ },
+ "distilbert.transformer.layer.1.attention.k_lin": {
+  "out_features": 768,
+  "in_features": 768,
+  "rank": 384
+ },
+ "distilbert.transformer.layer.1.attention.v_lin": {
+  "out_features": 768,
+  "in_features": 768,
+  "rank": 384
+ },
+ "distilbert.transformer.layer.1.attention.out_lin": {
+  "out_features": 768,
+  "in_features": 768,
+  "rank": 384
+ },
+ "distilbert.transformer.layer.1.ffn.lin1": {
+  "out_features": 3072,
+  "in_features": 768,
+  "rank": 614
+ },
+ "distilbert.transformer.layer.1.ffn.lin2": {
+  "out_features": 768,
+  "in_features": 3072,
+  "rank": 614
+ },
+ "distilbert.transformer.layer.2.attention.q_lin": {
+  "out_features": 768,
+  "in_features": 768,
+  "rank": 384
+ },
+ "distilbert.transformer.layer.2.attention.k_lin": {
+  "out_features": 768,
+  "in_features": 768,
+  "rank": 384
+ },
+ "distilbert.transformer.layer.2.attention.v_lin": {
+  "out_features": 768,
+  "in_features": 768,
+  "rank": 384
+ },
+ "distilbert.transformer.layer.2.attention.out_lin": {
+  "out_features": 768,
+  "in_features": 768,
+  "rank": 384
+ },
+ "distilbert.transformer.layer.2.ffn.lin1": {
+  "out_features": 3072,
+  "in_features": 768,
+  "rank": 614
+ },
+ "distilbert.transformer.layer.2.ffn.lin2": {
+  "out_features": 768,
+  "in_features": 3072,
+  "rank": 614
+ },
+ "distilbert.transformer.layer.3.attention.q_lin": {
+  "out_features": 768,
+  "in_features": 768,
+  "rank": 384
+ },
+ "distilbert.transformer.layer.3.attention.k_lin": {
+  "out_features": 768,
+  "in_features": 768,
+  "rank": 384
+ },
+ "distilbert.transformer.layer.3.attention.v_lin": {
+  "out_features": 768,
+  "in_features": 768,
+  "rank": 384
+ },
+ "distilbert.transformer.layer.3.attention.out_lin": {
+  "out_features": 768,
+  "in_features": 768,
+  "rank": 384
+ },
+ "distilbert.transformer.layer.3.ffn.lin1": {
+  "out_features": 3072,
+  "in_features": 768,
+  "rank": 614
+ },
+ "distilbert.transformer.layer.3.ffn.lin2": {
+  "out_features": 768,
+  "in_features": 3072,
+  "rank": 614
+ },
+ "distilbert.transformer.layer.4.attention.q_lin": {
+  "out_features": 768,
+  "in_features": 768,
+  "rank": 384
+ },
+ "distilbert.transformer.layer.4.attention.k_lin": {
+  "out_features": 768,
+  "in_features": 768,
+  "rank": 384
+ },
+ "distilbert.transformer.layer.4.attention.v_lin": {
+  "out_features": 768,
+  "in_features": 768,
+  "rank": 384
+ },
+ "distilbert.transformer.layer.4.attention.out_lin": {
+  "out_features": 768,
+  "in_features": 768,
+  "rank": 384
+ },
+ "distilbert.transformer.layer.4.ffn.lin1": {
+  "out_features": 3072,
+  "in_features": 768,
+  "rank": 614
+ },
+ "distilbert.transformer.layer.4.ffn.lin2": {
+  "out_features": 768,
+  "in_features": 3072,
+  "rank": 614
+ },
+ "distilbert.transformer.layer.5.attention.q_lin": {
+  "out_features": 768,
+  "in_features": 768,
+  "rank": 384
+ },
+ "distilbert.transformer.layer.5.attention.k_lin": {
+  "out_features": 768,
+  "in_features": 768,
+  "rank": 384
+ },
+ "distilbert.transformer.layer.5.attention.v_lin": {
+  "out_features": 768,
+  "in_features": 768,
+  "rank": 384
+ },
+ "distilbert.transformer.layer.5.attention.out_lin": {
+  "out_features": 768,
+  "in_features": 768,
+  "rank": 384
+ },
+ "distilbert.transformer.layer.5.ffn.lin1": {
+  "out_features": 3072,
+  "in_features": 768,
+  "rank": 614
+ },
+ "distilbert.transformer.layer.5.ffn.lin2": {
+  "out_features": 768,
+  "in_features": 3072,
+  "rank": 614
+ }
+}

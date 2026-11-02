@@ -1,0 +1,9 @@
+policy,slc_frac,param,value,acc_mean,acc_std,acc_min,n
+magnitude,0.2,fault_rate,0.002,0.893234,0.005991,0.886468,10
+magnitude_remap,0.2,fault_rate,0.002,0.897592,0.004200,0.889908,10
+magnitude,0.2,fault_rate,0.005,0.805963,0.051219,0.692661,10
+magnitude_remap,0.2,fault_rate,0.005,0.870413,0.016379,0.826835,10
+magnitude,0.2,fault_rate,0.01,0.568578,0.042669,0.510321,10
+magnitude_remap,0.2,fault_rate,0.01,0.675803,0.060825,0.520642,10
+magnitude,0.2,fault_rate,0.02,0.509977,0.027561,0.446101,10
+magnitude_remap,0.2,fault_rate,0.02,0.517202,0.010321,0.503440,10

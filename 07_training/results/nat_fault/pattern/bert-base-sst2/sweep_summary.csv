@@ -1,0 +1,5 @@
+policy,slc_frac,param,value,acc_mean,acc_std,acc_min,n
+magnitude,0.2,fault_mode,cluster,0.579931,0.054768,0.495413,10
+magnitude_remap,0.2,fault_mode,cluster,0.787615,0.050482,0.658257,10
+magnitude,0.2,fault_mode,line,0.522248,0.023554,0.495413,10
+magnitude_remap,0.2,fault_mode,line,0.725688,0.083907,0.586009,10
