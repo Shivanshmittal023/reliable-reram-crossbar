@@ -36,7 +36,7 @@ array and removes most of the data movement that dominates transformer inference
 a cell cannot be programmed exactly. A single-level cell (SLC) stores one bit and tolerates this error,
 while a multi-level cell (MLC) stores two bits and is denser but far less robust. A hybrid chip keeps
 the important weights in SLC and the rest in MLC, so the central question is which weights to protect.
-We study this question for DistilBERT and BERT-Base on SST-2 with a cell-level crossbar simulator that
+We study this question for DistilBERT and BERT-Base on SST-2 and MNLI with a cell-level crossbar simulator that
 models 8-bit weights, differential pairs, bit-slicing, programming noise, stuck-at faults, read noise,
 a fixed ADC and IR drop. After a singular value decomposition (SVD) of every weight matrix, we compare
 six placements of the SVD components: all-SLC, all-MLC, random, largest singular value (magnitude),
@@ -45,7 +45,9 @@ suffer in MLC. Storing everything in MLC fails at realistic noise, and BERT-Base
 near chance. Protecting a small share of components recovers almost all of the loss, but only if the right
 components are chosen. Ranking by singular value matches the best placement we could construct,
 whereas the gradient placement loses 3--12 accuracy points at high noise. Stuck-at cells are the one
-failure that placement does not fix: all-MLC fails at 0.1\% stuck cells and all-SLC at 1\%.
+failure that placement does not fix: all-MLC fails at 0.1\% stuck cells and all-SLC at 1\%. Fault-aware
+mapping, which reorders the components around a chip's known stuck cells, recovers much of this loss. The
+same results hold on MNLI.
 \end{abstract}
 
 \begin{IEEEkeywords}
@@ -118,7 +120,7 @@ does not model, affect each placement policy.
 any order: once a chip's stuck cells are known, each component is assigned to the physical slot where it
 would raise the loss least, at no hardware cost.
 \end{itemize}
-We study DistilBERT and BERT-Base on the SST-2 task of GLUE.
+We study DistilBERT and BERT-Base on the SST-2 task of GLUE, and repeat the main experiments on MNLI.
 
 \section{Methodology}
 Our pipeline has three stages: SVD factorisation of the transformer, a cell-level crossbar simulation, and
@@ -132,6 +134,13 @@ and the SST-2 sentiment task of GLUE \cite{wang2019glue}. SST-2 is a binary clas
 validation set. Both models start from public checkpoints that are already fine-tuned on SST-2
 (\texttt{distilbert-base-uncased-}\allowbreak\texttt{finetuned-sst-2-english} and
 \texttt{textattack/}\allowbreak\texttt{bert-base-uncased-SST-2}). Sentences are truncated to 128 tokens.
+
+The second task is MNLI, a three-class entailment task on sentence pairs. It has 392,702 training pairs and
+9,815 matched validation pairs. To keep the simulations affordable, the chip experiments on MNLI use a fixed
+random subset of 2,000 validation pairs. The checkpoints are
+\texttt{typeform/}\allowbreak\texttt{distilbert-base-uncased-mnli} and
+\texttt{textattack/}\allowbreak\texttt{bert-base-uncased-MNLI}. The label order of each checkpoint is matched
+to GLUE on the evaluation subset.
 
 \subsubsection{Factorisation}
 Following HyFlexPIM, we factorise every linear layer of the encoder blocks (the query, key, value and
@@ -149,25 +158,29 @@ and 33,168 for BERT-Base.
 \subsubsection{Recovery fine-tuning}
 Truncating to rank $k$ removes information, so we fine-tune the factorised model on the SST-2 training set
 to recover the lost accuracy. We use AdamW with a learning rate of $2\times10^{-5}$ decayed linearly to
-zero, batch size 32, 8 epochs, mixed-precision (fp16) autocast and seed 0. Table~\ref{tab:svd} shows the
-validation accuracy of the SVD-factorised models after fine-tuning.
+zero, batch size 32, 8 epochs, mixed-precision (fp16) autocast and seed 0. On MNLI we use 2 epochs on a
+random 100,000 of the training pairs. Table~\ref{tab:svd} shows the validation accuracy of the
+SVD-factorised models after fine-tuning.
 
 \begin{table}[t]
-\caption{SST-2 validation accuracy (\%) of the SVD-factorised models after fine-tuning.}
+\caption{Validation accuracy (\%) of the original and the SVD-factorised models (full validation sets).}
 \label{tab:svd}
 \centering
-\begin{tabular}{lc}
+\begin{tabular}{lcccc}
 \toprule
-Model & SVD + fine-tune \\
+ & \multicolumn{2}{c}{SST-2} & \multicolumn{2}{c}{MNLI} \\
+\cmidrule(lr){2-3}\cmidrule(l){4-5}
+Model & Original & SVD & Original & SVD \\
 \midrule
-DistilBERT & 89.11 \\
-BERT-Base  & 90.14 \\
+DistilBERT & 91.06 & 89.11 & 82.21 & 80.76 \\
+BERT-Base  & 92.43 & 90.14 & 84.57 & 82.87 \\
 \bottomrule
 \end{tabular}
 \end{table}
 
 All later experiments use these fine-tuned factorised models as their noise-free reference, so the
-accuracies in the tables that follow should be read against 89.11\% (DistilBERT) and 90.14\% (BERT-Base).
+accuracies in the tables that follow should be read against 89.11\% (DistilBERT) and 90.14\% (BERT-Base)
+on SST-2, and 80.9\% and 83.2\% on the 2,000-pair MNLI subset.
 
 \subsection{INT8 Quantisation}
 A crossbar stores integers, so every weight and every input is quantised to 8 bits before it reaches the
@@ -265,7 +278,7 @@ carry most of the weight matrix.
 \begin{equation}
 I_r=\sum_{b}\left|\frac{\partial L_b}{\partial\sigma_r}\right|,
 \end{equation}
-where $L_b$ is the loss on batch $b$ of 32 SST-2 training sentences with dropout enabled. The absolute value
+where $L_b$ is the loss on batch $b$ of 32 training sentences (pairs for MNLI) with dropout enabled. The absolute value
 is taken per batch, because on a trained model the gradients of different batches point in different
 directions and largely cancel in a single sum.
 \item \textbf{Fisher} scores a component by the expected rise in loss if it is stored in MLC:
@@ -594,6 +607,161 @@ placement fails on BERT-Base, and on DistilBERT all keep only 71--77\%. \textbf{
 more ADC bit than SLC, so the hybrid chip can run with a 6-bit ADC.} With
 5\% programming noise added (DistilBERT, 3 chips), the gap widens: with a 6-bit ADC all-MLC drops from
 77.8\% (ideal read-out) to 56.0\%, while all-SLC and the hybrid placements stay at 87--89\%.
+
+\subsection{Second Task: MNLI}
+We repeat three experiments on MNLI: placement at $\varsigma=5\%$, the fault-rate sweep, and fault-aware
+mapping. IR drop, ADC resolution, fault patterns and the other noise levels are not repeated. MNLI has three
+classes, so chance is about 33\%.
+
+\begin{table}[t]
+\caption{\textbf{MNLI}: accuracy (\%) in FP32 and INT8, with no hardware error (2,000-pair subset; hybrid
+placements at 20\% SLC).}
+\label{tab:mnli_int8}
+\centering
+\small
+\begin{tabular}{@{}llcc@{}}
+\toprule
+ & & DistilBERT & BERT-Base \\
+\midrule
+FP32 & Original          & 82.1 & 83.7 \\
+     & SVD + fine-tune   & 80.9 & 83.2 \\
+\midrule
+INT8 & All-SLC           & 76.9 & 72.2 \\
+     & All-MLC           & 76.8 & 72.4 \\
+     & Random            & 77.7 & 73.0 \\
+     & Gradient          & \textbf{79.6} & 78.2 \\
+     & Magnitude         & 77.3 & 79.1 \\
+     & Fisher            & 78.3 & \textbf{79.3} \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+Unlike SST-2, MNLI is sensitive to the 8-bit quantisation (Table~\ref{tab:mnli_int8}). With no noise and no
+faults, the all-SLC chip loses 4 points against the FP32 SVD model on DistilBERT (80.9
+to 76.9\%) and 11 points on BERT-Base (83.2 to 72.2\%). This loss also depends on the placement. Each tier
+has its own 8-bit scales, so a placement that separates large from small components quantises the small
+ones more finely. On BERT-Base the noise-free magnitude, gradient and Fisher chips reach 78--79\%, while the
+all-SLC, all-MLC and random chips stay at 72--73\%. Part of the gap between the hybrid and the all-SLC chip
+on BERT-Base therefore comes from quantisation and not from cell errors.
+
+\begin{table}[t]
+\caption{\textbf{MNLI}: accuracy (\%) vs.\ SLC share at $\varsigma=5\%$ (mean of 20 chips; bold = best).}
+\label{tab:mnli_slc}
+\centering
+\small
+\begin{tabular}{@{}lccccc@{}}
+\toprule
+Policy & 5\% & 10\%  & 20\%  & 30\%  & 50\% \\
+\midrule
+\multicolumn{6}{@{}l}{\textbf{DistilBERT}\quad all-MLC 36.8, all-SLC 72.0} \\
+Random    & 38.3 & 39.3 & 44.1 & 48.1 & 55.3 \\
+Gradient  & 66.6 & 69.0 & 71.3 & 72.1 & \textbf{73.6} \\
+Magnitude & 68.4 & \textbf{70.0} & \textbf{71.5} & \textbf{72.6} & 72.5 \\
+Fisher    & \textbf{68.5} & \textbf{70.0} & 71.1 & 72.1 & 72.3 \\
+\midrule
+\multicolumn{6}{@{}l}{\textbf{BERT-Base}\quad all-MLC 33.5, all-SLC 61.6} \\
+Random    & 34.1 & 33.9 & 35.9 & 38.9 & 44.9 \\
+Gradient  & 59.6 & 63.5 & 63.3 & 66.5 & 64.2 \\
+Magnitude & 64.0 & \textbf{66.0} & \textbf{68.0} & \textbf{69.2} & \textbf{66.7} \\
+Fisher    & \textbf{64.2} & 65.8 & 67.8 & 68.8 & 66.6 \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+Table~\ref{tab:mnli_slc} gives the placement results. All-MLC is at chance on both models, and random
+placement recovers little even at 50\% SLC. The informed policies again recover most of the gap with little
+SLC. On DistilBERT, magnitude and Fisher placement are within 1 point of the all-SLC chip from 20\% SLC. On
+BERT-Base, magnitude and Fisher beat the all-SLC chip from 5\% SLC, by up to 7.6 points at 30\%. From 30\% to
+50\% SLC, the accuracy of every informed policy on BERT-Base falls by about 2.5 points. Magnitude and Fisher
+again differ by less than the chip-to-chip spread. The gradient policy is again the weakest of the three.
+It trails magnitude by 4.7 points at 20\% SLC on BERT-Base and by 4.4 points at 5\% SLC.
+
+\begin{table}[t]
+\caption{\textbf{MNLI}: agreement between component scores, mean over layers (rank correlation $\rho$ and
+overlap of the top 20\%).}
+\label{tab:mnli_scores}
+\centering
+\small
+\begin{tabular}{@{}lcccc@{}}
+\toprule
+ & \multicolumn{2}{c}{\textbf{DistilBERT}} & \multicolumn{2}{c}{\textbf{BERT-Base}} \\
+\cmidrule(lr){2-3}\cmidrule(l){4-5}
+Scores & $\rho$ & Top 20\% & $\rho$ & Top 20\% \\
+\midrule
+Fisher vs.\ magnitude   & 0.97 & 89\% & 0.96 & 88\% \\
+Gradient vs.\ magnitude & 0.57 & 67\% & 0.56 & 63\% \\
+Gradient vs.\ Fisher    & 0.66 & 71\% & 0.66 & 69\% \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+Table~\ref{tab:mnli_scores} explains these results. The Fisher score ranks the components almost as the
+singular values do, and it shares 88--89\% of its top 20\% with magnitude. The gradient score agrees much
+less with both, and about a third of its top 20\% is different from the magnitude selection.
+
+\begin{table}[t]
+\caption{\textbf{MNLI}: accuracy (\%) vs.\ share of stuck cells, no programming noise (20\% SLC, mean of 20
+chips).}
+\label{tab:mnli_fault}
+\centering
+\small
+\begin{tabular}{@{}lccccc@{}}
+\toprule
+Policy & 0 & 0.1\% & 0.2\% & 0.5\% & 1\% \\
+\midrule
+\multicolumn{6}{@{}l}{\textbf{DistilBERT}} \\
+All-SLC   & 76.9 & 74.4 & 71.3 & 60.4 & 42.1 \\
+All-MLC   & 76.8 & 44.5 & 34.0 & 33.6 & 33.7 \\
+Random    & 77.7 & 51.6 & 35.3 & 32.9 & 33.2 \\
+Gradient  & 79.6 & 76.0 & 71.4 & 44.5 & 33.9 \\
+Magnitude & 77.3 & 74.8 & 71.3 & 49.7 & 34.0 \\
+Fisher    & 78.3 & 74.9 & 70.7 & 50.3 & 34.0 \\
+\midrule
+\multicolumn{6}{@{}l}{\textbf{BERT-Base}} \\
+All-SLC   & 72.2 & 67.2 & 61.9 & 44.4 & 34.5 \\
+All-MLC   & 72.4 & 37.2 & 33.2 & 32.8 & 31.8 \\
+Random    & 73.0 & 42.8 & 34.3 & 33.3 & 32.6 \\
+Gradient  & 78.2 & 73.0 & 65.2 & 36.9 & 32.0 \\
+Magnitude & 79.1 & 74.6 & 67.8 & 40.4 & 32.8 \\
+Fisher    & 79.3 & 73.9 & 67.2 & 39.8 & 32.8 \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+Table~\ref{tab:mnli_fault} gives the fault-rate sweep. At 2\% and 5\% stuck cells every placement is at
+chance, so these columns are omitted. MNLI is more fragile to stuck cells than SST-2. All-MLC and random
+placement fail at 0.1\% stuck cells. Magnitude and Fisher placement lose 2--5 points at 0.1\% and 6--11
+points at 0.2\%, and on BERT-Base they stay above the all-SLC chip (67.8 against 61.9\% at 0.2\%). From
+0.5\% every placement loses 16 points or more, with the gradient placement lowest among the hybrid ones, and
+at 1\% every placement is near chance, including all-SLC.
+
+\begin{table}[t]
+\caption{\textbf{MNLI}: fault-aware mapping, accuracy (\%) vs.\ share of stuck cells, no programming noise
+(mean of 10 chips).}
+\label{tab:mnli_remap}
+\centering
+\small
+\begin{tabular}{@{}lcccccc@{}}
+\toprule
+ & \multicolumn{3}{c}{\textbf{DistilBERT}} & \multicolumn{3}{c}{\textbf{BERT-Base}} \\
+\cmidrule(lr){2-4}\cmidrule(l){5-7}
+Policy & 0.2\% & 0.5\% & 1\% & 0.2\% & 0.5\% & 1\% \\
+\midrule
+All-SLC           & 71.4 & 58.4 & 41.4 & 61.5 & 46.7 & 35.7 \\
+All-SLC + remap   & 76.2 & \textbf{72.2} & \textbf{58.5} & 69.9 & \textbf{61.9} & \textbf{46.2} \\
+Magnitude         & 69.9 & 49.1 & 33.4 & 68.1 & 40.0 & 33.1 \\
+Magnitude + remap & \textbf{76.6} & 67.9 & 38.8 & 75.3 & 60.0 & 36.5 \\
+C1                & \textbf{76.6} & 67.0 & 39.4 & \textbf{75.5} & 60.4 & 35.5 \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+Table~\ref{tab:mnli_remap} gives the mapping results. At 2\% stuck cells every placement is at chance
+(32--37\%), so that column is omitted. Remapping again improves every placement. At 0.2\% stuck cells,
+magnitude + remap raises the accuracy from 69.9 to 76.6\% on DistilBERT and from 68.1 to 75.3\% on
+BERT-Base, and it cuts the chip-to-chip standard deviation from 4.5 to 0.4 points and from 3.4 to 0.9
+points. From 0.5\% the remapped all-SLC chip is the most robust: at 1\% stuck cells it gains 17 points over
+all-SLC on DistilBERT and 11 points on BERT-Base. C1 again gives no reliable gain over magnitude + remap.
 
 % ---------------------------------------------------------------
 % Remaining results, discussion and conclusion to be written.
