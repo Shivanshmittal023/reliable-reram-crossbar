@@ -11,7 +11,7 @@ re-examine this design in a bit-accurate, cell-level simulator. The questions ar
 protect, which hardware effects still break the chip, and how to recover accuracy without extra hardware.
 
 **Report:** [`submission/final_report.pdf`](submission/final_report.pdf) · **Slides:**
-[`submission/Reliable_Hybrid_SLC_MLC_ReRAM_Crossbars_for_Transformers.pptx`](submission/Reliable_Hybrid_SLC_MLC_ReRAM_Crossbars_for_Transformers.pptx)
+[`submission/Reliable_Hybrid_SLC_MLC_ReRAM_Crossbars_for_Transformers.pptx`](submission/Reliable_Hybrid_SLC_MLC_ReRAM_Crossbars_for_Transformers.pptx) · **LaTeX source:** [Overleaf](https://www.overleaf.com/project/6aece85e1b95091174c47a41/share#b4d9fbcf45930c5500ad512e139bb1528ce4028804be3b85)
 
 Models: BERT-Base and DistilBERT on SST-2 (full study) and MNLI (placement and mapping).
 
@@ -92,7 +92,7 @@ Model weights (`*.pt`) and Kaggle archives (`*.zip`) are not stored; regenerate 
 ## Submission documents
 | File | Contents |
 |---|---|
-| `submission/final_report.pdf` | final report, IEEE two-column, 10 pages (LaTeX source on Overleaf) |
+| `submission/final_report.pdf` | final report, IEEE two-column, 10 pages (LaTeX source on [Overleaf](https://www.overleaf.com/project/6aece85e1b95091174c47a41/share#b4d9fbcf45930c5500ad512e139bb1528ce4028804be3b85)) |
 | `submission/Reliable_Hybrid_SLC_MLC_ReRAM_Crossbars_for_Transformers.pptx` | presentation slides |
 | `submission/baseline_results.pdf` | every baseline result: HyFlexPIM placement, all-SLC, all-MLC and random, with graphs and tables |
 | `submission/contribution_results.pdf` | results of our five contributions, with analysis and comparison against the baseline, plus an appendix with the complete results of our methods |
