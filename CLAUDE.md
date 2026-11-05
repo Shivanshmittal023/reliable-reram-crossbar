@@ -1,1 +1,0 @@
-when making scripts for kaggle always make sure to print logs of each step and include imports in ! if required,

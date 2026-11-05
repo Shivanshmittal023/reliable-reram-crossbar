@@ -1,0 +1,270 @@
+\documentclass[10pt,a4paper]{article}
+\usepackage[margin=2cm]{geometry}
+\usepackage[T1]{fontenc}
+\usepackage{lmodern}
+\usepackage{amsmath,amssymb,booktabs,multirow,xcolor,colortbl}
+\usepackage{pgfplots}
+\pgfplotsset{compat=1.18}
+\usepackage{float}
+\usepackage[hidelinks]{hyperref}
+\usepackage{titlesec,enumitem}
+\titleformat{\section}{\large\bfseries}{\thesection}{0.6em}{}
+\setlist{itemsep=1pt,topsep=3pt}
+
+\definecolor{cgrad}{HTML}{C0612B}
+\definecolor{crand}{HTML}{8A939C}
+\pgfplotsset{
+  accplot/.style={width=0.49\textwidth,height=5.6cm,grid=major,grid style={gray!20},
+    tick label style={font=\scriptsize},label style={font=\footnotesize},title style={font=\small\bfseries},
+    legend style={font=\scriptsize,draw=none,fill=white,fill opacity=0.85,text opacity=1},
+    legend cell align=left,mark size=1.3pt},
+  pslc/.style={black,densely dotted,thick,mark=square*,mark options={solid}},
+  pmlc/.style={black!55,dashdotted,thick,mark=triangle*,mark options={solid}},
+  pgrad/.style={cgrad,very thick,mark=*},
+  prand/.style={crand,thick,mark=o}}
+
+\begin{document}
+
+\begin{center}
+{\LARGE\bfseries Baseline Results}\\[4pt]
+{\large Reliable Hybrid SLC/MLC ReRAM Crossbars for Transformers}\\[4pt]
+Shivansh Mittal, Sarvesh Joshi, Thumati Naveen Chandra Chowdary, Aryan Chakravorty\\
+CS5290 Memory-Centric Computer Architecture, Indian Institute of Technology Guwahati
+\end{center}
+
+\section{What the baseline is}
+The baseline is \textbf{HyFlexPIM} (Song \emph{et al.}, ISCA 2025), reproduced on our cell-level crossbar
+simulator. Every encoder linear layer of BERT-Base (72 matrices) and DistilBERT (36 matrices) is factorised
+with SVD, keeping $k=mn/(m+n)$ components so that storage is unchanged, and fine-tuned on SST-2 for 8
+epochs. Components are ranked by the HyFlexPIM gradient score, $\sum_b|\partial L_b/\partial\sigma_r|$ over
+batches of 32 training sentences, and the top 20\% of each layer go to SLC cells, the rest to MLC cells.
+Three reference chips are evaluated alongside it:
+\begin{itemize}
+\item \textbf{All SLC}: every component in reliable 1-bit cells (14 cells per weight), the most robust and most
+expensive chip;
+\item \textbf{All MLC}: every component in dense 2-bit cells (8 cells per weight), the cheapest chip;
+\item \textbf{Random 20\%}: a random 20\% of components in SLC, a control for whether the choice matters.
+\end{itemize}
+The hybrid chips use 9.2 cells per weight, 34\% fewer than all-SLC. Accuracy is measured on all 872 SST-2
+validation sentences and averaged over several simulated chips (random draws of all cell errors). Every
+placement is tested on the same chips. Errors are modelled per cell: 8-bit weights with one scale per output
+column, differential cell pairs, 7 SLC or 4 MLC bit slices per sign, and programming noise
+$\tilde G=G+\sigma G_{\max}\varepsilon$ on every cell.
+
+\section{Accuracy before hardware errors}
+\begin{table}[H]
+\centering\small
+\caption{SST-2 accuracy (\%) without hardware errors.}
+\begin{tabular}{@{}lcccc@{}}
+\toprule
+Model & FP32 & INT8 & SVD, truncated & SVD, fine-tuned \\
+\midrule
+BERT-Base & 92.43 & 91.86 & 89.33 & 90.14 \\
+DistilBERT & 91.06 & 90.37 & 89.68 & 89.11 \\
+\bottomrule
+\end{tabular}
+\end{table}
+\noindent The SVD factorisation costs about two points after fine-tuning; this cost is common to every
+placement. On an error-free simulated chip every placement stays within about one point of the digital
+SVD model, confirming the simulator.
+
+\section{Programming noise}
+\begin{figure}[H]
+\centering
+\begin{tikzpicture}
+\begin{axis}[accplot,title={BERT-Base},xlabel={Programming noise $\sigma$ (\% of $G_{\max}$)},ylabel={Accuracy (\%)},
+  xtick={0,1,2,3,5,7.5,10},ymin=45,ymax=93,legend pos=south west]
+\addplot[pslc] table[x=x,y=all_slc]{data/noise_bert.dat}; \addlegendentry{All SLC}
+\addplot[pgrad] table[x=x,y=gradient]{data/noise_bert.dat}; \addlegendentry{HyFlexPIM (gradient) 20\%}
+\addplot[prand] table[x=x,y=random]{data/noise_bert.dat}; \addlegendentry{Random 20\%}
+\addplot[pmlc] table[x=x,y=all_mlc]{data/noise_bert.dat}; \addlegendentry{All MLC}
+\end{axis}
+\end{tikzpicture}\hfill
+\begin{tikzpicture}
+\begin{axis}[accplot,title={DistilBERT},xlabel={Programming noise $\sigma$ (\% of $G_{\max}$)},
+  xtick={0,1,2,3,5,7.5,10},ymin=45,ymax=93]
+\addplot[pslc] table[x=x,y=all_slc]{data/noise_distil.dat};
+\addplot[pgrad] table[x=x,y=gradient]{data/noise_distil.dat};
+\addplot[prand] table[x=x,y=random]{data/noise_distil.dat};
+\addplot[pmlc] table[x=x,y=all_mlc]{data/noise_distil.dat};
+\end{axis}
+\end{tikzpicture}
+\caption{Accuracy against programming noise, mean of 5 chips.}
+\end{figure}
+
+\begin{table}[H]
+\centering\small
+\caption{Accuracy (\%) against programming noise $\sigma$, mean of 5 chips.}
+\begin{tabular}{@{}llccccccc@{}}
+\toprule
+Model & Placement & 0 & 1\% & 2\% & 3\% & 5\% & 7.5\% & 10\% \\
+\midrule
+\multirow{4}{*}{BERT-Base} & All SLC & 89.9 & 89.6 & 89.3 & 89.1 & 87.8 & 85.9 & 79.7 \\
+ & HyFlexPIM (gradient) 20\% & 89.8 & 90.4 & 90.2 & 90.0 & 88.0 & 79.3 & 67.7 \\
+ & Random 20\% & 90.0 & 90.1 & 89.9 & 87.7 & 78.8 & 58.8 & 49.1 \\
+ & All MLC & 90.0 & 89.3 & 87.3 & 83.9 & 66.3 & 52.2 & 51.3 \\
+\midrule
+\multirow{4}{*}{DistilBERT} & All SLC & 89.0 & 88.7 & 88.8 & 88.6 & 88.5 & 87.5 & 85.9 \\
+ & HyFlexPIM (gradient) 20\% & 89.8 & 88.5 & 88.9 & 88.7 & 87.7 & 83.4 & 69.8 \\
+ & Random 20\% & 88.6 & 88.7 & 88.7 & 87.8 & 82.8 & 61.8 & 52.4 \\
+ & All MLC & 89.1 & 88.4 & 87.9 & 86.1 & 74.5 & 60.4 & 56.0 \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\begin{itemize}
+\item \textbf{All-MLC fails at moderate noise}: BERT-Base falls to 66.3\% at $\sigma=5\%$ and to near chance
+(52.2\%) at 7.5\%. A hybrid layout is necessary.
+\item \textbf{The HyFlexPIM hybrid works at low noise but degrades at high noise}: with 20\% SLC it matches
+all-SLC up to $\sigma=5\%$, then trails it by 6.6 points at 7.5\% and 12 points at 10\% on BERT-Base.
+\item \textbf{Random selection recovers little}: which components are protected matters, not only how many.
+\end{itemize}
+
+\section{SLC share}
+\begin{figure}[H]
+\centering
+\begin{tikzpicture}
+\begin{axis}[accplot,title={BERT-Base, $\sigma=7.5\%$},xlabel={Share of components in SLC (\%)},ylabel={Accuracy (\%)},
+  xtick={0,10,20,30,50,100},ymin=50,ymax=90,legend pos=south east]
+\addplot[pgrad] table[x=x,y=gradient]{data/share_bert_075.dat}; \addlegendentry{HyFlexPIM (gradient)}
+\addplot[prand] table[x=x,y=random]{data/share_bert_075.dat}; \addlegendentry{Random}
+\end{axis}
+\end{tikzpicture}\hfill
+\begin{tikzpicture}
+\begin{axis}[accplot,title={DistilBERT, $\sigma=7.5\%$},xlabel={Share of components in SLC (\%)},
+  xtick={0,10,20,30,50,100},ymin=50,ymax=90]
+\addplot[pgrad] table[x=x,y=gradient]{data/share_distil_075.dat};
+\addplot[prand] table[x=x,y=random]{data/share_distil_075.dat};
+\end{axis}
+\end{tikzpicture}
+\caption{Accuracy against the share of components in SLC at $\sigma=7.5\%$, mean of 20 chips; 0\% is all-MLC
+and 100\% all-SLC.}
+\end{figure}
+
+\begin{table}[H]
+\centering\small
+\caption{Accuracy (\%) of the HyFlexPIM gradient placement by SLC share, mean of 20 chips.}
+\begin{tabular}{@{}llccccccc@{}}
+\toprule
+Model & $\sigma$ & 0\% (all MLC) & 5\% & 10\% & 20\% & 30\% & 50\% & 100\% (all SLC) \\
+\midrule
+\multirow{3}{*}{BERT-Base} & 3\% & 82.1 & 88.7 & 90.0 & 90.0 & 89.9 & 89.6 & 89.2 \\
+ & 5\% & 66.8 & 84.2 & 88.2 & 88.4 & 88.4 & 88.1 & 88.0 \\
+ & 7.5\% & 53.0 & 67.5 & 79.0 & 81.2 & 82.4 & 83.2 & 85.7 \\
+\midrule
+\multirow{3}{*}{DistilBERT} & 3\% & 86.0 & 88.4 & 88.5 & 88.6 & 88.8 & 88.7 & 88.7 \\
+ & 5\% & 74.8 & 87.3 & 87.3 & 87.7 & 88.1 & 87.8 & 88.2 \\
+ & 7.5\% & 56.9 & 78.0 & 80.7 & 83.1 & 84.8 & 86.0 & 87.4 \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\noindent At $\sigma=7.5\%$ the gradient placement does not reach all-SLC even with 50\% of the components in
+SLC on BERT-Base (83.2\% against 85.7\%), so most of the cell savings of the hybrid are lost at high noise.
+
+\section{Stuck cells}
+\begin{figure}[H]
+\centering
+\begin{tikzpicture}
+\begin{axis}[accplot,title={BERT-Base},xlabel={Stuck cells $p$ (\% of cells)},ylabel={Accuracy (\%)},
+  symbolic x coords={0,0.1,0.2,0.5,1,2,5},xtick=data,ymin=45,ymax=93,legend pos=north east]
+\addplot[pslc] table[x=x,y=all_slc]{data/fault_bert.dat}; \addlegendentry{All SLC}
+\addplot[pgrad] table[x=x,y=gradient]{data/fault_bert.dat}; \addlegendentry{HyFlexPIM 20\%}
+\addplot[prand] table[x=x,y=random]{data/fault_bert.dat}; \addlegendentry{Random 20\%}
+\addplot[pmlc] table[x=x,y=all_mlc]{data/fault_bert.dat}; \addlegendentry{All MLC}
+\end{axis}
+\end{tikzpicture}\hfill
+\begin{tikzpicture}
+\begin{axis}[accplot,title={DistilBERT},xlabel={Stuck cells $p$ (\% of cells)},
+  symbolic x coords={0,0.1,0.2,0.5,1,2,5},xtick=data,ymin=45,ymax=93]
+\addplot[pslc] table[x=x,y=all_slc]{data/fault_distil.dat};
+\addplot[pgrad] table[x=x,y=gradient]{data/fault_distil.dat};
+\addplot[prand] table[x=x,y=random]{data/fault_distil.dat};
+\addplot[pmlc] table[x=x,y=all_mlc]{data/fault_distil.dat};
+\end{axis}
+\end{tikzpicture}
+\caption{Accuracy against the share of stuck cells (half at $G_{\max}$, half at $G_{\min}$), no programming
+noise, mean of 20 chips. The horizontal axis is not to scale.}
+\end{figure}
+
+\begin{itemize}
+\item \textbf{Stuck cells break every baseline}: all-MLC fails at 0.1\% stuck cells (58.6\% on BERT-Base),
+the HyFlexPIM hybrid drops to 71.0\% at 0.5\% and 52.8\% at 1\%, and even all-SLC falls to 62.7\% at 1\%.
+\item A stuck cell in a high-order slice shifts its weight by a large fixed amount, so faults are far more
+harmful than noise, and accuracy varies widely between chips depending on where the faults fall.
+\end{itemize}
+
+\section{Other non-idealities}
+\begin{table}[H]
+\centering\small
+\caption{Accuracy (\%) under each other non-ideality, one at a time. The hybrid keeps 20\% of the components
+in SLC by the HyFlexPIM gradient score.}
+\setlength{\tabcolsep}{5pt}
+\begin{tabular}{@{}lccc@{\hskip 14pt}ccc@{}}
+\toprule
+& \multicolumn{3}{c}{BERT-Base} & \multicolumn{3}{c}{DistilBERT} \\
+\cmidrule(r){2-4}\cmidrule(l){5-7}
+Condition & All SLC & All MLC & HyFlexPIM & All SLC & All MLC & HyFlexPIM \\
+\midrule
+No errors & 89.7 & 90.4 & 90.3 & 88.5 & 89.0 & 88.6 \\
+Read noise $\sigma_r=2\%$ & 89.0 & 77.3 & 89.8 & 88.3 & 83.8 & 88.1 \\
+Read noise $\sigma_r=5\%$ & 80.0 & 53.0 & 76.6 & 84.5 & 57.7 & 80.5 \\
+$\sigma=5\%$, middle MLC levels $\times2$ & 88.2 & 62.5 & 87.8 & 88.4 & 70.3 & 87.1 \\
+1\% stuck, scattered & 61.3 & 50.7 & 52.6 & 74.2 & 51.2 & 55.0 \\
+1\% stuck, $3\times3$ clusters & 66.7 & 50.8 & 51.5 & 80.3 & 51.2 & 56.4 \\
+1\% stuck, bit lines & 57.0 & 50.4 & 51.0 & 71.2 & 50.8 & 52.2 \\
+ADC 7 bits & 90.0 & 89.2 & 90.1 & 88.4 & 87.8 & 88.5 \\
+ADC 6 bits & 89.3 & 83.0 & 89.6 & 88.0 & 81.7 & 88.4 \\
+ADC 5 bits & 51.1 & 51.1 & 53.0 & 71.0 & 56.5 & 77.3 \\
+IR drop $r=3\times10^{-4}$ & 88.9 & 89.8 & 90.5 & 89.4 & 89.1 & 89.6 \\
+IR drop $r=3\times10^{-3}$ & 58.5 & 79.1 & 76.4 & 70.1 & 77.9 & 74.7 \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\begin{itemize}
+\item Read noise and level-dependent noise behave like programming noise: all-MLC fails, and the HyFlexPIM
+hybrid loses 3.4--4 points against all-SLC at 5\% read noise.
+\item A fixed 6-bit ADC is enough for all-SLC and the hybrid; all-MLC needs 7 bits; 5 bits fails BERT-Base.
+\item IR drop has no effect at moderate wire resistance and hurts SLC most at high resistance, because a
+stored SLC one sits at the highest conductance.
+\item Every fault pattern leaves the HyFlexPIM hybrid close to chance at 1\% stuck cells.
+\end{itemize}
+
+\section{Second dataset: MNLI}
+The same baselines on MNLI (three classes, chance 33.3\%), on 2{,}000 matched validation pairs. On MNLI the
+simulator loses accuracy even on an error-free chip (up to 11 points for all-SLC on BERT-Base) because the
+vector between a tier's two crossbars is re-quantised with a single 8-bit scale; only placements with the same
+tier sizes should therefore be compared directly.
+
+\begin{table}[H]
+\centering\small
+\caption{MNLI accuracy (\%) of the baselines.}
+\setlength{\tabcolsep}{4pt}
+\begin{tabular}{@{}lcccccc@{}}
+\toprule
+& \multicolumn{2}{c}{$\sigma=5\%$} & \multicolumn{4}{c}{Stuck cells (no noise)} \\
+\cmidrule(r){2-3}\cmidrule(l){4-7}
+Placement & BERT & DistilBERT & BERT 0.1\% & BERT 0.5\% & DistilBERT 0.1\% & DistilBERT 0.5\% \\
+\midrule
+Digital SVD model & 83.2 & 80.9 & 83.2 & 83.2 & 80.9 & 80.9 \\
+All SLC & 61.6 & 72.0 & 67.2 & 44.4 & 74.4 & 60.4 \\
+HyFlexPIM (gradient) 20\% & 63.3 & 71.3 & 73.0 & 36.9 & 76.0 & 44.5 \\
+Random 20\% & 35.9 & 44.1 & 42.8 & 33.3 & 51.6 & 32.9 \\
+All MLC & 33.5 & 36.8 & 37.2 & 32.8 & 44.5 & 33.6 \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\section{Summary of the baseline}
+\begin{itemize}
+\item A hybrid SLC/MLC layout is necessary: all-MLC fails at moderate programming noise and at 0.1\% stuck
+cells.
+\item The HyFlexPIM gradient placement works at low noise but falls behind all-SLC at $\sigma\geq7.5\%$,
+by 4--16 points at 20\% SLC and by up to 18 points at 5\% SLC on BERT-Base.
+\item No baseline handles stuck cells: at 1\% stuck cells the HyFlexPIM hybrid is near chance and all-SLC
+loses 14--27 points.
+\end{itemize}
+These gaps are what our contributions address; see the separate \emph{Contribution Results} document.
+
+\end{document}

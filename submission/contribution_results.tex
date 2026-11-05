@@ -1,0 +1,364 @@
+\documentclass[10pt,a4paper]{article}
+\usepackage[margin=2cm]{geometry}
+\usepackage[T1]{fontenc}
+\usepackage{lmodern}
+\usepackage{amsmath,amssymb,booktabs,multirow,colortbl}
+\usepackage[table]{xcolor}
+\usepackage{pgfplots}
+\pgfplotsset{compat=1.18}
+\usepackage{float}
+\usepackage[hidelinks]{hyperref}
+\usepackage{titlesec,enumitem}
+\titleformat{\section}{\large\bfseries}{\thesection}{0.6em}{}
+\titleformat{\subsection}{\normalsize\bfseries}{\thesubsection}{0.5em}{}
+\setlist{itemsep=1pt,topsep=3pt}
+
+\definecolor{cmag}{HTML}{1F6F8B}
+\definecolor{cfis}{HTML}{6A8F3A}
+\definecolor{cgrad}{HTML}{C0612B}
+\definecolor{ctier}{HTML}{7B3F98}
+\definecolor{crand}{HTML}{8A939C}
+\newcommand{\gain}[1]{\textcolor{cmag}{\textbf{#1}}}
+\pgfplotsset{
+  accplot/.style={width=0.49\textwidth,height=5.6cm,grid=major,grid style={gray!20},
+    tick label style={font=\scriptsize},label style={font=\footnotesize},title style={font=\small\bfseries},
+    legend style={font=\scriptsize,draw=none,fill=white,fill opacity=0.85,text opacity=1},
+    legend cell align=left,mark size=1.3pt},
+  pslc/.style={black,densely dotted,thick,mark=square*,mark options={solid}},
+  pslcmap/.style={black,thick,mark=square*},
+  pgrad/.style={cgrad,thick,mark=*},
+  pmag/.style={cmag,very thick,mark=*},
+  pfis/.style={cfis,thick,dashed,mark=diamond*,mark options={solid}},
+  phyb/.style={crand,thick,mark=o},
+  pmap/.style={cmag,very thick,mark=*},
+  pjoint/.style={cfis,thick,dashed,mark=diamond*,mark options={solid}},
+  pnf/.style={cgrad,thick,mark=triangle*},
+  ptier/.style={ctier,very thick,mark=*}}
+
+\begin{document}
+
+\begin{center}
+{\LARGE\bfseries Contribution Results}\\[4pt]
+{\large Reliable Hybrid SLC/MLC ReRAM Crossbars for Transformers}\\[4pt]
+Shivansh Mittal, Sarvesh Joshi, Thumati Naveen Chandra Chowdary, Aryan Chakravorty\\
+CS5290 Memory-Centric Computer Architecture, Indian Institute of Technology Guwahati
+\end{center}
+
+\section*{Step 1: What is compared}
+The baseline is the HyFlexPIM hybrid (SVD components ranked by the loss gradient, 20\% in SLC) with the
+all-SLC and all-MLC chips as references; it is documented in the separate \emph{Baseline Results}. Our four
+contributions are evaluated with the same cell-level simulator on BERT-Base and DistilBERT (SST-2) and, for
+contributions 1 and 2, on MNLI:
+\begin{enumerate}
+\item \textbf{Magnitude placement}: rank components by singular value $|\sigma_r|$ instead of the gradient.
+\item \textbf{Fault-aware mapping}: after a chip is tested, place each component in the slot whose stuck
+cells hurt it least (Fisher-weighted Hungarian assignment), using the free order of SVD components.
+\item \textbf{Tier-aware training}: fine-tune on a freshly simulated chip at every step, each component under
+the errors of the tier (SLC or MLC) it will be stored in.
+\item \textbf{Generalisation to MNLI} of contributions 1 and 2.
+\end{enumerate}
+All placements, mappings and trained models are evaluated on the same simulated chips (same seeds), so
+differences within an experiment are paired and given as mean $\pm$ standard error over chips. The hybrid chip
+uses 9.2 cells per weight, 34\% fewer than all-SLC (14).
+
+\section*{Step 2: The baseline's gaps}
+The baseline document shows three gaps, which the contributions address in turn: (i) the HyFlexPIM gradient
+placement falls behind all-SLC at high programming noise; (ii) stuck cells break every baseline, all-MLC at
+0.1\% and the HyFlexPIM hybrid near chance at 1\%; (iii) even all-SLC loses 14--27 points at 1\% stuck cells.
+
+\section*{Step 3: Contribution 1, magnitude placement}
+\begin{figure}[H]
+\centering
+\begin{tikzpicture}
+\begin{axis}[accplot,title={BERT-Base},xlabel={Programming noise $\sigma$ (\% of $G_{\max}$)},ylabel={Accuracy (\%)},
+  xtick={0,1,2,3,5,7.5,10},ymin=60,ymax=92,legend pos=south west]
+\addplot[pslc] table[x=x,y=all_slc]{data/noise_bert.dat}; \addlegendentry{All SLC}
+\addplot[pmag] table[x=x,y=magnitude]{data/noise_bert.dat}; \addlegendentry{Magnitude (ours)}
+\addplot[pfis] table[x=x,y=fisher]{data/noise_bert.dat}; \addlegendentry{Fisher (ours)}
+\addplot[pgrad] table[x=x,y=gradient]{data/noise_bert.dat}; \addlegendentry{HyFlexPIM gradient}
+\end{axis}
+\end{tikzpicture}\hfill
+\begin{tikzpicture}
+\begin{axis}[accplot,title={DistilBERT},xlabel={Programming noise $\sigma$ (\% of $G_{\max}$)},
+  xtick={0,1,2,3,5,7.5,10},ymin=60,ymax=92]
+\addplot[pslc] table[x=x,y=all_slc]{data/noise_distil.dat};
+\addplot[pmag] table[x=x,y=magnitude]{data/noise_distil.dat};
+\addplot[pfis] table[x=x,y=fisher]{data/noise_distil.dat};
+\addplot[pgrad] table[x=x,y=gradient]{data/noise_distil.dat};
+\end{axis}
+\end{tikzpicture}
+\caption{Accuracy against programming noise, 20\% SLC, mean of 5 chips.}
+\end{figure}
+
+\begin{figure}[H]
+\centering
+\begin{tikzpicture}
+\begin{axis}[accplot,title={BERT-Base, $\sigma=7.5\%$},xlabel={Share of components in SLC (\%)},ylabel={Accuracy (\%)},
+  xtick={0,10,20,30,50,100},ymin=50,ymax=90,legend pos=south east]
+\addplot[pmag] table[x=x,y=magnitude]{data/share_bert_075.dat}; \addlegendentry{Magnitude (ours)}
+\addplot[pfis] table[x=x,y=fisher]{data/share_bert_075.dat}; \addlegendentry{Fisher (ours)}
+\addplot[pgrad] table[x=x,y=gradient]{data/share_bert_075.dat}; \addlegendentry{HyFlexPIM gradient}
+\end{axis}
+\end{tikzpicture}\hfill
+\begin{tikzpicture}
+\begin{axis}[accplot,title={DistilBERT, $\sigma=7.5\%$},xlabel={Share of components in SLC (\%)},
+  xtick={0,10,20,30,50,100},ymin=50,ymax=90]
+\addplot[pmag] table[x=x,y=magnitude]{data/share_distil_075.dat};
+\addplot[pfis] table[x=x,y=fisher]{data/share_distil_075.dat};
+\addplot[pgrad] table[x=x,y=gradient]{data/share_distil_075.dat};
+\end{axis}
+\end{tikzpicture}
+\caption{Accuracy against the share of components in SLC at $\sigma=7.5\%$, mean of 20 chips; 0\% is all-MLC,
+100\% all-SLC.}
+\end{figure}
+
+\begin{table}[H]
+\centering\small
+\caption{Paired difference to magnitude, in correctly classified sentences out of 872 (mean $\pm$ standard
+error; 100 chips per noise level, 300 overall, all SLC shares).}\label{t:paired}
+\begin{tabular}{@{}llrrrr@{}}
+\toprule
+Model & Placement & $\sigma=3\%$ & 5\% & 7.5\% & All \\
+\midrule
+\multirow{2}{*}{BERT-Base} & Fisher & $-0.1\pm0.5$ & $-0.1\pm0.7$ & $+1.4\pm1.9$ & $+0.4\pm0.7$ \\
+ & HyFlexPIM gradient & $-1.2\pm0.7$ & $-10.4\pm1.6$ & $-40.4\pm5.0$ & $-17.3\pm2.0$ \\
+\midrule
+\multirow{2}{*}{DistilBERT} & Fisher & $-0.4\pm0.7$ & $-1.3\pm0.7$ & $+0.0\pm1.7$ & $-0.6\pm0.7$ \\
+ & HyFlexPIM gradient & $-0.9\pm0.7$ & $-4.0\pm1.0$ & $-18.4\pm2.6$ & $-7.8\pm1.1$ \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\begin{table}[H]
+\centering\small
+\caption{Smallest SLC share within half a point of all-SLC (shares tested: 5, 10, 20, 30, 50\%), and the
+resulting cells per weight relative to all-SLC.}\label{t:need}
+\begin{tabular}{@{}llccc@{}}
+\toprule
+Model & Placement & $\sigma=3\%$ & $\sigma=5\%$ & $\sigma=7.5\%$ \\
+\midrule
+\multirow{2}{*}{BERT-Base} & Magnitude (ours) & \gain{5\%} (59\% of cells) & \gain{5\%} (59\%) & \gain{30\%} (70\%) \\
+ & HyFlexPIM gradient & 5\% (59\%) & 10\% (61\%) & not reached at 50\% \\
+\midrule
+\multirow{2}{*}{DistilBERT} & Magnitude (ours) & 5\% (59\%) & \gain{10\%} (61\%) & \gain{50\%} (79\%) \\
+ & HyFlexPIM gradient & 5\% (59\%) & 20\% (66\%) & not reached at 50\% \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\noindent\textbf{Analysis.}
+\begin{itemize}
+\item Magnitude and Fisher are statistically indistinguishable at every noise level, while the HyFlexPIM
+gradient falls further behind as noise grows (Table~\ref{t:paired}); at 5\% SLC and $\sigma=7.5\%$ the gap on
+BERT-Base is $11.9\pm1.7$ points.
+\item \textbf{Why.} Each crossbar column has its own 8-bit scale, and the column of component $r$ holds
+$\sigma_r v_r$, so the weight error a fixed cell noise causes is proportional to $|\sigma_r|$. The Fisher score
+multiplies this error size by the loss sensitivity; that it selects the same components as magnitude
+suggests the error size dominates. The gradient measures sensitivity alone and misses it.
+\item \textbf{Cost.} Magnitude needs half the SLC share of the gradient at $\sigma=5\%$ and is the only score
+that reaches all-SLC at $\sigma=7.5\%$ (Table~\ref{t:need}). It needs no data or gradients.
+\end{itemize}
+
+\section*{Step 4: Contribution 2, fault-aware mapping}
+\begin{figure}[H]
+\centering
+\begin{tikzpicture}
+\begin{axis}[accplot,title={BERT-Base},xlabel={Stuck cells $p$ (\% of cells)},ylabel={Accuracy (\%)},
+  symbolic x coords={0.2,0.5,1,2},xtick=data,ymin=45,ymax=93,legend pos=south west]
+\addplot[pslc] table[x=x,y=slc]{data/recover_bert.dat}; \addlegendentry{All SLC}
+\addplot[pslcmap] table[x=x,y=slc_map]{data/recover_bert.dat}; \addlegendentry{All SLC + mapping}
+\addplot[phyb] table[x=x,y=hyb]{data/recover_bert.dat}; \addlegendentry{Hybrid, no mitigation}
+\addplot[pmap] table[x=x,y=hyb_map]{data/recover_bert.dat}; \addlegendentry{Hybrid + fault-aware mapping}
+\addplot[pjoint] table[x=x,y=joint]{data/recover_bert.dat}; \addlegendentry{Hybrid + joint mapping}
+\end{axis}
+\end{tikzpicture}\hfill
+\begin{tikzpicture}
+\begin{axis}[accplot,title={DistilBERT},xlabel={Stuck cells $p$ (\% of cells)},
+  symbolic x coords={0.2,0.5,1,2},xtick=data,ymin=45,ymax=93]
+\addplot[pslc] table[x=x,y=slc]{data/recover_distil.dat};
+\addplot[pslcmap] table[x=x,y=slc_map]{data/recover_distil.dat};
+\addplot[phyb] table[x=x,y=hyb]{data/recover_distil.dat};
+\addplot[pmap] table[x=x,y=hyb_map]{data/recover_distil.dat};
+\addplot[pjoint] table[x=x,y=joint]{data/recover_distil.dat};
+\end{axis}
+\end{tikzpicture}
+\caption{Accuracy against the share of stuck cells, no programming noise, mean of 10 chips. The hybrid uses
+magnitude placement with 20\% SLC.}\label{f:map}
+\end{figure}
+
+\begin{table}[H]
+\centering\small
+\caption{Paired gain of fault-aware mapping over no mitigation (hybrid, magnitude, 20\% SLC), and of joint
+tier-and-slot mapping over fault-aware mapping, in accuracy points (mean $\pm$ s.e. over 10 chips).}\label{t:mapgain}
+\setlength{\tabcolsep}{3.5pt}
+\resizebox{\textwidth}{!}{%
+\begin{tabular}{@{}ll cccc ccc cc@{}}
+\toprule
+& & \multicolumn{4}{c}{Stuck cells, no noise} & \multicolumn{3}{c}{Stuck cells, $\sigma=5\%$} & \multicolumn{2}{c}{1\% stuck} \\
+\cmidrule(lr){3-6}\cmidrule(lr){7-9}\cmidrule(l){10-11}
+& Model & 0.2\% & 0.5\% & 1\% & 2\% & 0.2\% & 0.5\% & 1\% & clusters & lines \\
+\midrule
+\multirow{2}{*}{Mapping gain} & BERT & $+1.6\pm0.3$ & $+8.9\pm2.0$ & $+9.2\pm2.6$ & $+2.1\pm1.2$ & $+2.5\pm0.6$ & $+10.2\pm2.1$ & $+6.0\pm1.7$ & $+10.6\pm2.3$ & $+6.8\pm2.2$ \\
+ & Distil & $+1.3\pm0.5$ & $+7.2\pm3.3$ & $+4.6\pm3.4$ & $+3.1\pm1.1$ & $+2.3\pm0.5$ & $+8.1\pm1.2$ & $+5.6\pm3.5$ & $+12.6\pm2.1$ & $+13.9\pm3.3$ \\
+\midrule
+\multirow{2}{*}{Joint $-$ mapping} & BERT & $-0.1\pm0.2$ & $-1.3\pm0.8$ & $+3.2\pm2.2$ & $-2.8\pm0.9$ & $-0.3\pm0.3$ & $-2.5\pm1.9$ & $+3.6\pm2.0$ & $-2.8\pm2.7$ & $-0.1\pm1.9$ \\
+ & Distil & $-0.1\pm0.1$ & $+0.2\pm0.7$ & $+0.7\pm2.0$ & $+1.4\pm1.6$ & $-0.7\pm0.4$ & $-0.7\pm0.8$ & $-2.0\pm3.1$ & $+7.0\pm2.3$ & $-5.3\pm2.4$ \\
+\bottomrule
+\end{tabular}}
+\end{table}
+
+\noindent\textbf{Analysis.}
+\begin{itemize}
+\item \textbf{Mapping helps in every setting} (Table~\ref{t:mapgain}), with or without programming noise.
+Gains are largest for clustered and line faults, where moving important components away from a damaged
+region matters most, and chips become more alike: at 0.5\% stuck cells the standard deviation over
+BERT-Base chips falls from 6.7 to 1.2 points.
+\item \textbf{Choosing the tier per chip does not help}: joint mapping wins and loses by similar margins,
+mostly within two standard errors. Its second-order cost underrates the large error of a stuck high-order
+cell, so the benefit comes from the choice of slot.
+\item \textbf{Mapping alone is not enough above 0.5\% stuck cells} (Fig.~\ref{f:map}): the mapped hybrid falls
+behind all-SLC with mapping, because MLC cells hold two bits and the SLC tier offers few slots. Step 5
+closes this gap.
+\end{itemize}
+
+\section*{Step 5: Contribution 3, tier-aware training}
+\begin{figure}[H]
+\centering
+\begin{tikzpicture}
+\begin{axis}[ybar,width=\textwidth,height=6.2cm,bar width=7pt,ymin=40,ymax=92,ylabel={Accuracy (\%)},
+  symbolic x coords={None,Map,NoiseT,FaultT,TierNoMap,Tier,SLC},xtick=data,
+  xticklabels={{No mitigation},{Fault-aware\\mapping},{Noise-only\\training + map},{Noise + fault\\training + map},{Tier-aware\\training, no map},{\textbf{Tier-aware}\\\textbf{training + map}},{All SLC\\+ map}},
+  xticklabel style={font=\scriptsize,align=center},tick label style={font=\scriptsize},label style={font=\footnotesize},
+  nodes near coords,nodes near coords style={font=\tiny,rotate=90,anchor=west},
+  legend style={font=\scriptsize,draw=none,at={(0.02,0.98)},anchor=north west},grid=major,grid style={gray!20},
+  enlarge x limits=0.08]
+\addplot[fill=cmag!70,draw=cmag] coordinates {(None,55.9) (Map,65.1) (NoiseT,67.6) (FaultT,78.6) (TierNoMap,76.1) (Tier,82.9) (SLC,75.8)};
+\addplot[fill=cgrad!60,draw=cgrad] coordinates {(None,62.4) (Map,67.0) (NoiseT,68.2) (FaultT,80.7) (TierNoMap,81.3) (Tier,84.7) (SLC,84.8)};
+\legend{BERT-Base,DistilBERT}
+\end{axis}
+\end{tikzpicture}
+\caption{Accuracy at 1\% stuck cells, no programming noise, mean of 10 chips. All bars except the last are the
+hybrid chip (magnitude placement, 20\% SLC).}\label{f:bar}
+\end{figure}
+
+\begin{table}[H]
+\centering\small
+\caption{Paired differences of tier-aware training + mapping, in accuracy points (mean $\pm$ s.e., 10 chips).}\label{t:trpaired}
+\setlength{\tabcolsep}{3.5pt}
+\resizebox{\textwidth}{!}{%
+\begin{tabular}{@{}ll cccc ccc cc@{}}
+\toprule
+& & \multicolumn{4}{c}{Stuck cells, no noise} & \multicolumn{3}{c}{Stuck cells, $\sigma=5\%$} & \multicolumn{2}{c}{1\% stuck} \\
+\cmidrule(lr){3-6}\cmidrule(lr){7-9}\cmidrule(l){10-11}
+Compared with & Model & 0.2\% & 0.5\% & 1\% & 2\% & 0.2\% & 0.5\% & 1\% & clusters & lines \\
+\midrule
+\multirow{2}{*}{mapping only} & BERT & $-1.2\pm0.2$ & $+2.7\pm0.5$ & $+17.8\pm2.2$ & $+0.8\pm1.0$ & $+1.6\pm0.5$ & $+7.4\pm0.8$ & $+22.4\pm1.8$ & $+20.7\pm1.6$ & $+20.8\pm2.8$ \\
+ & Distil & $-0.1\pm0.2$ & $+3.0\pm0.8$ & $+17.7\pm2.7$ & $+4.1\pm2.4$ & $+0.5\pm0.4$ & $+3.9\pm0.6$ & $+14.7\pm2.4$ & $+14.9\pm2.4$ & $+16.5\pm3.1$ \\
+\midrule
+\multirow{2}{*}{noise + fault training} & BERT & $-1.0\pm0.2$ & $-0.4\pm0.4$ & $+4.3\pm2.2$ & $+2.2\pm1.0$ & $-0.6\pm0.4$ & $+0.4\pm0.3$ & $+7.5\pm1.8$ & $+6.2\pm1.7$ & $+5.1\pm3.7$ \\
+ & Distil & $-0.4\pm0.2$ & $-0.1\pm0.2$ & $+4.0\pm0.6$ & $+2.4\pm1.7$ & $-0.5\pm0.3$ & $+0.5\pm0.3$ & $+2.3\pm1.6$ & $+2.7\pm1.3$ & $+2.8\pm0.8$ \\
+\midrule
+\multirow{2}{*}{all SLC + mapping} & BERT & $-0.8\pm0.3$ & $+4.6\pm0.7$ & $+7.1\pm3.3$ & $-2.9\pm2.2$ & $+2.9\pm1.4$ & $+5.4\pm1.0$ & $+4.0\pm1.7$ & $+3.7\pm1.4$ & $+0.2\pm3.0$ \\
+ & Distil & $+0.3\pm0.2$ & $+0.5\pm0.5$ & $-0.0\pm0.9$ & $-4.9\pm3.1$ & $+0.7\pm0.3$ & $+0.1\pm0.3$ & $-0.9\pm2.4$ & $-2.2\pm1.2$ & $+3.0\pm1.9$ \\
+\bottomrule
+\end{tabular}}
+\end{table}
+
+\begin{table}[H]
+\centering\small
+\caption{Accuracy (\%) under programming noise alone (no stuck cells), hybrid with 20\% SLC by magnitude,
+mean of 10 chips; $\sigma=0$ is an error-free chip.}\label{t:trnoise}
+\begin{tabular}{@{}lccc@{\hskip 14pt}ccc@{}}
+\toprule
+& \multicolumn{3}{c}{BERT-Base} & \multicolumn{3}{c}{DistilBERT} \\
+\cmidrule(r){2-4}\cmidrule(l){5-7}
+Training & $\sigma=0$ & 5\% & 7.5\% & 0 & 5\% & 7.5\% \\
+\midrule
+No training & 89.7 & 88.7 & 84.2 & 89.1 & 88.2 & 85.6 \\
+Noise-only training & 89.9 & 89.7 & 86.3 & 87.4 & 87.6 & 85.6 \\
+Noise + fault training & \textbf{90.9} & \textbf{89.9} & \textbf{88.8} & \textbf{89.9} & \textbf{89.3} & 87.6 \\
+Tier-aware training & 89.4 & 89.3 & 88.3 & 87.8 & 88.4 & \textbf{88.0} \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\noindent\textbf{Analysis.}
+\begin{itemize}
+\item \textbf{Stuck cells must be injected during training}: noise-only training barely moves the bars of
+Fig.~\ref{f:bar}, while adding stuck cells gives the largest single step.
+\item \textbf{Knowing the tiers helps where errors are dense}: tier-aware training beats tier-unaware training
+at 1\% stuck cells, with programming noise and for clustered faults, ties at 0.5\%, and is slightly behind at
+0.2\%, the cost of training on the harsher chip (Table~\ref{t:trnoise}, $\sigma=0$).
+\item \textbf{Training and mapping are complementary}: training makes the weights tolerate errors, mapping
+keeps sensitive values away from known faults; tier-aware training alone already exceeds mapping alone, and
+mapping still adds on top.
+\item \textbf{The gap to all-SLC closes} (last block of Table~\ref{t:trpaired}): with tier-aware training and
+mapping the hybrid beats all-SLC with mapping on BERT-Base and matches it on DistilBERT up to 1\% stuck cells,
+with 34\% fewer cells. At 2\% every configuration fails.
+\item Training also improves robustness to programming noise alone (Table~\ref{t:trnoise}).
+\end{itemize}
+
+\section*{Step 6: Contribution 4, generalisation to MNLI}
+\begin{table}[H]
+\centering\small
+\caption{MNLI (three classes, chance 33.3\%): paired results, in accuracy points (mean $\pm$ s.e.). Raw
+accuracies are in Appendix A.6.}\label{t:mnli}
+\begin{tabular}{@{}lcc@{}}
+\toprule
+& BERT-Base & DistilBERT \\
+\midrule
+Fisher $-$ magnitude, $\sigma=5\%$, all SLC shares (100 chips) & $-0.2\pm0.2$ & $-0.2\pm0.1$ \\
+HyFlexPIM gradient $-$ magnitude, same chips & $-3.4\pm0.4$ & $-0.5\pm0.2$ \\
+Fault-aware mapping gain at 0.5\% stuck cells (10 chips) & $+20.1\pm3.0$ & $+18.8\pm3.2$ \\
+\bottomrule
+\end{tabular}
+\end{table}
+\noindent Both contributions transfer to the harder task: magnitude again matches Fisher and beats the
+gradient on BERT-Base, and mapping recovers about 20 points at 0.5\% stuck cells. MNLI also exposed a
+simulator limitation: the single 8-bit scale of the vector between a tier's two crossbars costs up to 11
+points even on an error-free chip, so only placements and mappings with the same tier sizes are compared.
+
+\section*{Step 7: Overall comparison with the baseline}
+\begin{table}[H]
+\centering\small
+\caption{Accuracy (\%) of the baseline and of our methods, BERT-Base / DistilBERT. All hybrids keep 20\% of
+the components in SLC unless stated. Programming-noise rows use the same 20 chips for all columns; stuck-cell
+rows take the baseline from the stuck-cell and fault-pattern sweeps and our methods from the mapping
+experiment (10 chips), so those comparisons are not paired.}
+\setlength{\tabcolsep}{4pt}
+\resizebox{\textwidth}{!}{%
+\begin{tabular}{@{}lccccc@{}}
+\toprule
+Scenario & HyFlexPIM baseline & Magnitude & + fault-aware mapping & + tier-aware training & All SLC + mapping \\
+\midrule
+$\sigma=7.5\%$, 20\% SLC & 81.2 / 83.1 & \gain{84.1 / 85.2} & -- & -- & 85.7 / 87.4$^{\dagger}$ \\
+$\sigma=7.5\%$, 5\% SLC & 67.5 / 78.0 & \gain{79.4 / 80.2} & -- & -- & 85.7 / 87.4$^{\dagger}$ \\
+\midrule
+0.5\% stuck cells & 71.0 / 74.5 & 76.6 / 77.9 & 85.6 / 85.1 & \gain{88.3 / 88.1} & 83.7 / 87.6 \\
+1\% stuck cells & 52.8 / 55.4 & 55.9 / 62.4 & 65.1 / 67.0 & \gain{82.9 / 84.7} & 75.8 / 84.8 \\
+1\% stuck, $3\times3$ clusters & 51.5 / 56.4 & 53.7 / 55.9 & 64.3 / 68.5 & \gain{85.0 / 83.4} & 81.3 / 85.6 \\
+1\% stuck, bit lines & 51.0 / 52.2 & 50.1 / 54.0 & 56.9 / 68.0 & \gain{77.7 / 84.4} & 77.5 / 81.5 \\
+\bottomrule
+\end{tabular}}
+
+\smallskip
+\raggedright\footnotesize $^{\dagger}$all-SLC without mapping (mapping has no effect without stuck cells).
+\end{table}
+
+\noindent\textbf{Findings.}
+\begin{itemize}
+\item \textbf{Placement}: magnitude ranking matches the Fisher estimate of expected damage and beats the
+HyFlexPIM gradient at high noise, by $+2.8\pm0.8$ (BERT-Base) and $+2.2\pm0.3$ points (DistilBERT) at 20\% SLC
+and $+11.9\pm1.7$ points at 5\% SLC on BERT-Base, on the same chips.
+\item \textbf{Fault-aware mapping}: a zero-hardware reordering that improves the hybrid in every stuck-cell
+setting, by up to 13.9 points; choosing the tier per chip adds nothing.
+\item \textbf{Tier-aware training}: together with mapping, raises the hybrid at 1\% stuck cells from 52.8\% and
+55.4\% (HyFlexPIM baseline) to 82.9\% and 84.7\%, matching or beating an all-SLC chip with mapping up to 1\%
+scattered stuck cells while using 34\% fewer cells.
+\item \textbf{Generality}: the placement and mapping results hold on MNLI.
+\end{itemize}
+
+\clearpage
+\input{complete_results}
+
+\end{document}

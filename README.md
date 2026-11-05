@@ -54,6 +54,8 @@ Other folders:
 
 ```
 report/       final report: report.pdf and its LaTeX source (main.tex, sections/, refs.bib, data/)
+submission/   submission documents: final_report.pdf (10 pages), baseline_results.pdf and
+              contribution_results.pdf, with their LaTeX sources and plot data
 docs/         project plan (revision 2) and an earlier paper draft
 ```
 
