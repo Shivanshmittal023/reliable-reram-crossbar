@@ -54,7 +54,7 @@ script, a README (method, settings, how to run, findings) and its `results/`.
 Other folders:
 
 ```
-submission/   final report, slides, baseline and contribution results (see below)
+submission/   final report, slides, baseline and contribution results; their LaTeX sources in latex/
 ```
 
 Results are always stored as `results/<experiment>/<model>/sweep.csv` (one row per simulated chip:
@@ -97,11 +97,11 @@ Model weights (`*.pt`) and Kaggle archives (`*.zip`) are not stored; regenerate 
 | `submission/baseline_results.pdf` | every baseline result: HyFlexPIM placement, all-SLC, all-MLC and random, with graphs and tables |
 | `submission/contribution_results.pdf` | results of our five contributions, with analysis and comparison against the baseline, plus an appendix with the complete results of our methods |
 
-The two results documents are built from their LaTeX sources in `submission/` (plot data in
-`submission/data/`; the generated tables in `baseline_*.tex` for the baseline document and in
-`complete_results.tex` for the contribution appendix):
+The LaTeX sources of the two results documents are in `submission/latex/`: the main files, the generated
+tables (`baseline_*.tex` for the baseline document, `complete_results.tex` for the contribution appendix)
+and the plot data (`data/`). To rebuild them:
 ```
-cd submission
+cd submission/latex
 pdflatex baseline_results && pdflatex baseline_results
 pdflatex contribution_results && pdflatex contribution_results
 ```
