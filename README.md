@@ -10,7 +10,8 @@ transformer weight matrix in reliable one-bit cells (SLC) and the rest in dense 
 re-examine this design in a bit-accurate, cell-level simulator. The questions are which components to
 protect, which hardware effects still break the chip, and how to recover accuracy without extra hardware.
 
-**Report:** [`report/report.pdf`](report/report.pdf) (LaTeX source in [`report/`](report/)).
+**Report:** [`submission/final_report.pdf`](submission/final_report.pdf) · **Slides:**
+[`submission/Reliable_Hybrid_SLC_MLC_ReRAM_Crossbars_for_Transformers.pptx`](submission/Reliable_Hybrid_SLC_MLC_ReRAM_Crossbars_for_Transformers.pptx)
 
 Models: BERT-Base and DistilBERT on SST-2 (full study) and MNLI (placement and mapping).
 
@@ -53,10 +54,7 @@ script, a README (method, settings, how to run, findings) and its `results/`.
 Other folders:
 
 ```
-report/       final report: report.pdf and its LaTeX source (main.tex, sections/, refs.bib, data/)
-submission/   submission documents: final_report.pdf (10 pages), baseline_results.pdf and
-              contribution_results.pdf, with their LaTeX sources and plot data
-docs/         project plan (revision 2) and an earlier paper draft
+submission/   final report, slides, baseline and contribution results (see below)
 ```
 
 Results are always stored as `results/<experiment>/<model>/sweep.csv` (one row per simulated chip:
@@ -91,10 +89,19 @@ notebook output as input and are independent of each other. Step 8 is self-conta
 
 Model weights (`*.pt`) and Kaggle archives (`*.zip`) are not stored; regenerate them with the scripts.
 
-## Building the report
+## Submission documents
+| File | Contents |
+|---|---|
+| `submission/final_report.pdf` | final report, IEEE two-column, 10 pages (LaTeX source on Overleaf) |
+| `submission/Reliable_Hybrid_SLC_MLC_ReRAM_Crossbars_for_Transformers.pptx` | presentation slides |
+| `submission/baseline_results.pdf` | baseline results: HyFlexPIM placement, all-SLC, all-MLC and random, with graphs and tables |
+| `submission/contribution_results.pdf` | results of our contributions with analysis and comparison against the baseline, plus an appendix with the complete results of every experiment |
+
+The two results documents are built from their LaTeX sources in `submission/` (plot data in
+`submission/data/`, the appendix tables in `complete_results.tex`):
 ```
-cd report
-pdflatex main && bibtex main && pdflatex main && pdflatex main
+cd submission
+pdflatex baseline_results && pdflatex baseline_results
+pdflatex contribution_results && pdflatex contribution_results
 ```
-It needs the IEEEtran, pgfplots, siunitx, cleveref and colortbl packages. Plots are drawn from
-`report/data/`.
+They need the pgfplots, booktabs, multirow, colortbl, float, titlesec, enumitem and lmodern packages.

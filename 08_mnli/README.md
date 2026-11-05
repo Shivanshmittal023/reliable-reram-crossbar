@@ -76,4 +76,4 @@ Accuracy % on the 2,000-pair subset (chance 33.3%), hybrids with 20% SLC:
   largest components set it. Comparisons with all-SLC or all-MLC are therefore not meaningful on MNLI;
   only placements and mappings with the same tier sizes are compared.
 
-See Section IX of [`report/report.pdf`](../report/report.pdf).
+See Section IX of [`submission/final_report.pdf`](../submission/final_report.pdf).

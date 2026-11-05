@@ -60,7 +60,7 @@ At 1% stuck cells, with fault-aware mapping (BERT-Base / DistilBERT accuracy %):
 - **With tier-aware training and mapping, the hybrid matches or beats an all-SLC chip with mapping** up to
   1% scattered stuck cells, using 34% fewer cells.
 
-See Section VIII-F/G of [`report/report.pdf`](../report/report.pdf).
+See Section VIII-F/G of [`submission/final_report.pdf`](../submission/final_report.pdf).
 
 ## Run on Kaggle
 1. GPU T4, Internet on. Add the step 1 notebook output as input.
