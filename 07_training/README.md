@@ -8,7 +8,7 @@ mapping.
 
 ## How the training works
 On every training step, each SVD factor is programmed onto a freshly drawn chip. This uses the same
-`Crossbar` code as every evaluation: 8-bit rows, differential cell pairs, bit slices, programming noise
+`Crossbar` code as every evaluation: 8-bit weights with one scale per output column, differential cell pairs, bit slices, programming noise
 and stuck cells. The loss is computed with the damaged weights, and the update goes to the clean weights
 (straight-through estimator). Training runs for 2 epochs (AdamW, learning rate 1e-5, batch size 32). The
 training chip has σ = 5% programming noise and, where stated, 0.5% stuck cells.

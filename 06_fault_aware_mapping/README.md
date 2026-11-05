@@ -6,8 +6,8 @@
 steps 2–5 and adds a mapping step that takes a tested chip's stuck cells into account.
 
 ## Idea
-In an SVD layer the k components can be stored in **any order**: component r is one row of the first
-crossbar (σ_r·v_r) and one input row of the second (u_r), and moving both together leaves the layer
+In an SVD layer the k components can be stored in **any order**: component r is one column of the first
+crossbar (holding σ_r·v_r) and one row of the second (holding u_r), and moving both together leaves the layer
 output unchanged. After a chip is tested, its stuck cells are known, so we can choose which component
 goes into which physical slot. This needs no extra hardware and no retraining.
 

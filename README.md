@@ -18,7 +18,7 @@ Models: BERT-Base and DistilBERT on SST-2 (full study) and MNLI (placement and m
 - **A hybrid layout is necessary.** All-MLC storage falls to 52–60% on SST-2 at 7.5% programming noise.
 - **Rank components by singular value.** Magnitude ranking matches a Fisher-information estimate of each
   component's expected damage, chip by chip, and beats a HyFlexPIM-style gradient by 2–12 points at
-  7.5% noise. The reason is that each crossbar row has its own 8-bit scale, so the weight error a fixed
+  7.5% noise. The reason is that each crossbar column (output) has its own 8-bit scale, so the weight error a fixed
   cell noise causes grows with the singular value. With magnitude ranking, 5–10% of components in SLC
   match an all-SLC chip at 5% noise.
 - **Stuck cells are the limiting effect.** Read noise, level-dependent noise, a 6-bit ADC and moderate
@@ -64,7 +64,8 @@ results compare chip by chip, also across steps.
 
 ## The crossbar simulator
 Steps 2–8 contain the same simulator (each script is one Kaggle cell, so the code is repeated):
-- 8-bit signed weights, one scale per crossbar row, on a differential pair of cells, split into bit
+- Inputs on the rows (word lines), outputs on the columns (bit lines). 8-bit signed weights, one scale
+  per output column, on a differential pair of cells, split into bit
   slices: 7 SLC cells (1 bit) or 4 MLC cells (2 bits) per sign; G_max/G_min = 100; 128×128 tiles.
 - Programming noise σ·G_max per cell (fixed per chip), read noise (fresh at every read), level-dependent
   MLC noise, stuck cells (scattered, 3×3 clusters, whole bit lines), static IR drop, and a fixed

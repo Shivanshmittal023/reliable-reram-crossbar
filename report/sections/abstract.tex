@@ -7,7 +7,7 @@ programming and read noise, level-dependent noise, stuck cells, a fixed ADC with
 drop. A hybrid layout is necessary, since all-MLC storage falls to 52--60\% accuracy at 7.5\% programming noise,
 but the choice of components matters as much as their number. Ranking components by singular value
 reaches the same accuracy as a Fisher-information estimate of each component's expected damage, while a
-gradient score loses 2--12 points at high noise; we explain this through the per-row quantisation of the
+gradient score loses 2--12 points at high noise; we explain this through the per-column quantisation of the
 crossbar. With magnitude ranking, 5--10\% of components in SLC match an all-SLC chip at 5\% noise.
 Stuck cells are the one effect placement cannot handle. Because the components of an SVD layer can be
 stored in any order, we map them to physical slots around a tested chip's stuck cells by solving an

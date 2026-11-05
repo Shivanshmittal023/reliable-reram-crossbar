@@ -9,7 +9,7 @@ in SLC, at three noise levels:
 |---|---|
 | `magnitude` | \|σ_r\| (no data needed) |
 | `gradient` | HyFlexPIM-style: Σ over batches of 32 of \|∂L/∂σ_r\|, dropout on |
-| `fisher` | expected loss increase in MLC: Σ over every stored entry of Fisher(entry) × s², where s is the 8-bit scale of the crossbar row holding it |
+| `fisher` | expected loss increase in MLC: Σ over every stored entry of Fisher(entry) × s², where s is the 8-bit scale of the crossbar column holding it |
 
 | Experiment | Swept | Fixed | Chips per point |
 |---|---|---|---|

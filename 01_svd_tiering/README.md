@@ -18,8 +18,9 @@ For each model the script:
    recover the truncation loss.
 4. Saves the factorised model and the singular values, which are the magnitude scores.
 
-On the chip each layer becomes two crossbars, x → [σVᵀ] → [U] → y. Component r is row r of σVᵀ
-together with column r of U.
+On the chip each layer becomes two crossbars, x → [σVᵀ] → [U] → y, with inputs on the rows and outputs
+on the columns. Component r is one column of the first crossbar (holding σ_r·v_r, so its current is that
+component's value) and one row of the second (holding u_r, which spreads the value over the outputs).
 
 ## Run
 Kaggle, GPU T4, Internet on. Paste the script into one cell and run it (about 50 min for both models).

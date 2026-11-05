@@ -12,7 +12,7 @@ and how the simulator was verified. \Cref{tab:model} lists the parameters.
 \toprule
 Parameter & Value \\
 \midrule
-Weight precision & 8-bit signed, one scale per crossbar row \\
+Weight precision & 8-bit signed, one scale per output column \\
 Input precision & 8-bit signed \\
 Cells per weight (per sign) & 7 SLC ($b=1$) or 4 MLC ($b=2$) \\
 Conductance range & $G_{\max}=1$ (normalised), $G_{\max}/G_{\min}=100$ \\
@@ -27,12 +27,14 @@ Wire resistance $r$ & $R_{\text{wire}}$ per segment / $R_{\text{on}}$, $10^{-4}$
 \end{table}
 
 \subsection{Storing a Weight Matrix}
-A matrix $W\in\mathbb R^{m\times n}$ is quantised row by row to signed 8-bit integers,
+A matrix $W\in\mathbb R^{m\times n}$, with $n$ inputs and $m$ outputs, is stored with its inputs on the rows
+(word lines) and its outputs on the columns (bit lines) of the crossbar. It is quantised to signed 8-bit
+integers with one scale per output column,
 \begin{equation}
 q_{ij}=\operatorname{clip}\!\big(\operatorname{round}(w_{ij}/s_i),\,-127,\,127\big),
 \label{eq:quant}
 \end{equation}
-with row scale $s_i=\max_j|w_{ij}|/127$.
+with column scale $s_i=\max_j|w_{ij}|/127$ for output $i$.
 The sign is handled by a differential pair, $q=q^{+}-q^{-}$ with $q^{\pm}=\max(\pm q,0)$, and each
 7-bit magnitude is split into $S=\lceil 7/b\rceil$ base-$L$ digits,
 \begin{equation}

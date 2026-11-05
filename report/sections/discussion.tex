@@ -1,9 +1,9 @@
 \section{Discussion}\label{sec:discussion}
 
 \subsection{Why Magnitude Ranking Works}
-The cell model explains why ranking by singular value matches the Fisher estimate. Each crossbar row is
-quantised with its own scale (\cref{eq:quant}), and the row of component $r$ is $\sigma_r v_r^{\top}$, so its
-scale is $s_r=|\sigma_r|\,\|v_r\|_\infty/127$. A fixed cell noise therefore causes a weight error
+The cell model explains why ranking by singular value matches the Fisher estimate. Each crossbar column is
+quantised with its own scale (\cref{eq:quant}), and the column of component $r$ in the first crossbar holds
+$\sigma_r v_r$, so its scale is $s_r=|\sigma_r|\,\|v_r\|_\infty/127$. A fixed cell noise therefore causes a weight error
 proportional to $|\sigma_r|$: components with large singular values receive the largest absolute errors.
 The Fisher score (\cref{eq:fisher}) multiplies this error size by the loss sensitivity of each stored value.
 That it selects essentially the same components as magnitude suggests that the error size varies across
@@ -20,7 +20,7 @@ differences of about a point or less in favour of the gradient. We find no diffe
 set-up explain this:
 \begin{itemize}
 \item \textbf{Noise model.} Under HyFlexPIM's relative weight noise the error of a weight does not depend on
-the scale of its crossbar row, so the mechanism above is absent. Its noise level is set from a bit error
+the scale of its crossbar column, so the mechanism above is absent. Its noise level is set from a bit error
 rate measured on real MLC cells~\cite{fan2024mlc}, which is itself a per-cell quantity.
 \item \textbf{Noise range.} HyFlexPIM evaluates a single noise level. In our sweeps the rankings differ
 only at $\sigma\geq5\%$.

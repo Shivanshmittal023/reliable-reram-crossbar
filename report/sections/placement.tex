@@ -15,8 +15,9 @@ epochs with AdamW, learning rate $2\times10^{-5}$ with linear decay, and batch s
 $V$ are trained directly, so the factors need not stay orthogonal.
 
 \subsection{Mapping a Factorised Layer onto Two Tiers}
-We call $(\sigma_r,u_r,v_r)$ the $r$-th \emph{component}. On the chip it is stored as one row of a first
-crossbar, $\sigma_r v_r^{\top}$, and one column of a second crossbar, $u_r$. A placement chooses a set
+We call $(\sigma_r,u_r,v_r)$ the $r$-th \emph{component}. On the chip it is stored as one column of a first
+crossbar, holding $\sigma_r v_r$, and one row of a second crossbar, holding $u_r$: the first crossbar turns
+the input into one value per component, and the second spreads each value back over the outputs. A placement chooses a set
 $\mathcal S$ of components for SLC; the rest form the MLC tier. Each tier has its own pair of crossbars
 (\cref{fig:tiers}), and the layer computes
 \begin{equation}
@@ -46,7 +47,7 @@ $\lceil fk\rceil$ components of each layer by a score, so every layer has the sa
 \draw[arr] (p) -- node[above] {$+b$} (y);
 \end{tikzpicture}
 \caption{A factorised layer on the chip. Components in $\mathcal S$ use SLC crossbars, the rest MLC
-crossbars; each component is one row of the first crossbar and one column of the second.}
+crossbars; each component is one column of the first crossbar and one row of the second.}
 \label{fig:tiers}
 \end{figure}
 
@@ -71,12 +72,12 @@ random error $\delta_e$ on stored entry $e$ raises the expected loss by about $\
 E[\delta_e^2]$, where $F_e$ is the Fisher information of that entry~\cite{lecun1990obd}. We estimate $F_e$
 by the empirical Fisher, the sum of squared per-sentence gradients. Under the cell model of
 \cref{sec:model}, a fixed cell noise becomes a weight error proportional to the 8-bit scale of the
-crossbar row holding the entry, so $\mathbb E[\delta_e^2]\propto s^2$. Summing over every entry the
+crossbar column holding the entry, so $\mathbb E[\delta_e^2]\propto s^2$. Summing over every entry the
 component stores gives
 \begin{equation}
 D_r=s_r^2\sum_j F\big(\sigma_r v_{rj}\big)+\sum_i t_i^2\,F\big(u_{ir}\big),
 \label{eq:fisher}
 \end{equation}
-where $s_r=\max_j|\sigma_r v_{rj}|/127$ is the scale of the component's row in the first crossbar and
-$t_i=\max_r|u_{ir}|/127$ that of output row $i$ in the second. The constant factor of the noise variance
+where $s_r=\max_j|\sigma_r v_{rj}|/127$ is the scale of the component's column in the first crossbar and
+$t_i=\max_r|u_{ir}|/127$ that of output column $i$ in the second. The constant factor of the noise variance
 is the same for every component and is omitted.
