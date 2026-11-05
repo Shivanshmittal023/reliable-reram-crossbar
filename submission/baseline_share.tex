@@ -1,0 +1,28 @@
+\noindent Source: \nolinkurl{03_slc_share/results/slc_share/}.
+\begin{table}[H]
+\centering\footnotesize
+\caption{Accuracy (\%) of the HyFlexPIM gradient placement and a random choice by share of components in SLC, mean of 20 chips.}
+\begin{tabular}{@{}lllccccccc@{}}
+\toprule
+Model & $\sigma$ & Placement & 0\% (all MLC) & 5\% & 10\% & 20\% & 30\% & 50\% & 100\% (all SLC) \\
+\midrule
+\multirow{6}{*}{BERT-Base} & 3\% & HyFlexPIM gradient & 82.1 & 88.7 & 90.0 & 90.0 & 89.9 & 89.6 & 89.2 \\
+ &  & Random & 82.1 & 87.0 & 86.9 & 87.6 & 87.3 & 89.0 & 89.2 \\
+\cmidrule(l){2-10}
+ & 5\% & HyFlexPIM gradient & 66.8 & 84.2 & 88.2 & 88.4 & 88.4 & 88.1 & 88.0 \\
+ &  & Random & 66.8 & 72.5 & 73.6 & 76.2 & 77.8 & 83.4 & 88.0 \\
+\cmidrule(l){2-10}
+ & 7.5\% & HyFlexPIM gradient & 53.0 & 67.5 & 79.0 & 81.2 & 82.4 & 83.2 & 85.7 \\
+ &  & Random & 53.0 & 53.6 & 54.2 & 55.2 & 57.5 & 67.3 & 85.7 \\
+\midrule
+\multirow{6}{*}{DistilBERT} & 3\% & HyFlexPIM gradient & 86.0 & 88.4 & 88.5 & 88.6 & 88.8 & 88.7 & 88.7 \\
+ &  & Random & 86.0 & 86.4 & 86.8 & 87.5 & 88.1 & 88.4 & 88.7 \\
+\cmidrule(l){2-10}
+ & 5\% & HyFlexPIM gradient & 74.8 & 87.3 & 87.3 & 87.7 & 88.1 & 87.8 & 88.2 \\
+ &  & Random & 74.8 & 75.4 & 77.4 & 81.9 & 82.3 & 85.7 & 88.2 \\
+\cmidrule(l){2-10}
+ & 7.5\% & HyFlexPIM gradient & 56.9 & 78.0 & 80.7 & 83.1 & 84.8 & 86.0 & 87.4 \\
+ &  & Random & 56.9 & 56.4 & 58.2 & 63.1 & 64.7 & 73.7 & 87.4 \\
+\bottomrule
+\end{tabular}
+\end{table}

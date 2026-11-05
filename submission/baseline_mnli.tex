@@ -1,0 +1,37 @@
+\noindent Source: \nolinkurl{08_mnli/results/{slc_share,fault}/}.
+\begin{table}[H]
+\centering\footnotesize
+\caption{MNLI accuracy (\%) by share of components in SLC at $\sigma=5\%$, mean of 20 chips.}
+\begin{tabular}{@{}lllccccccc@{}}
+\toprule
+Model & $\sigma$ & Placement & 0\% (all MLC) & 5\% & 10\% & 20\% & 30\% & 50\% & 100\% (all SLC) \\
+\midrule
+\multirow{2}{*}{BERT-Base} & 5\% & HyFlexPIM gradient & 33.5 & 59.6 & 63.5 & 63.3 & 66.5 & 64.2 & 61.6 \\
+ &  & Random & 33.5 & 34.1 & 33.9 & 35.9 & 38.9 & 44.9 & 61.6 \\
+\midrule
+\multirow{2}{*}{DistilBERT} & 5\% & HyFlexPIM gradient & 36.8 & 66.6 & 69.0 & 71.3 & 72.1 & 73.6 & 72.0 \\
+ &  & Random & 36.8 & 38.3 & 39.3 & 44.1 & 48.1 & 55.3 & 72.0 \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\begin{table}[H]
+\centering\footnotesize
+\caption{MNLI accuracy (\%) against the share of stuck cells, 20\% SLC, mean of 20 chips.}
+\resizebox{\ifdim\width>\textwidth\textwidth\else\width\fi}{!}{%
+\begin{tabular}{@{}llccccccc@{}}
+\toprule
+Model & Placement & 0\% & 0.1\% & 0.2\% & 0.5\% & 1\% & 2\% & 5\% \\
+\midrule
+\multirow{4}{*}{BERT-Base} & All SLC & 72.2 & 67.2 & 61.9 & 44.4 & 34.5 & 32.4 & 32.4 \\
+ & All MLC & 72.4 & 37.2 & 33.2 & 32.8 & 31.8 & 31.9 & 32.3 \\
+ & Random 20\% & 73.0 & 42.8 & 34.3 & 33.3 & 32.6 & 32.4 & 33.5 \\
+ & HyFlexPIM gradient 20\% & 78.2 & 73.0 & 65.2 & 36.9 & 32.0 & 31.5 & 32.4 \\
+\midrule
+\multirow{4}{*}{DistilBERT} & All SLC & 76.9 & 74.4 & 71.3 & 60.4 & 42.1 & 34.1 & 34.2 \\
+ & All MLC & 76.8 & 44.5 & 34.0 & 33.6 & 33.7 & 34.1 & 33.0 \\
+ & Random 20\% & 77.7 & 51.6 & 35.3 & 32.9 & 33.2 & 33.7 & 33.4 \\
+ & HyFlexPIM gradient 20\% & 79.6 & 76.0 & 71.4 & 44.5 & 33.9 & 32.9 & 33.9 \\
+\bottomrule
+\end{tabular}}
+\end{table}

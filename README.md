@@ -94,11 +94,12 @@ Model weights (`*.pt`) and Kaggle archives (`*.zip`) are not stored; regenerate 
 |---|---|
 | `submission/final_report.pdf` | final report, IEEE two-column, 10 pages (LaTeX source on Overleaf) |
 | `submission/Reliable_Hybrid_SLC_MLC_ReRAM_Crossbars_for_Transformers.pptx` | presentation slides |
-| `submission/baseline_results.pdf` | baseline results: HyFlexPIM placement, all-SLC, all-MLC and random, with graphs and tables |
-| `submission/contribution_results.pdf` | results of our contributions with analysis and comparison against the baseline, plus an appendix with the complete results of every experiment |
+| `submission/baseline_results.pdf` | every baseline result: HyFlexPIM placement, all-SLC, all-MLC and random, with graphs and tables |
+| `submission/contribution_results.pdf` | results of our five contributions, with analysis and comparison against the baseline, plus an appendix with the complete results of our methods |
 
 The two results documents are built from their LaTeX sources in `submission/` (plot data in
-`submission/data/`, the appendix tables in `complete_results.tex`):
+`submission/data/`; the generated tables in `baseline_*.tex` for the baseline document and in
+`complete_results.tex` for the contribution appendix):
 ```
 cd submission
 pdflatex baseline_results && pdflatex baseline_results

@@ -1,0 +1,21 @@
+\noindent Source: \nolinkurl{02_programming_noise/results/noise/}.
+\begin{table}[H]
+\centering\footnotesize
+\caption{Accuracy (\%) against programming noise $\sigma$, mean of 5 chips.}
+\resizebox{\ifdim\width>\textwidth\textwidth\else\width\fi}{!}{%
+\begin{tabular}{@{}llccccccc@{}}
+\toprule
+Model & Placement & 0\% & 1\% & 2\% & 3\% & 5\% & 7.5\% & 10\% \\
+\midrule
+\multirow{4}{*}{BERT-Base} & All SLC & 89.9 & 89.6 & 89.3 & 89.1 & 87.8 & 85.9 & 79.7 \\
+ & All MLC & 90.0 & 89.3 & 87.3 & 83.9 & 66.3 & 52.2 & 51.3 \\
+ & Random 20\% & 90.0 & 90.1 & 89.9 & 87.7 & 78.8 & 58.8 & 49.1 \\
+ & HyFlexPIM gradient 20\% & 89.8 & 90.4 & 90.2 & 90.0 & 88.0 & 79.3 & 67.7 \\
+\midrule
+\multirow{4}{*}{DistilBERT} & All SLC & 89.0 & 88.7 & 88.8 & 88.6 & 88.5 & 87.5 & 85.9 \\
+ & All MLC & 89.1 & 88.4 & 87.9 & 86.1 & 74.5 & 60.4 & 56.0 \\
+ & Random 20\% & 88.6 & 88.7 & 88.7 & 87.8 & 82.8 & 61.8 & 52.4 \\
+ & HyFlexPIM gradient 20\% & 89.8 & 88.5 & 88.9 & 88.7 & 87.7 & 83.4 & 69.8 \\
+\bottomrule
+\end{tabular}}
+\end{table}

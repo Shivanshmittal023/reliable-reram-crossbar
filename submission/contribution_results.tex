@@ -35,6 +35,7 @@
   pnf/.style={cgrad,thick,mark=triangle*},
   ptier/.style={ctier,very thick,mark=*}}
 
+\setlength{\emergencystretch}{2em}
 \begin{document}
 
 \begin{center}
@@ -44,37 +45,82 @@ Shivansh Mittal, Sarvesh Joshi, Thumati Naveen Chandra Chowdary, Aryan Chakravor
 CS5290 Memory-Centric Computer Architecture, Indian Institute of Technology Guwahati
 \end{center}
 
-\section*{Step 1: What is compared}
-The baseline is the HyFlexPIM hybrid (SVD components ranked by the loss gradient, 20\% in SLC) with the
-all-SLC and all-MLC chips as references; it is documented in the separate \emph{Baseline Results}. Our four
-contributions are evaluated with the same cell-level simulator on BERT-Base and DistilBERT (SST-2) and, for
-contributions 1 and 2, on MNLI:
-\begin{enumerate}
-\item \textbf{Magnitude placement}: rank components by singular value $|\sigma_r|$ instead of the gradient.
-\item \textbf{Fault-aware mapping}: after a chip is tested, place each component in the slot whose stuck
-cells hurt it least (Fisher-weighted Hungarian assignment), using the free order of SVD components.
-\item \textbf{Tier-aware training}: fine-tune on a freshly simulated chip at every step, each component under
-the errors of the tier (SLC or MLC) it will be stored in.
-\item \textbf{Generalisation to MNLI} of contributions 1 and 2.
-\end{enumerate}
-All placements, mappings and trained models are evaluated on the same simulated chips (same seeds), so
-differences within an experiment are paired and given as mean $\pm$ standard error over chips. The hybrid chip
-uses 9.2 cells per weight, 34\% fewer than all-SLC (14).
+\section*{Overview}
+The baseline is the HyFlexPIM hybrid (SVD components ranked by the loss gradient, 20\% in SLC), with all-SLC and
+all-MLC chips as references (see \emph{Baseline Results}). We contribute five things, in the order of the
+report: (1) a verified cell-level crossbar model and the finding that stuck cells are the limiting effect;
+(2) a Fisher-information estimate of each component's damage, which shows that ranking by singular value
+(magnitude) is close to the best placement; (3) fault-aware mapping; (4) tier-aware training; (5) evidence
+that (2) and (3) hold on MNLI. Every method is tested on the same simulated chips as the baseline, so
+differences within an experiment are paired (mean $\pm$ standard error, in accuracy points unless stated). The
+hybrid chip uses 9.2 cells per weight, 34\% fewer than all-SLC.
 
-\section*{Step 2: The baseline's gaps}
-The baseline document shows three gaps, which the contributions address in turn: (i) the HyFlexPIM gradient
-placement falls behind all-SLC at high programming noise; (ii) stuck cells break every baseline, all-MLC at
-0.1\% and the HyFlexPIM hybrid near chance at 1\%; (iii) even all-SLC loses 14--27 points at 1\% stuck cells.
+\section{Contribution 1: cell-level crossbar model and characterisation}
+\textbf{What.} A simulator that stores every weight as a real crossbar would: 8-bit integers with one scale
+per output column, a differential cell pair for the sign, and 7 SLC or 4 MLC bit slices per sign. Errors are
+applied to every cell: programming noise, read noise, level-dependent MLC noise, stuck cells in three spatial
+patterns, IR drop, and a fixed ADC with bit-serial inputs. Self-tests show that, with all errors off, it
+equals exact 8-bit integer arithmetic (relative error $<10^{-4}$), and an error-free chip stays within about one
+point of the digital model. HyFlexPIM instead perturbs whole weights, $\tilde W=W\odot(1+\eta)$, at a single
+noise level, so these effects cannot be studied there.
 
-\section*{Step 3: Contribution 1, magnitude placement}
+\begin{table}[H]
+\centering\small
+\caption{Our placements under each non-ideality, one at a time, with 20\% SLC: accuracy (\%) of magnitude and
+Fisher, and the difference of magnitude to the HyFlexPIM gradient hybrid and to all-SLC on the same chips
+(baseline values in the \emph{Baseline Results}; complete sweeps in Appendix A.4).}\label{t:chip}
+\resizebox{\textwidth}{!}{%
+\begin{tabular}{@{}l cccc c cccc@{}}
+\toprule
+& \multicolumn{4}{c}{BERT-Base} && \multicolumn{4}{c}{DistilBERT} \\
+\cmidrule{2-5}\cmidrule{7-10}
+Condition & Magnitude & Fisher & vs HyFlexPIM & vs all-SLC && Magnitude & Fisher & vs HyFlexPIM & vs all-SLC \\
+\midrule
+No errors & 90.6 & 89.6 & +0.3 & +0.9 && 88.8 & 89.1 & +0.1 & +0.2 \\
+\midrule
+Read noise $\sigma_r=2\%$ & 90.1 & 89.7 & +0.3 & +1.1 && 88.4 & 88.2 & +0.3 & +0.1 \\
+Read noise $\sigma_r=5\%$ & 82.5 & 82.7 & +5.8 & +2.5 && 83.3 & 83.2 & +2.9 & -1.2 \\
+$\sigma=5\%$, middle MLC levels $\times2$ & 88.4 & 88.4 & +0.5 & +0.2 && 88.0 & 87.9 & +1.0 & -0.4 \\
+ADC 6 bits (bit-serial) & 90.0 & 90.5 & +0.5 & +0.7 && 89.7 & 88.8 & +1.3 & +1.7 \\
+ADC 5 bits (bit-serial) & 51.1 & 51.6 & -1.8 & +0.0 && 70.6 & 70.9 & -6.7 & -0.3 \\
+IR drop $r=3\times10^{-4}$ & 90.4 & 91.1 & -0.1 & +1.5 && 89.7 & 89.3 & +0.1 & +0.2 \\
+IR drop $r=3\times10^{-3}$ & 76.8 & 72.8 & +0.5 & +18.3 && 73.4 & 72.6 & -1.3 & +3.3 \\
+\midrule
+1\% stuck cells, scattered & 56.4 & 55.6 & +3.8 & -5.0 && 62.5 & 60.0 & +7.5 & -11.7 \\
+1\% stuck cells, $3\times3$ clusters & 54.0 & 53.1 & +2.5 & -12.7 && 56.1 & 57.3 & -0.3 & -24.1 \\
+1\% stuck cells, bit lines & 50.4 & 52.2 & -0.6 & -6.6 && 54.7 & 56.3 & +2.5 & -16.5 \\
+\bottomrule
+\end{tabular}}
+\end{table}
+
+\noindent\textbf{Takeaways.}
+\begin{itemize}
+\item Under read noise, level-dependent noise, a 6-bit ADC and moderate IR drop, the magnitude and Fisher
+hybrids stay within about a point of all-SLC or above it, and magnitude is 2.9--5.8 points ahead of the
+HyFlexPIM hybrid at 5\% read noise. A 6-bit ADC suffices for the hybrid.
+\item \textbf{Stuck cells are the limiting effect}: at 1\% stuck cells every hybrid placement loses 26--40 points
+against its error-free accuracy, for every fault pattern, and even all-SLC loses 8--33. Contributions 3 and 4
+address this.
+\end{itemize}
+
+\section{Contribution 2: Fisher damage estimate and magnitude placement}
+\textbf{What.} The expected rise in loss if component $r$ is stored in MLC, summed over every number it stores
+(its column $\sigma_r v_r$ in the first crossbar and its row $u_r$ in the second):
+\[
+D_r=s_r^2\sum_j F(\sigma_r v_{rj})+\sum_i t_i^2F(u_{ir}),
+\]
+where $F$ is the empirical Fisher information (loss sensitivity) of each stored number and $s_r$, $t_i$ are the
+8-bit column scales that turn a fixed cell noise into a weight error. $D_r$ is the principled estimate of what
+placement should minimise. We compare it with the HyFlexPIM gradient and with plain magnitude $|\sigma_r|$.
+
 \begin{figure}[H]
 \centering
 \begin{tikzpicture}
 \begin{axis}[accplot,title={BERT-Base},xlabel={Programming noise $\sigma$ (\% of $G_{\max}$)},ylabel={Accuracy (\%)},
   xtick={0,1,2,3,5,7.5,10},ymin=60,ymax=92,legend pos=south west]
 \addplot[pslc] table[x=x,y=all_slc]{data/noise_bert.dat}; \addlegendentry{All SLC}
-\addplot[pmag] table[x=x,y=magnitude]{data/noise_bert.dat}; \addlegendentry{Magnitude (ours)}
-\addplot[pfis] table[x=x,y=fisher]{data/noise_bert.dat}; \addlegendentry{Fisher (ours)}
+\addplot[pmag] table[x=x,y=magnitude]{data/noise_bert.dat}; \addlegendentry{Magnitude}
+\addplot[pfis] table[x=x,y=fisher]{data/noise_bert.dat}; \addlegendentry{Fisher}
 \addplot[pgrad] table[x=x,y=gradient]{data/noise_bert.dat}; \addlegendentry{HyFlexPIM gradient}
 \end{axis}
 \end{tikzpicture}\hfill
@@ -95,8 +141,8 @@ placement falls behind all-SLC at high programming noise; (ii) stuck cells break
 \begin{tikzpicture}
 \begin{axis}[accplot,title={BERT-Base, $\sigma=7.5\%$},xlabel={Share of components in SLC (\%)},ylabel={Accuracy (\%)},
   xtick={0,10,20,30,50,100},ymin=50,ymax=90,legend pos=south east]
-\addplot[pmag] table[x=x,y=magnitude]{data/share_bert_075.dat}; \addlegendentry{Magnitude (ours)}
-\addplot[pfis] table[x=x,y=fisher]{data/share_bert_075.dat}; \addlegendentry{Fisher (ours)}
+\addplot[pmag] table[x=x,y=magnitude]{data/share_bert_075.dat}; \addlegendentry{Magnitude}
+\addplot[pfis] table[x=x,y=fisher]{data/share_bert_075.dat}; \addlegendentry{Fisher}
 \addplot[pgrad] table[x=x,y=gradient]{data/share_bert_075.dat}; \addlegendentry{HyFlexPIM gradient}
 \end{axis}
 \end{tikzpicture}\hfill
@@ -137,29 +183,35 @@ resulting cells per weight relative to all-SLC.}\label{t:need}
 \toprule
 Model & Placement & $\sigma=3\%$ & $\sigma=5\%$ & $\sigma=7.5\%$ \\
 \midrule
-\multirow{2}{*}{BERT-Base} & Magnitude (ours) & \gain{5\%} (59\% of cells) & \gain{5\%} (59\%) & \gain{30\%} (70\%) \\
+\multirow{2}{*}{BERT-Base} & Magnitude & \gain{5\%} (59\% of cells) & \gain{5\%} (59\%) & \gain{30\%} (70\%) \\
  & HyFlexPIM gradient & 5\% (59\%) & 10\% (61\%) & not reached at 50\% \\
 \midrule
-\multirow{2}{*}{DistilBERT} & Magnitude (ours) & 5\% (59\%) & \gain{10\%} (61\%) & \gain{50\%} (79\%) \\
+\multirow{2}{*}{DistilBERT} & Magnitude & 5\% (59\%) & \gain{10\%} (61\%) & \gain{50\%} (79\%) \\
  & HyFlexPIM gradient & 5\% (59\%) & 20\% (66\%) & not reached at 50\% \\
 \bottomrule
 \end{tabular}
 \end{table}
 
-\noindent\textbf{Analysis.}
+\noindent\textbf{Takeaways.}
 \begin{itemize}
-\item Magnitude and Fisher are statistically indistinguishable at every noise level, while the HyFlexPIM
-gradient falls further behind as noise grows (Table~\ref{t:paired}); at 5\% SLC and $\sigma=7.5\%$ the gap on
-BERT-Base is $11.9\pm1.7$ points.
-\item \textbf{Why.} Each crossbar column has its own 8-bit scale, and the column of component $r$ holds
-$\sigma_r v_r$, so the weight error a fixed cell noise causes is proportional to $|\sigma_r|$. The Fisher score
-multiplies this error size by the loss sensitivity; that it selects the same components as magnitude
-suggests the error size dominates. The gradient measures sensitivity alone and misses it.
-\item \textbf{Cost.} Magnitude needs half the SLC share of the gradient at $\sigma=5\%$ and is the only score
-that reaches all-SLC at $\sigma=7.5\%$ (Table~\ref{t:need}). It needs no data or gradients.
+\item \textbf{Fisher and magnitude choose the same components}: rank correlation 0.96--0.97 on MNLI, and a paired
+difference within about one sentence in 872 at every noise level on SST-2 (Table~\ref{t:paired}).
+\item \textbf{Both beat the HyFlexPIM gradient at high noise}: by $+2.8\pm0.8$ and $+2.2\pm0.3$ points at 20\% SLC and
+$\sigma=7.5\%$, and by $+11.9\pm1.7$ points on BERT-Base at 5\% SLC.
+\item \textbf{Why}: the column of component $r$ holds $\sigma_r v_r$, so its scale, and the weight error a cell
+noise causes, is proportional to $|\sigma_r|$. Fisher multiplies this error size by the sensitivity; that it
+agrees with magnitude suggests the error size dominates. The gradient ignores the error size.
+\item \textbf{Practical result}: magnitude needs no data or gradients and half the SLC share of the gradient at
+$\sigma=5\%$ (Table~\ref{t:need}).
 \end{itemize}
 
-\section*{Step 4: Contribution 2, fault-aware mapping}
+\section{Contribution 3: fault-aware mapping}
+\textbf{What.} The components of an SVD layer can be stored in any order. After a chip is tested, each
+component is placed in the slot whose stuck cells hurt it least: the cost of component $r$ in slot $s$ is the
+Fisher-weighted squared error that slot's stuck cells would cause, and the Hungarian algorithm finds the best
+assignment. It needs no extra hardware or retraining. Joint mapping, which also chooses the tier per chip, is
+tested as an extension.
+
 \begin{figure}[H]
 \centering
 \begin{tikzpicture}
@@ -207,21 +259,23 @@ tier-and-slot mapping over fault-aware mapping, in accuracy points (mean $\pm$ s
 \end{tabular}}
 \end{table}
 
-\noindent\textbf{Analysis.}
+\noindent\textbf{Takeaways.}
 \begin{itemize}
-\item \textbf{Mapping helps in every setting} (Table~\ref{t:mapgain}), with or without programming noise.
-Gains are largest for clustered and line faults, where moving important components away from a damaged
-region matters most, and chips become more alike: at 0.5\% stuck cells the standard deviation over
-BERT-Base chips falls from 6.7 to 1.2 points.
-\item \textbf{Choosing the tier per chip does not help}: joint mapping wins and loses by similar margins,
-mostly within two standard errors. Its second-order cost underrates the large error of a stuck high-order
-cell, so the benefit comes from the choice of slot.
-\item \textbf{Mapping alone is not enough above 0.5\% stuck cells} (Fig.~\ref{f:map}): the mapped hybrid falls
-behind all-SLC with mapping, because MLC cells hold two bits and the SLC tier offers few slots. Step 5
-closes this gap.
+\item \textbf{Mapping helps in every setting}, by 1.3--13.9 points; at 0.5\% stuck cells BERT-Base rises from
+76.6\% to 85.6\%, and the spread over chips falls from 6.7 to 1.2 points. Gains are largest for clusters and
+broken lines.
+\item \textbf{Joint mapping adds nothing reliable}: its second-order cost underrates the large error of a stuck
+high-order cell, so the benefit comes from the choice of slot, not of tier.
+\item \textbf{Mapping alone falls behind all-SLC from 0.5\% stuck cells}, which contribution 4 closes.
 \end{itemize}
 
-\section*{Step 5: Contribution 3, tier-aware training}
+\section{Contribution 4: tier-aware training}
+\textbf{What.} Fine-tuning for 2 epochs on a freshly simulated chip at every step (5\% noise, 0.5\% stuck cells);
+the loss is measured on the damaged weights and the update applied to the clean ones (straight-through).
+Tier-aware training simulates the real hybrid layout, so each component trains under the errors of its own
+tier; the tier-unaware variants put every component on SLC cells, with noise only or with noise and stuck
+cells.
+
 \begin{figure}[H]
 \centering
 \begin{tikzpicture}
@@ -282,23 +336,16 @@ Tier-aware training & 89.4 & 89.3 & 88.3 & 87.8 & 88.4 & \textbf{88.0} \\
 \end{tabular}
 \end{table}
 
-\noindent\textbf{Analysis.}
+\noindent\textbf{Takeaways.}
 \begin{itemize}
-\item \textbf{Stuck cells must be injected during training}: noise-only training barely moves the bars of
-Fig.~\ref{f:bar}, while adding stuck cells gives the largest single step.
-\item \textbf{Knowing the tiers helps where errors are dense}: tier-aware training beats tier-unaware training
-at 1\% stuck cells, with programming noise and for clustered faults, ties at 0.5\%, and is slightly behind at
-0.2\%, the cost of training on the harsher chip (Table~\ref{t:trnoise}, $\sigma=0$).
-\item \textbf{Training and mapping are complementary}: training makes the weights tolerate errors, mapping
-keeps sensitive values away from known faults; tier-aware training alone already exceeds mapping alone, and
-mapping still adds on top.
-\item \textbf{The gap to all-SLC closes} (last block of Table~\ref{t:trpaired}): with tier-aware training and
-mapping the hybrid beats all-SLC with mapping on BERT-Base and matches it on DistilBERT up to 1\% stuck cells,
-with 34\% fewer cells. At 2\% every configuration fails.
-\item Training also improves robustness to programming noise alone (Table~\ref{t:trnoise}).
+\item \textbf{Stuck cells must be injected}: noise-only training gives no consistent gain under stuck cells.
+\item \textbf{Knowing the tiers helps where errors are dense}: tier-aware training beats tier-unaware training at
+1\% stuck cells and with noise, and is slightly behind at 0.2\% (cost 0.3 / 1.3 points on an error-free chip).
+\item \textbf{Training and mapping are complementary}, and together \textbf{close the gap to all-SLC}: the hybrid
+matches or beats all-SLC with mapping up to 1\% scattered stuck cells, with 34\% fewer cells.
 \end{itemize}
 
-\section*{Step 6: Contribution 4, generalisation to MNLI}
+\section{Contribution 5: generalisation to MNLI}
 \begin{table}[H]
 \centering\small
 \caption{MNLI (three classes, chance 33.3\%): paired results, in accuracy points (mean $\pm$ s.e.). Raw
@@ -313,12 +360,12 @@ Fault-aware mapping gain at 0.5\% stuck cells (10 chips) & $+20.1\pm3.0$ & $+18.
 \bottomrule
 \end{tabular}
 \end{table}
-\noindent Both contributions transfer to the harder task: magnitude again matches Fisher and beats the
-gradient on BERT-Base, and mapping recovers about 20 points at 0.5\% stuck cells. MNLI also exposed a
-simulator limitation: the single 8-bit scale of the vector between a tier's two crossbars costs up to 11
-points even on an error-free chip, so only placements and mappings with the same tier sizes are compared.
 
-\section*{Step 7: Overall comparison with the baseline}
+\noindent Magnitude again matches Fisher and beats the gradient on BERT-Base, and fault-aware mapping recovers
+about 20 points at 0.5\% stuck cells. MNLI also exposed that one 8-bit scale for the vector between a tier's
+two crossbars costs up to 11 points even without errors, so only placements with equal tier sizes are compared.
+
+\section{Overall comparison with the baseline}
 \begin{table}[H]
 \centering\small
 \caption{Accuracy (\%) of the baseline and of our methods, BERT-Base / DistilBERT. All hybrids keep 20\% of
@@ -345,18 +392,10 @@ $\sigma=7.5\%$, 5\% SLC & 67.5 / 78.0 & \gain{79.4 / 80.2} & -- & -- & 85.7 / 87
 \raggedright\footnotesize $^{\dagger}$all-SLC without mapping (mapping has no effect without stuck cells).
 \end{table}
 
-\noindent\textbf{Findings.}
-\begin{itemize}
-\item \textbf{Placement}: magnitude ranking matches the Fisher estimate of expected damage and beats the
-HyFlexPIM gradient at high noise, by $+2.8\pm0.8$ (BERT-Base) and $+2.2\pm0.3$ points (DistilBERT) at 20\% SLC
-and $+11.9\pm1.7$ points at 5\% SLC on BERT-Base, on the same chips.
-\item \textbf{Fault-aware mapping}: a zero-hardware reordering that improves the hybrid in every stuck-cell
-setting, by up to 13.9 points; choosing the tier per chip adds nothing.
-\item \textbf{Tier-aware training}: together with mapping, raises the hybrid at 1\% stuck cells from 52.8\% and
-55.4\% (HyFlexPIM baseline) to 82.9\% and 84.7\%, matching or beating an all-SLC chip with mapping up to 1\%
-scattered stuck cells while using 34\% fewer cells.
-\item \textbf{Generality}: the placement and mapping results hold on MNLI.
-\end{itemize}
+\noindent\textbf{Summary.} Against the HyFlexPIM baseline, magnitude placement (justified by the Fisher estimate)
+removes the high-noise loss, fault-aware mapping recovers most of the stuck-cell loss at no hardware cost, and
+tier-aware training lifts the hybrid at 1\% stuck cells from near chance to the level of an all-SLC chip, with a
+third fewer cells; the placement and mapping results also hold on MNLI.
 
 \clearpage
 \input{complete_results}
