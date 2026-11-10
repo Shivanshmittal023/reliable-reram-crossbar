@@ -1,0 +1,15 @@
+\section{Conclusion and Future Work}\label{sec:conclusion}
+
+A hybrid SLC/MLC layout is necessary for SVD-factorised transformers on ReRAM, and which components are
+protected matters as much as how many. Ranking by singular value is close to the best placement under a
+cell-level error model and needs no data; a small SLC share then suffices at moderate noise, and the hybrid
+stays robust to read noise, level-dependent noise, a 6-bit ADC and moderate IR drop. Stuck cells are the
+exception. Mapping components to slots around a tested chip's faults recovers most of the loss at no
+hardware cost, and tier-aware training closes the remaining gap to an all-SLC chip up to 1\% scattered stuck
+cells, with a third fewer cells.
+
+Future work: energy, area and latency measured by emulating the tiers and their periphery on an FPGA board
+(unavailable to us during this project) or with NeuroSim~\cite{peng2019neurosim}; all error sources combined
+on one chip; fine-tuning and training repeated over several seeds, which our free-tier GPU budget did not
+allow; finer activation scales; robustness to fault-injection attacks such as the bit-flip
+attack~\cite{rakin2019bfa}; and further tasks and models.

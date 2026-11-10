@@ -1,0 +1,69 @@
+\section{Fault-Aware Mapping}\label{sec:mapping}
+
+Placement decides which tier each component uses, but not which physical position in that tier. With stuck
+cells this matters: a stuck high-order cell shifts its weight by a large fixed amount, so it does far
+more harm under an important component than under an unimportant one. This section uses a property of
+the SVD layer to choose the position of every component around a chip's stuck cells.
+
+\subsection{Free Order of Components}
+For any permutation matrix $P$,
+\begin{equation}
+(UP)\big(P^{\top}\Sigma V^{\top}\big)=U\Sigma V^{\top},
+\label{eq:perm}
+\end{equation}
+so the $k$ components of a layer can be stored in any order without changing its output. We call the
+$j$-th position of a tier a \emph{slot}: column $j$ of the tier's first crossbar together with row $j$ of
+its second crossbar. Moving a component to another slot moves its column $\sigma_r v_r$ and its
+row $u_r$ together. The order is fixed when the chip is programmed, so a chosen mapping needs no
+permutation hardware and no change to the neighbouring layers.
+
+\subsection{Known Stuck Cells}
+Stuck cells can be located after fabrication by writing and reading back every cell. We assume this test
+has been done, so each chip's stuck-cell map is known before its weights are programmed; in simulation it
+is the chip's drawn fault map. Programming noise is random and not known in advance, so the mapping
+targets stuck cells only.
+
+\subsection{Cost of a Component in a Slot}
+Placing component $r$ in slot $s$ costs the expected rise in loss caused by the stuck cells of that slot.
+A cell of slice $t$ stuck at conductance $G^{*}$, under an entry whose digit should be $d$, changes the
+entry by
+\begin{equation}
+\delta=\pm\,s\,L^{t}\,\frac{G^{*}-(G_{\min}+d\,\Delta)}{\Delta},
+\label{eq:stuckerr}
+\end{equation}
+with $s$ the 8-bit scale of the crossbar column holding the entry and the sign set by the side of the
+differential pair. Weighting each error by the Fisher information of its entry, as in \cref{eq:fisher},
+gives
+\begin{equation}
+C_{rs}=\sum_{\text{stuck cells }c\text{ in slot }s}F_{e(r,c)}\,\delta_{r,c}^{2},
+\label{eq:cost}
+\end{equation}
+where $e(r,c)$ is the entry of component $r$ that would occupy cell $c$. The first-crossbar column moves with
+its component and keeps its own scale $s_r$, while the scales $t_i$ of the second crossbar depend only on
+which components share the tier, so every term of $C_{rs}$ is known before programming. The sum treats two
+stuck cells under the same entry as independent, which slightly misestimates their joint error; it is
+exact when each entry has at most one stuck cell.
+
+\subsection{Assignment}
+Within each tier, the mapping is the permutation $\pi$ that minimises $\sum_r C_{r\pi(r)}$, a linear
+assignment problem. We solve it exactly with the Hungarian method~\cite{kuhn1955hungarian} as implemented
+in SciPy~\cite{virtanen2020scipy}, separately for every layer and tier; cost matrices have at most
+$614\times614$ entries (all components of a feed-forward layer). We apply it to the
+magnitude hybrid, keeping its SLC set and choosing the slot of each component within its tier; this is
+our \emph{fault-aware mapping}. As a high-cost reference, we apply the same mapping to an all-SLC chip. A self-test before every run
+checks that the predicted cost matches the measured error of a programmed crossbar within 10\%.
+
+\subsection{Joint Tier and Slot Mapping}
+Fault-aware mapping keeps the SLC set fixed. A natural extension chooses tier and slot together for each
+chip: an important component might be better off in a clean MLC slot than in a badly damaged SLC slot. We
+form one assignment over all $k$ components and all $k$ slots of a layer, with $\lceil fk\rceil$ SLC slots,
+which enforces the SLC budget. The cost of a slot adds the expected damage from programming noise in its
+tier to \cref{eq:cost},
+\begin{equation}
+C^{\text{joint}}_{rs}=C_{rs}+\kappa_{\tau(s)}\Big(s_r^2\sum_j F\big(\sigma_r v_{rj}\big)+\sum_i t_i^2F\big(u_{ir}\big)\Big),
+\label{eq:c1}
+\end{equation}
+where $\kappa_\tau=2(\sigma_d/\Delta_\tau)^2\sum_t L_\tau^{2t}$ is the noise variance of a weight in tier
+$\tau$, in units of its 8-bit step. The second term is the Fisher score $D_r$ of \cref{eq:fisher} scaled
+by the tier. We use $\sigma_d=\max(\sigma,2\%)$, so that on a chip with stuck cells but no programming noise
+the tier choice still reflects the higher fragility of MLC.

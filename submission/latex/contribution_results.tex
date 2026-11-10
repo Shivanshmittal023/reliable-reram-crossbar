@@ -365,6 +365,54 @@ Fault-aware mapping gain at 0.5\% stuck cells (10 chips) & $+20.1\pm3.0$ & $+18.
 about 20 points at 0.5\% stuck cells. MNLI also exposed that one 8-bit scale for the vector between a tier's
 two crossbars costs up to 11 points even without errors, so only placements with equal tier sizes are compared.
 
+\section{First-order ADC cost estimate}
+Savings elsewhere in this document are counted in memory cells. ADCs dominate the power of crossbar
+accelerators (58\% of tile power and 31\% of tile area in ISAAC~\cite{isaac}), so we also estimate the ADC
+energy of each configuration analytically. We count the conversions of Eq.~(5) of the report: one per output
+column, weight slice, 128-row tile and input bit (7 magnitude bits), with the two cells of a differential pair
+subtracted before the ADC. Each SVD layer is counted as its two crossbars per tier, so the tiling of the
+second crossbar's $k_\tau$ rows is included. The energy per conversion comes from ISAAC's 8-bit SAR ADC at
+32\,nm, 1.2\,GS/s, eight ADCs per array group at 16\,mW~\cite{isaac}, i.e.\ 1.67\,pJ per conversion; ISAAC
+takes these values from Murmann's ADC survey~\cite{murmann}. ISAAC scales an ADC to other resolutions by
+scaling its reference buffer, memory and clock linearly with the number of bits and its capacitive DAC
+exponentially~\cite{isaac}. We do not know how the energy splits between these parts, so we report both
+bounds: linear ($\propto b$) and exponential ($\propto 2^b$) scaling. The resolution of each configuration is
+the smallest that kept it within about a point of the ideal ADC (Section~1): 6 bits for all-SLC and the
+hybrid, 7 bits for all-MLC.
+
+\begin{table}[H]
+\centering\small
+\caption{ADC conversions and ADC energy per token for the encoder linear layers. Energy range: linear to
+exponential scaling of the ADC with resolution; the 8-bit all-SLC chip is the reference.}
+\begin{tabular}{@{}llcccc@{}}
+\toprule
+Model & Configuration & ADC bits & Conversions per token & ADC energy per token ($\mu$J) & Relative energy \\
+\midrule
+\multirow{4}{*}{BERT-Base} & All SLC & 8 & 33.0\,M & 54.9 & 1 \\
+ & All SLC & 6 & 33.0\,M & 13.7--41.2 & 0.25--0.75 \\
+ & All MLC & 7 & 18.8\,M & 15.7--27.5 & 0.29--0.50 \\
+ & Hybrid, 20\% SLC & 6 & 23.0\,M & \phantom{0}9.6--28.8 & 0.17--0.52 \\
+\midrule
+\multirow{4}{*}{DistilBERT} & All SLC & 8 & 16.5\,M & 27.5 & 1 \\
+ & All SLC & 6 & 16.5\,M & \phantom{0}6.9--20.6 & 0.25--0.75 \\
+ & All MLC & 7 & \phantom{0}9.4\,M & \phantom{0}7.8--13.7 & 0.29--0.50 \\
+ & Hybrid, 20\% SLC & 6 & 11.5\,M & \phantom{0}4.8--14.4 & 0.17--0.52 \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\begin{itemize}
+\item At the same 6-bit resolution the hybrid needs 30\% fewer conversions, and so 30\% less ADC energy, than
+all-SLC. The saving is a little below the 34\% saving in cells because the hybrid's MLC tier splits the second
+crossbar into more 128-row tiles.
+\item All-MLC needs fewer conversions still, but needs a 7-bit ADC, which costs 1.2--2$\times$ more energy per
+conversion than 6 bits, and it fails under programming noise and stuck cells.
+\item The estimate covers ADC conversions only. It leaves out DACs, sample-and-hold, shift-and-add and the
+digital layers, assumes one ADC energy for every conversion, and uses a 32\,nm design point. It ranks the
+configurations; it is not a measurement. ADC area scales in the same way per ADC, but the number of ADCs
+depends on the throughput target, which we do not fix.
+\end{itemize}
+
 \section{Overall comparison with the baseline}
 \begin{table}[H]
 \centering\small
@@ -395,7 +443,16 @@ $\sigma=7.5\%$, 5\% SLC & 67.5 / 78.0 & \gain{79.4 / 80.2} & -- & -- & 85.7 / 87
 \noindent\textbf{Summary.} Against the HyFlexPIM baseline, magnitude placement (justified by the Fisher estimate)
 removes the high-noise loss, fault-aware mapping recovers most of the stuck-cell loss at no hardware cost, and
 tier-aware training lifts the hybrid at 1\% stuck cells from near chance to the level of an all-SLC chip, with a
-third fewer cells; the placement and mapping results also hold on MNLI.
+third fewer cells; the placement and mapping results also hold on MNLI. At the same ADC resolution the hybrid
+also needs about 30\% less ADC energy than all-SLC.
+
+\begin{thebibliography}{9}
+\bibitem{isaac} A.~Shafiee, A.~Nag, N.~Muralimanohar, R.~Balasubramonian, J.~P. Strachan, M.~Hu, R.~S. Williams,
+and V.~Srikumar, ``ISAAC: A convolutional neural network accelerator with in-situ analog arithmetic in
+crossbars,'' in \emph{Proc. 43rd Annu. Int. Symp. Comput. Archit. (ISCA)}, 2016, pp.~14--26.
+\bibitem{murmann} B.~Murmann, ``ADC performance survey 1997--2015 (ISSCC \& VLSI Symposium),'' 2015. [Online].
+Available: \url{http://web.stanford.edu/~murmann/adcsurvey.html}
+\end{thebibliography}
 
 \clearpage
 \input{complete_results}

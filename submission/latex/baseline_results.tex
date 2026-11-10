@@ -165,12 +165,18 @@ harmful than noise, and accuracy varies widely between chips depending on where 
 \end{itemize}
 
 \section{Other non-idealities}
-Each effect is applied on its own, with the others disabled.
+Each effect is applied on its own, with the others disabled. These experiments use evaluation batches of 64
+sentences instead of 128. Crossbar inputs share one 8-bit scale per batch, so the error-free accuracies here
+(0\%, ideal ADC, no IR drop) differ by up to about a point from those of the other sections; within each table
+every placement uses the same batches.
 \input{baseline_other}
 \begin{itemize}
 \item Read noise and level-dependent noise behave like programming noise: all-MLC fails, and the HyFlexPIM
 hybrid loses 3.4--4 points against all-SLC at 5\% read noise.
 \item A fixed 6-bit ADC is enough for all-SLC and the hybrid; all-MLC needs 7 bits; 5 bits fails BERT-Base.
+Below 6 bits the results are not monotonic (BERT-Base: 51.1\% at 5 bits but 61.1\% at 4 bits). Each value is
+a single deterministic chip on which most column sums round to a few ADC levels, so the accuracy depends on
+how that rounding happens to fall rather than on the resolution; we treat every result below 6 bits as a failure.
 \item IR drop has no effect at moderate wire resistance and hurts SLC most at high resistance, because a stored
 SLC one sits at the highest conductance.
 \item Every fault pattern leaves the HyFlexPIM hybrid close to chance at 1\% stuck cells.

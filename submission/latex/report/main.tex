@@ -1,0 +1,67 @@
+\documentclass[conference]{IEEEtran}
+\IEEEoverridecommandlockouts
+
+\usepackage{amsmath,amssymb}
+\usepackage{booktabs,multirow,colortbl}
+\usepackage{graphicx}
+\usepackage{xcolor}
+\usepackage{pgfplots}
+\pgfplotsset{compat=1.18}
+\usepackage{siunitx}
+\usepackage[hidelinks]{hyperref}
+\usepackage[capitalise,nameinlink]{cleveref}
+\usepackage{cite}
+
+% placement colours, used consistently in every figure
+\definecolor{cmag}{HTML}{1F6F8B}
+\definecolor{cfis}{HTML}{6A8F3A}
+\definecolor{cgrad}{HTML}{C0612B}
+\definecolor{crand}{HTML}{8A939C}
+\pgfplotsset{
+  accplot/.style={width=\columnwidth,height=5.2cm,grid=major,grid style={gray!20},
+    tick label style={font=\scriptsize},label style={font=\footnotesize},
+    legend style={font=\scriptsize,draw=none,fill=white,fill opacity=0.85,text opacity=1},
+    legend cell align=left,ylabel={SST-2 accuracy (\%)},ymin=45,ymax=93,mark size=1.2pt},
+  pslc/.style={black,densely dotted,thick,mark=square*,mark options={solid}},
+  pmlc/.style={black!55,dashdotted,thick,mark=triangle*,mark options={solid}},
+  pmag/.style={cmag,very thick,mark=*},
+  pfis/.style={cfis,thick,dashed,mark=diamond*,mark options={solid}},
+  pgrad/.style={cgrad,thick,mark=*},
+  prand/.style={crand,thick,mark=o}}
+
+
+% float-only pages start at the top instead of being centred
+\makeatletter\setlength{\@fptop}{0pt}\makeatother
+
+\begin{document}
+\bstctlcite{IEEEexample:BSTcontrol}
+
+\title{Reliable Hybrid SLC/MLC ReRAM\\ Crossbars for Transformers\\[4pt]
+{\Large Component Placement, Fault-Aware Mapping and Noise-Aware Training}}
+
+\author{\IEEEauthorblockN{Shivansh Mittal\qquad Sarvesh Joshi\qquad Thumati Naveen Chandra Chowdary\qquad
+Aryan Chakravorty}
+\IEEEauthorblockA{\textit{Indian Institute of Technology Guwahati}\\
+Course Project, CS5290 Memory-Centric Computer Architecture}}
+
+\maketitle
+
+\input{sections/abstract}
+\input{sections/introduction}
+\input{sections/background}
+\input{sections/model}
+\input{sections/placement}
+\input{sections/mapping}
+\input{sections/training}
+\input{sections/setup}
+\input{sections/results}
+\input{sections/mnli}
+\input{sections/discussion}
+\input{sections/conclusion}
+
+
+\bibliographystyle{IEEEtran}
+\bibliography{refs}
+
+
+\end{document}

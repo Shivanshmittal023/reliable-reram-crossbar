@@ -1,0 +1,112 @@
+\section{Crossbar Model}\label{sec:model}
+
+We wrote a PyTorch simulator that replaces each linear layer of a model with crossbars and models the
+stored value of every cell. This section describes how a weight matrix is stored, the error sources,
+and how the simulator was verified. \Cref{tab:model} lists the parameters.
+
+\begin{table}[t]
+\centering\footnotesize
+\caption{Crossbar model parameters.}\label{tab:model}
+\setlength{\tabcolsep}{4pt}
+\begin{tabular}{@{}ll@{}}
+\toprule
+Parameter & Value \\
+\midrule
+Weight precision & 8-bit signed, one scale per output column \\
+Input precision & 8-bit signed \\
+Cells per weight (per sign) & 7 SLC ($b=1$) or 4 MLC ($b=2$) \\
+Conductance range & $G_{\max}=1$ (normalised), $G_{\max}/G_{\min}=100$ \\
+Tile size & $128\times128$ \\
+Programming noise $\sigma$ & 0--10\% of $G_{\max}$, fixed per chip \\
+Read noise $\sigma_r$ & 0.5--5\% of $G_{\max}$, fresh at every read \\
+Stuck cells $p$ & 0.1--5\% of cells, half at $G_{\max}$, half at $G_{\min}$ \\
+ADC & ideal, or 3--8 bits with a fixed calibrated range \\
+Wire resistance $r$ & $R_{\text{wire}}$ per segment / $R_{\text{on}}$, $10^{-4}$--$3\times10^{-3}$ \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\subsection{Storing a Weight Matrix}
+A matrix $W\in\mathbb R^{m\times n}$, with $n$ inputs and $m$ outputs, is stored with its inputs on the rows
+(word lines) and its outputs on the columns (bit lines) of the crossbar. It is quantised to signed 8-bit
+integers with one scale per output column,
+\begin{equation}
+q_{ij}=\operatorname{clip}\!\big(\operatorname{round}(w_{ij}/s_i),\,-127,\,127\big),
+\label{eq:quant}
+\end{equation}
+with column scale $s_i=\max_j|w_{ij}|/127$ for output $i$.
+The sign is handled by a differential pair, $q=q^{+}-q^{-}$ with $q^{\pm}=\max(\pm q,0)$, and each
+7-bit magnitude is split into $S=\lceil 7/b\rceil$ base-$L$ digits,
+\begin{equation}
+q^{\pm}=\sum_{t=0}^{S-1}L^{t}d_t^{\pm},\qquad d_t^{\pm}\in\{0,\dots,L-1\},
+\label{eq:slice}
+\end{equation}
+each stored in its own cell at conductance $G=G_{\min}+d\,\Delta$. An SLC weight thus uses $2\times7$
+cells and an MLC weight $2\times4$. The stored weight is read back as
+\begin{equation}
+\hat w_{ij}=s_i\sum_{t=0}^{S-1}L^{t}\,\frac{G^{+}_{ij,t}-G^{-}_{ij,t}}{\Delta},
+\label{eq:readback}
+\end{equation}
+where the $G_{\min}$ offset cancels in the difference. In hardware the crossbar computes the integer dot
+product of the input with each slice, the slice results are shifted and added after the ADC, and the
+column scale $s_i$ is applied once per output in the digital periphery; this is equivalent to using
+$\hat W$, and without errors $\hat w_{ij}=s_iq_{ij}$ exactly. Inputs are quantised to 8 bits in the same
+way, with one scale per tensor.
+
+\subsection{Error Sources}
+Each error source is a separate, seeded option, so that its effect can be measured on its own.
+\begin{itemize}
+\item \textbf{Programming noise.} Every cell receives a fixed Gaussian offset,
+$\tilde G=\max\!\big(0,\;G+\sigma G_{\max}\varepsilon\big)$ with $\varepsilon\sim\mathcal N(0,1)$, drawn
+once per chip. Because $\Delta$ is three times smaller for MLC, the same $\sigma$ causes a three times
+larger digit error in MLC.
+
+\item \textbf{Level-dependent noise.} The noise of an MLC cell can depend on its level: $\sigma$ is
+multiplied by a factor $m_d$ per level $d$. We use $m=(1,1.5,1.5,1)$ and $m=(1,2,2,1)$, making the two
+middle levels up to twice as noisy as the end levels.
+
+\item \textbf{Read noise.} An independent Gaussian offset of standard deviation $\sigma_r G_{\max}$ is
+added to every cell at every read. Since it is independent of the stored value, its effect on an output
+is Gaussian with a closed-form variance, which the simulator adds directly to the output.
+
+\item \textbf{Stuck cells.} A cell is stuck with probability $p$, at $G_{\max}$ or $G_{\min}$ with equal
+probability, and keeps that conductance whatever is written. In the \emph{clustered} pattern, faults
+grow from random seeds into $3\times3$ blocks, with the seed rate set so that the overall rate is about
+$p$. In the \emph{line} pattern, a whole bit line within one $128$-row tile fails with probability $p$.
+
+\item \textbf{ADC and bit-serial inputs.} With a finite ADC, inputs are applied one bit at a time:
+each input is written in sign-magnitude form, and bit $k$ of its magnitude is applied with the input's
+sign. For every input bit $k$, weight slice $t$ and $128$-row tile, the column sum is quantised by a
+$b_{\text{ADC}}$-bit ADC and the results are combined digitally,
+\begin{equation}
+y_j=\sum_{k}\sum_{t}2^{k}L^{t}\,\mathrm{ADC}_t\!\Big(\sum_{i\in\text{tile}}x_i^{(k)}\big(d^{+}_{ij,t}-d^{-}_{ij,t}\big)\Big).
+\label{eq:adc}
+\end{equation}
+The full-scale range of each slice's ADC is fixed once, from the largest column sum observed on 64
+training sentences on an error-free chip, and is not adjusted at run time.
+
+\item \textbf{IR drop.} A first-order static model attenuates each cell by its distance from the row
+driver and the column sense amplifier. A cell crossed by $n$ wire segments behaves as
+\begin{equation}
+G_{\text{eff}}=\frac{G}{1+r\,G\,n},\qquad n=(c+1)+(127-\rho),
+\label{eq:irdrop}
+\end{equation}
+where $c$ and $\rho$ are the cell's column and row positions within its tile, and $r$ is the resistance
+of one wire segment relative to the on-resistance. This ignores the dependence of IR drop on the input
+pattern, which is enough to show whether a cell's position matters.
+\end{itemize}
+
+\subsection{Chips and Paired Comparison}
+A \emph{chip} is one draw of all random errors in a model: noise offsets, stuck cells and their values.
+All draws come from a single random generator seeded with the chip number, and every placement or
+mapping is evaluated on the same seeds. Two placements are therefore compared on chips with identical
+error draws, and their difference on each chip is a paired measurement. We report the mean accuracy
+over chips and, where differences are small, the mean paired difference with its standard error.
+
+\subsection{Verification}
+Every experiment starts with self-tests on random matrices and stops if one fails. With all errors
+disabled, the crossbar equals the 8-bit integer product to a relative error below $10^{-4}$ for SLC and
+MLC, also when read slice by slice, tile by tile and bit by bit; a calibrated 16-bit ADC is lossless while
+a 4-bit ADC is not; the measured read-noise spread matches its closed-form variance within 15\%; and the
+fault patterns produce the requested share of stuck cells. End to end, a chip with no errors reaches within
+about one point of the digital model for every placement (\cref{sec:results}).

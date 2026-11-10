@@ -1,0 +1,83 @@
+\section{SVD Tiering and Component Placement}\label{sec:placement}
+
+\subsection{Factorisation and Fine-Tuning}
+Following HyFlexPIM~\cite{song2025hyflexpim}, every linear layer of the transformer encoders (72
+matrices in BERT-Base, 36 in DistilBERT) is factorised with a truncated SVD,
+\begin{equation}
+W\approx U\Sigma V^{\top}=\sum_{r=1}^{k}\sigma_r\,u_r v_r^{\top},\qquad
+k=\Big\lfloor\frac{mn}{m+n}\Big\rfloor,
+\label{eq:svd}
+\end{equation}
+for $W\in\mathbb R^{m\times n}$. This rank keeps the parameter count unchanged, e.g.\ $k=384$ for a
+$768\times768$ attention matrix and $k=614$ for a $768\times3072$ feed-forward matrix. Truncation loses
+accuracy, so the factorised model is fine-tuned on the full SST-2 training set (67{,}349 sentences) for 8
+epochs with AdamW, learning rate $2\times10^{-5}$ with linear decay, and batch size 32. $U$, $\Sigma$ and
+$V$ are trained directly, so the factors need not stay orthogonal.
+
+\subsection{Mapping a Factorised Layer onto Two Tiers}
+We call $(\sigma_r,u_r,v_r)$ the $r$-th \emph{component}. On the chip it is stored as one column of a first
+crossbar, holding $\sigma_r v_r$, and one row of a second crossbar, holding $u_r$: the first crossbar turns
+the input into one value per component, and the second spreads each value back over the outputs. A placement chooses a set
+$\mathcal S$ of components for SLC; the rest form the MLC tier. Each tier has its own pair of crossbars
+(\cref{fig:tiers}), and the layer computes
+\begin{equation}
+y=U_{\mathcal S}\big(\Sigma V^{\top}\big)_{\mathcal S}\,x+U_{\bar{\mathcal S}}\big(\Sigma V^{\top}\big)_{\bar{\mathcal S}}\,x+b.
+\label{eq:tiers}
+\end{equation}
+The intermediate vector between the two crossbars is re-quantised to 8 bits, as any crossbar input. A
+component holds $m+n$ weights, so placing a share $f$ of the components in SLC costs $14f+8(1-f)$ cells per
+weight against 14 for all-SLC; at $f=20\%$ this is 9.2 cells, 34\% fewer. All placements select the top
+$\lceil fk\rceil$ components of each layer by a score, so every layer has the same SLC share.
+
+\begin{figure}[t]
+\centering
+\begin{tikzpicture}[font=\footnotesize,
+  xb/.style={draw,minimum width=1.55cm,minimum height=0.62cm,align=center},
+  arr/.style={-latex}]
+\node (x) at (0,0) {$x$};
+\node[xb,fill=cmag!15] (s1) at (1.6,0.55) {$(\Sigma V^{\top})_{\mathcal S}$\\[-1pt]SLC};
+\node[xb,fill=cmag!15] (s2) at (3.7,0.55) {$U_{\mathcal S}$\\[-1pt]SLC};
+\node[xb,fill=crand!20] (m1) at (1.6,-0.55) {$(\Sigma V^{\top})_{\bar{\mathcal S}}$\\[-1pt]MLC};
+\node[xb,fill=crand!20] (m2) at (3.7,-0.55) {$U_{\bar{\mathcal S}}$\\[-1pt]MLC};
+\node[draw,circle,inner sep=1pt] (p) at (5.2,0) {$+$};
+\node (y) at (6.1,0) {$y$};
+\draw[arr] (x) |- (s1); \draw[arr] (x) |- (m1);
+\draw[arr] (s1) -- (s2); \draw[arr] (m1) -- (m2);
+\draw[arr] (s2) -| (p); \draw[arr] (m2) -| (p);
+\draw[arr] (p) -- node[above] {$+b$} (y);
+\end{tikzpicture}
+\caption{A factorised layer on the chip. Components in $\mathcal S$ use SLC crossbars, the rest MLC
+crossbars; each component is one column of the first crossbar and one row of the second.}
+\label{fig:tiers}
+\end{figure}
+
+\subsection{Placement Scores}
+Besides the two extremes, all-SLC and all-MLC, and a random choice as a control, we compare three scores.
+All data-dependent scores use the same 2{,}048 SST-2 training sentences.
+
+\textbf{Magnitude.} The size of the singular value, $|\sigma_r|$ ($\sigma_r$ is trained freely and need
+not stay positive). It needs no data.
+
+\textbf{Gradient (HyFlexPIM-style).} The absolute loss gradient with respect to the singular value,
+summed over batches $b$ of 32 sentences with dropout active,
+\begin{equation}
+g_r=\sum_b\Big|\frac{\partial L_b}{\partial\sigma_r}\Big|.
+\label{eq:grad}
+\end{equation}
+The absolute value is taken per batch because, on a trained model, the gradients of different sentences
+point in opposite directions and largely cancel in a single sum.
+
+\textbf{Fisher.} The expected rise in loss if component $r$ is stored in MLC. To second order, a small
+random error $\delta_e$ on stored entry $e$ raises the expected loss by about $\tfrac12F_e\,\mathbb
+E[\delta_e^2]$, where $F_e$ is the Fisher information of that entry~\cite{lecun1990obd}. We estimate $F_e$
+by the empirical Fisher, the sum of squared per-sentence gradients. Under the cell model of
+\cref{sec:model}, a fixed cell noise becomes a weight error proportional to the 8-bit scale of the
+crossbar column holding the entry, so $\mathbb E[\delta_e^2]\propto s^2$. Summing over every entry the
+component stores gives
+\begin{equation}
+D_r=s_r^2\sum_j F\big(\sigma_r v_{rj}\big)+\sum_i t_i^2\,F\big(u_{ir}\big),
+\label{eq:fisher}
+\end{equation}
+where $s_r=\max_j|\sigma_r v_{rj}|/127$ is the scale of the component's column in the first crossbar and
+$t_i=\max_r|u_{ir}|/127$ that of output column $i$ in the second. The constant factor of the noise variance
+is the same for every component and is omitted.
