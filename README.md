@@ -1,7 +1,7 @@
 # Reliable Hybrid SLC/MLC ReRAM Crossbars for Transformers
 
 **Component placement, fault-aware mapping and noise-aware training.** Course project for CS5290
-Memory-Centric Computer Architecture, IIT Guwahati, by Shivansh Mittal, Sarvesh Joshi, Thumati Naveen
+Memory-Centric Computer Architecture, IIT Guwahati, by Group 7: Shivansh Mittal, Sarvesh Joshi, Thumati Naveen
 Chandra Chowdary and Aryan Chakravorty.
 
 A ReRAM crossbar computes matrix–vector products where the weights are stored, but its cells are
