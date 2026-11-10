@@ -51,6 +51,13 @@ placement is tested on the same chips. Errors are modelled per cell: 8-bit weigh
 column, differential cell pairs, 7 SLC or 4 MLC bit slices per sign, and programming noise
 $\tilde G=G+\sigma G_{\max}\varepsilon$ on every cell.
 
+\paragraph{Scope of these results.} HyFlexPIM reports only programming noise. The other effects here (stuck
+cells, fault patterns, read and level-dependent noise, IR drop, a fixed ADC) and the MNLI experiments are our
+own extensions of the evaluation. They are applied to the unchanged HyFlexPIM design: placement by the gradient
+score, the same fine-tuned model for every chip, no fault-aware mapping and no noise-, fault- or tier-aware
+training. Every result in this document is therefore what the chip achieves \emph{without} our methods; the
+same chips with our methods are reported in the \emph{Contribution Results} document.
+
 \section{Accuracy before hardware errors}
 \begin{table}[H]
 \centering\small
